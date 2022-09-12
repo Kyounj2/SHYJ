@@ -137,9 +137,12 @@ public class YJ_KillerMove : MonoBehaviour
     float attackTime = 0;
     void Attack()
     {
+        // 점프하면서 공격했을때 바닥으로 내리기
+        transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x,0,transform.position.z), 10 * Time.deltaTime);
+
         attackTime += Time.deltaTime;
 
-        if(attackTime > 1f)
+        if(attackTime > 0.5f)
         {
             anim.SetBool("Attack", false);
             state = State.Move;
