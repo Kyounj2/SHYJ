@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +45,10 @@ public class YJ_KillerMove : MonoBehaviour
     
     void Update()
     {
+        // 마우스커서 숨기기
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
         print("현재상태 : " + state);
         KillerRot();
 
@@ -64,12 +69,13 @@ public class YJ_KillerMove : MonoBehaviour
                 anim.SetBool("Attack", true);
                 Attack();
                 break;
-            case State.Skill_1:
+            case State.Skill_1: // 스피드업
                 Skill_SpeedUp();
                 break;
-            case State.Skill_2:
+            case State.Skill_2: // 비명지르기
+                Skill_Scream();
                 break;
-            case State.Skill_3:
+            case State.Skill_3: // 발전기 저주
                 break;
             case State.Die:
                 break;
@@ -130,6 +136,11 @@ public class YJ_KillerMove : MonoBehaviour
             state = State.Skill_1;
         }
 
+        // 2번키 누르면 비명 스킬 가동
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            state = State.Skill_2;
+        }
 
         cc.Move(dir * speed * Time.deltaTime);
     }
@@ -170,4 +181,26 @@ public class YJ_KillerMove : MonoBehaviour
         }
     }
 
+    float skill_2Time = 0;
+    public Collider[] colls;
+    void Skill_Scream()
+    {
+        skill_2Time += Time.deltaTime;
+        colls = Physics.OverlapSphere(transform.position, 5f);
+
+        for(int i = 0; i < colls.Length; i++)
+        {
+            if (colls[i].gameObject.layer == 31)
+            {
+                // 피달게할 함수 실행
+            }
+        }
+
+        if(skill_2Time > 1.5f)
+        {
+            Array.Clear(colls, 0, colls.Length); // 배열 안의 목록 전부 삭제
+            state = State.Move;
+            skill_2Time = 0;
+        }
+    }
 }
