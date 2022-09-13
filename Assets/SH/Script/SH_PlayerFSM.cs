@@ -26,32 +26,32 @@ public class SH_PlayerFSM : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (state)
-        {
-            case State.Normal:
-                Normal();
-                break;
+        //switch (state)
+        //{
+        //    case State.Normal:
+        //        Normal();
+        //        break;
 
-            case State.Transform:
-                Transform();
-                break;
+        //    case State.Transform:
+        //        Transform();
+        //        break;
 
-            case State.Damage:
-                Damage();
-                break;
+        //    case State.Damage:
+        //        Damage();
+        //        break;
 
-            case State.Groggy:
-                Groggy();
-                break;
+        //    case State.Groggy:
+        //        Groggy();
+        //        break;
 
-            case State.Seated:
-                Die();
-                break;
+        //    case State.Seated:
+        //        Die();
+        //        break;
 
-            case State.Die:
-                Die();
-                break;
-        }
+        //    case State.Die:
+        //        Die();
+        //        break;
+        //}
     }
 
     public void ChangeState(State s)
@@ -113,28 +113,28 @@ public class SH_PlayerFSM : MonoBehaviour
         }
     }
 
-    private void Normal()
-    {
-        throw new NotImplementedException();
-    }
+    //private void Normal()
+    //{
+    //    throw new NotImplementedException();
+    //}
 
-    private void Transform()
-    {
-        throw new NotImplementedException();
-    }
+    //private void Transform()
+    //{
+    //    throw new NotImplementedException();
+    //}
 
-    private void Damage()
-    {
-        throw new NotImplementedException();
-    }
+    //private void Damage()
+    //{
+    //    throw new NotImplementedException();
+    //}
 
-    private void Groggy()
-    {
-        throw new NotImplementedException();
-    }
+    //private void Groggy()
+    //{
+    //    throw new NotImplementedException();
+    //}
 
-    private void Die()
-    {
-        throw new NotImplementedException();
-    }
+    //private void Die()
+    //{
+    //    throw new NotImplementedException();
+    //}
 }

@@ -27,6 +27,11 @@ public class SH_PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        PlayerMovement();
+    }
+    
+    void PlayerMovement()
+    {
         float v = Input.GetAxisRaw("Vertical");
         float h = Input.GetAxisRaw("Horizontal");
 
@@ -34,7 +39,7 @@ public class SH_PlayerMove : MonoBehaviour
         dir.Normalize();
 
         yVelocity += gravity * Time.deltaTime;
-        
+
         if (Jumping() == false)
         {
             yVelocity = 0;
