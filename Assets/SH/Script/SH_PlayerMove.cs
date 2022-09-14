@@ -12,7 +12,8 @@ public class SH_PlayerMove : MonoBehaviour
 
     public float jumpPower = 5;
     public float jumpRayLen = 1.2f;
-    float gravity = -15;
+    public Transform[] rayBase;
+    float gravity = -5;
     float yVelocity = 0;
 
     public int maxJumpCount = 1;
@@ -65,12 +66,31 @@ public class SH_PlayerMove : MonoBehaviour
         RaycastHit hit;
         Debug.DrawRay(ray.origin, ray.direction * jumpRayLen, Color.red);
 
+        Ray[] footRay = new Ray[10];
+        for (int i = 0; i < rayBase.Length; i++)
+        {
+            Vector3 footStart = rayBase[i].position + transform.up;
+            footRay[i] = new Ray(footStart, -transform.up);
+
+            Debug.DrawRay(footRay[i].origin, footRay[i].direction * jumpRayLen, Color.blue);
+        }
+
         if (Physics.Raycast(ray, out hit))
         {
             if (hit.distance < jumpRayLen && yVelocity <= 0)
                 return false;
             else
-                return true;
+            {
+                for (int i = 0; i < rayBase.Length; i++)
+                {
+                    if (Physics.Raycast(footRay[i], out hit))
+                    {
+                        if (hit.distance < jumpRayLen && yVelocity <= 0)
+                            return false;
+                    }
+                }
+            }
+            return true;
         }
         else
         {
