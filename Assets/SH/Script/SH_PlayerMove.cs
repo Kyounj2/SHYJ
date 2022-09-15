@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SH_PlayerMove : MonoBehaviour
 {
-    public Transform body;
+    public Transform player;
+    Animator anim;
     CharacterController cc;
 
     public float walkSpeed = 10;
@@ -23,6 +25,7 @@ public class SH_PlayerMove : MonoBehaviour
     void Start()
     {
         cc = GetComponent<CharacterController>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -36,7 +39,7 @@ public class SH_PlayerMove : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical");
         float h = Input.GetAxisRaw("Horizontal");
 
-        dir = body.forward * v + body.right * h;
+        dir = player.forward * v + player.right * h;
         dir.Normalize();
 
         yVelocity += gravity * Time.deltaTime;
@@ -54,6 +57,8 @@ public class SH_PlayerMove : MonoBehaviour
         }
 
         dir.y = yVelocity;
+
+        anim.SetFloat("Speed", v);
 
         cc.Move(dir * walkSpeed * Time.deltaTime);
     }
