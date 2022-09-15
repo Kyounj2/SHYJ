@@ -6,20 +6,26 @@ using UnityEngine.UI;
 // F키를 누르면 게이지를 채우고싶다
 public class YJ_Propmachines : MonoBehaviour
 {
-    public GameObject gage;
+    // 머신게이지
+    public GameObject maghineGage;
     Slider slider;
-
     bool macineOn = false;
+
+    // 
     void Start()
     {
-        gage.SetActive(false);
-        slider = gage.GetComponent<Slider>();
+        // 플레이거 가동용 게이지
+        maghineGage.SetActive(false);
+        slider = maghineGage.GetComponent<Slider>();
+
+
     }
 
     
     void Update()
     {
-        if(gage && Input.GetKeyDown(KeyCode.F))
+        // 머신게이지가 켜져있고 플레이어가 F를 눌렀을때
+        if(maghineGage && Input.GetKeyDown(KeyCode.F))
         {
             macineOn = true;
         }
@@ -32,18 +38,32 @@ public class YJ_Propmachines : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // 플레이어라면
         if (other.gameObject.layer == 31)
         {
-            gage.SetActive(true);
+            maghineGage.SetActive(true);
+        }
+
+        // 애너미라면
+        if (other.gameObject.layer == 30)
+        {
+            
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
+        // 플레이어라면
         if(other.gameObject.layer == 31)
         {
             macineOn = false;
-            gage.SetActive(false);
+            maghineGage.SetActive(false);
+        }
+
+        // 애너미라면
+        if (other.gameObject.layer == 30)
+        {
+
         }
     }
 }
