@@ -53,6 +53,7 @@ public class SH_PlayerSkill : MonoBehaviour
                 tbMeshFilter.mesh = tb.GetComponent<MeshFilter>().mesh;
                 tbMeshRenderer.material = tb.GetComponent<MeshRenderer>().material;
                 tbMeshCollider.sharedMesh = tb.GetComponent<MeshCollider>().sharedMesh;
+                mimicBody.transform.localScale = tb.transform.localScale;
             }
         }
     }
