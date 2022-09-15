@@ -35957,7 +35957,7 @@ GameObject:
   - component: {fileID: 4435114447495008140}
   m_Layer: 0
   m_Name: gravestone_016
-  m_TagString: Untagged
+  m_TagString: Transformable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
