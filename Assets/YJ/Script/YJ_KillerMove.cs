@@ -146,8 +146,21 @@ public class YJ_KillerMove : MonoBehaviour
     }
 
     float attackTime = 0;
+    public GameObject hand;
+    RaycastHit hit;
+    SH_PlayerHP hp;
+
     void Attack()
     {
+        Debug.DrawRay(hand.transform.position, Camera.main.transform.forward * 1.5f, Color.red * 1f);
+
+        Ray ray = new Ray(hand.transform.position, Camera.main.transform.forward);
+
+        if(Physics.Raycast(ray, out hit, 1.5f))
+        {
+            hp = hit.transform.GetComponent<SH_PlayerHP>();
+        }
+
         // 점프하면서 공격했을때 바닥으로 내리기
         transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x,0,transform.position.z), 10 * Time.deltaTime);
 
@@ -155,6 +168,11 @@ public class YJ_KillerMove : MonoBehaviour
 
         if(attackTime > 0.5f)
         {
+            if(hp != null)
+            {
+                hp.OnDamaged(30);
+                hp = null;
+            }
             anim.SetBool("Attack", false);
             state = State.Move;
             attackTime = 0f;
