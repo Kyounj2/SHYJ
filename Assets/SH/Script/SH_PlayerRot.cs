@@ -7,7 +7,7 @@ using UnityEngine;
 public class SH_PlayerRot : MonoBehaviour
 {
     Transform cam;
-    public Transform body;
+    public Transform player;
     public Transform camPivot;
     public Transform[] camPos = new Transform[2];
     int index = 0;
@@ -31,6 +31,7 @@ public class SH_PlayerRot : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             index = SwitchIndex(index);
+
         }
         cam.position = Vector3.Lerp(cam.position, camPos[index].position, 10 * Time.deltaTime);
 
@@ -46,11 +47,11 @@ public class SH_PlayerRot : MonoBehaviour
         rotX += mx * rotSpeed * Time.deltaTime;
         rotY -= my * rotSpeed * Time.deltaTime;
 
-        rotY = Mathf.Clamp(rotY , - 85.0f, 85.0f);
+        rotY = Mathf.Clamp(rotY , -70.0f, 85.0f);
 
         // 3. 입력값으로 회전량을 세팅해주고싶다.
-        // 3-1. rotX의 값은 body에 세팅해주고싶다.
-        body.transform.localEulerAngles = new Vector3(0, rotX, 0);
+        // 3-1. rotX의 값은 Player에 세팅해주고싶다.
+        player.transform.localEulerAngles = new Vector3(0, rotX, 0);
         // 3-2. rotY의 값은 camPivot에 세팅해주고 싶다.
         camPivot.transform.localEulerAngles = new Vector3(rotY, 0, 0);
     }

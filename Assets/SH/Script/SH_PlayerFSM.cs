@@ -11,21 +11,34 @@ public class SH_PlayerFSM : MonoBehaviour
         Transform,
         Damage,
         Groggy,
+        Catched,
         Seated,
         Die,
     }
     public State state = State.Normal;
     public State preState;
 
+    public Transform body;
+    Animator anim;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        anim = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            ChangeState(State.Groggy);
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            ChangeState(State.Catched);
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            ChangeState(State.Seated);
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+            ChangeState(State.Normal);
+
         //switch (state)
         //{
         //    case State.Normal:
@@ -56,7 +69,7 @@ public class SH_PlayerFSM : MonoBehaviour
 
     public void ChangeState(State s)
     {
-        preState = s;
+        preState = state;
         EndState(preState);
 
         if (state == s)
@@ -70,6 +83,7 @@ public class SH_PlayerFSM : MonoBehaviour
         switch (state)
         {
             case State.Normal:
+                anim.SetTrigger("Idle");
                 break;
 
             case State.Transform:
@@ -79,9 +93,16 @@ public class SH_PlayerFSM : MonoBehaviour
                 break;
 
             case State.Groggy:
+                anim.SetTrigger("Groggy");
+                break;
+
+            case State.Catched:
+                body.localEulerAngles = new Vector3(80, 0, 0);
+                anim.SetTrigger("Catched");
                 break;
 
             case State.Seated:
+                anim.SetTrigger("Seated");
                 break;
 
             case State.Die:
@@ -103,6 +124,10 @@ public class SH_PlayerFSM : MonoBehaviour
                 break;
 
             case State.Groggy:
+                break;
+
+            case State.Catched:
+                body.localEulerAngles = new Vector3(0, 0, 0);
                 break;
 
             case State.Seated:
