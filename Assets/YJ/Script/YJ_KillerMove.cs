@@ -65,6 +65,12 @@ public class YJ_KillerMove : MonoBehaviour
                 {
                     anim.SetInteger("vv", 0);
                 }
+
+                if (carryTime > 0.3)
+                {
+                    playerTr.gameObject.transform.position = shoulderPos.transform.position;
+                    playerFSM.body.gameObject.transform.localEulerAngles = transform.localEulerAngles + new Vector3(100, 0, 180);
+                }
                 break;
             case State.Attack:
                 anim.SetBool("Attack", true);
@@ -89,6 +95,7 @@ public class YJ_KillerMove : MonoBehaviour
     }
 
     public Transform Campos;
+    public Transform Campos2;
 
     // 카메라 rot구현
     void KillerRot()
@@ -101,8 +108,23 @@ public class YJ_KillerMove : MonoBehaviour
 
         rotY = Mathf.Clamp(rotY, 1050, 1120); // 위아래 고정
 
-        transform.eulerAngles = new Vector3(0, rotX, 0); // 일단좌우만
-        Campos.transform.eulerAngles = new Vector3(-rotY, rotX, 0);
+        if(carryTime <= 0 )
+        {
+            transform.eulerAngles = new Vector3(0, rotX, 0); // 일단좌우만
+            Campos.transform.eulerAngles = new Vector3(-rotY, rotX, 0);
+
+        }
+        else if (carryTime > 0.1 )
+        {
+            if(carryTime < 10)
+            {
+                Campos.transform.position = Vector3.Lerp(Campos.transform.position, Campos2.transform.position, Time.deltaTime);
+            }
+            //Campos.transform.position = Campos2.transform.position;
+            transform.eulerAngles = new Vector3(0, rotX,0);
+            Campos.transform.forward = transform.forward;
+            //Camera.main.transform.eulerAngles = new Vector3(16, 0, 0);
+        }
     }
 
     RaycastHit player;
@@ -162,19 +184,19 @@ public class YJ_KillerMove : MonoBehaviour
         dir.y = yvel;
 
         // 마우스 왼쪽버튼 누르면 Attack으로 바꾸기
-        if(Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && carryTime <= 0)
         {
             state = State.Attack;
         }
 
         // 1번키 누르면 스피드업 스킬 가동
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) && carryTime <= 0)
         {
             state = State.Skill_1;
         }
 
         // 2번키 누르면 비명 스킬 가동
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2) && carryTime <= 0)
         {
             state = State.Skill_2;
         }
@@ -259,19 +281,26 @@ public class YJ_KillerMove : MonoBehaviour
         }
     }
 
-    public GameObject playerCarry;
+    public GameObject shoulderPos;
     float carryTime = 0;
     void Carry()
     {
         carryTime += Time.deltaTime;
         playerTr.gameObject.GetComponent<CharacterController>().enabled = false;
-        playerTr.gameObject.transform.position = hand.transform.position;
         //playerFSM.body.gameObject.transform.up = transform.forward;
         playerFSM.body.gameObject.transform.localEulerAngles = transform.localEulerAngles + new Vector3(100, 0, 180);
 
-        if(carryTime > 0.28)
+        if(carryTime < 0.29)
         {
-            hand.transform.position = hand.transform.position + new Vector3(-0.88f, -0.47f, 0.22f);
+            playerTr.gameObject.transform.position = hand.transform.position;
+        }
+        else if(carryTime > 0.28 && carryTime < 0.32)
+        {
+            playerTr.gameObject.transform.position = shoulderPos.transform.position;
+        }
+        else if(carryTime > 0.32)
+        {
+            state = State.Move;
         }
     }
 }
