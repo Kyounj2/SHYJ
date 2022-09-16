@@ -98,7 +98,7 @@ public class SH_PlayerFSM : MonoBehaviour
                 break;
 
             case State.Catched:
-                body.localEulerAngles = new Vector3(80, 0, 0);
+                //body.localEulerAngles = new Vector3(80, 0, 0);
                 anim.SetTrigger("Catched");
                 break;
 
