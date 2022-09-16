@@ -28,6 +28,7 @@ public class YJ_KillerMove : MonoBehaviour
         Skill_1, // 3초동안 내 앞방향으로 스피드업
         Skill_2,
         Skill_3,
+        Carry,
         Die
     }
 
@@ -77,6 +78,10 @@ public class YJ_KillerMove : MonoBehaviour
                 break;
             case State.Skill_3: // 발전기 저주
                 break;
+            case State.Carry:
+                anim.SetBool("Carry", true);
+                Carry();
+                break;
             case State.Die:
                 break;
 
@@ -100,6 +105,9 @@ public class YJ_KillerMove : MonoBehaviour
         Campos.transform.eulerAngles = new Vector3(-rotY, rotX, 0);
     }
 
+    RaycastHit player;
+    Transform playerTr;
+    SH_PlayerFSM playerFSM;
     // 이동구현
     void KillerMove()
     {
@@ -107,6 +115,35 @@ public class YJ_KillerMove : MonoBehaviour
         float v = Input.GetAxis("Vertical");
 
         yvel += gravity * Time.deltaTime;
+
+        // ray쏘고다니기
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 2.5f, Color.red * 1f);
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        if (Physics.Raycast(ray, out player, 2.5f))
+        {
+            if(player.collider.gameObject.layer == 29)
+            {
+                playerFSM = player.transform.GetComponent<SH_PlayerFSM>();
+                playerTr = player.transform;
+                print(playerFSM);
+                print(playerTr);
+
+                if(playerFSM != null)
+                {
+                    if(playerFSM.state == SH_PlayerFSM.State.Groggy)
+                    {
+                        if(Input.GetKeyDown(KeyCode.F))
+                        {
+                            playerFSM.ChangeState(SH_PlayerFSM.State.Catched);
+                            state = State.Carry;
+                        }
+                    }
+                    
+                }
+            }
+
+        }
+
 
         if (cc.isGrounded)
         {
@@ -219,6 +256,22 @@ public class YJ_KillerMove : MonoBehaviour
             Array.Clear(colls, 0, colls.Length); // 배열 안의 목록 전부 삭제
             state = State.Move;
             skill_2Time = 0;
+        }
+    }
+
+    public GameObject playerCarry;
+    float carryTime = 0;
+    void Carry()
+    {
+        carryTime += Time.deltaTime;
+        playerTr.gameObject.GetComponent<CharacterController>().enabled = false;
+        playerTr.gameObject.transform.position = hand.transform.position;
+        //playerFSM.body.gameObject.transform.up = transform.forward;
+        playerFSM.body.gameObject.transform.localEulerAngles = transform.localEulerAngles + new Vector3(100, 0, 180);
+
+        if(carryTime > 0.28)
+        {
+            hand.transform.position = hand.transform.position + new Vector3(-0.88f, -0.47f, 0.22f);
         }
     }
 }

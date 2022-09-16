@@ -8,6 +8,8 @@ public class SH_PlayerHP : MonoBehaviour
     float maxHP;
     const float defaultHp = 100;
 
+    SH_PlayerFSM fsm;
+
     public float HP
     {
         get { return hp; }
@@ -17,12 +19,13 @@ public class SH_PlayerHP : MonoBehaviour
     void Start()
     {
         hp = defaultHp;
+        fsm = GetComponent<SH_PlayerFSM>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void Mapping()
@@ -40,6 +43,8 @@ public class SH_PlayerHP : MonoBehaviour
         hp += amount;
         print(hp);
 
+        Mathf.Clamp(hp, 0, maxHP);
+
         if (hp > maxHP)
         {
             hp = maxHP;
@@ -51,9 +56,12 @@ public class SH_PlayerHP : MonoBehaviour
         hp -= amount;
         print(hp);
 
+        Mathf.Clamp(hp, 0, maxHP);
+
         if (hp <= 0)
         {
             // 죽거나, 그로기 상태이고 싶다.
+            fsm.ChangeState(SH_PlayerFSM.State.Groggy);
         }
     }
 }
