@@ -7,7 +7,7 @@ public class SH_PlayerMove : MonoBehaviour
 {
     public Transform player;
     Animator anim;
-    CharacterController cc;
+    [HideInInspector] public CharacterController cc;
 
     public float walkSpeed = 10;
     Vector3 dir;

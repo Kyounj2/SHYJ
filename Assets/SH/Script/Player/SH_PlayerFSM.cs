@@ -15,20 +15,21 @@ public class SH_PlayerFSM : MonoBehaviour
         Seated,
         Die,
     }
-
     public State state = State.Normal;
     public State preState;
 
     public Transform body;
     Animator anim;
 
-    // Start is called before the first frame update
+    SH_PlayerMove pm;
+    SH_PlayerRot pr;
+    SH_PlayerSkill ps;
+
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -40,32 +41,32 @@ public class SH_PlayerFSM : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha4))
             ChangeState(State.Normal);
 
-        //switch (state)
-        //{
-        //    case State.Normal:
-        //        Normal();
-        //        break;
+        switch (state)
+        {
+            case State.Normal:
+                Normal();
+                break;
 
-        //    case State.Transform:
-        //        Transform();
-        //        break;
+            case State.Transform:
+                Transform();
+                break;
 
-        //    case State.Damage:
-        //        Damage();
-        //        break;
+            case State.Damage:
+                Damage();
+                break;
 
-        //    case State.Groggy:
-        //        Groggy();
-        //        break;
+            case State.Groggy:
+                Groggy();
+                break;
 
-        //    case State.Seated:
-        //        Die();
-        //        break;
+            case State.Seated:
+                Die();
+                break;
 
-        //    case State.Die:
-        //        Die();
-        //        break;
-        //}
+            case State.Die:
+                Die();
+                break;
+        }
     }
 
     public void ChangeState(State s)
@@ -98,11 +99,12 @@ public class SH_PlayerFSM : MonoBehaviour
                 break;
 
             case State.Catched:
-                //body.localEulerAngles = new Vector3(80, 0, 0);
+                pm.cc.enabled = false;
                 anim.SetTrigger("Catched");
                 break;
 
             case State.Seated:
+                pm.cc.enabled = false;
                 anim.SetTrigger("Seated");
                 break;
 
@@ -128,10 +130,12 @@ public class SH_PlayerFSM : MonoBehaviour
                 break;
 
             case State.Catched:
+                pm.cc.enabled = true;
                 body.localEulerAngles = new Vector3(0, 0, 0);
                 break;
 
             case State.Seated:
+                pm.cc.enabled = true;
                 break;
 
             case State.Die:
@@ -139,28 +143,28 @@ public class SH_PlayerFSM : MonoBehaviour
         }
     }
 
-    //private void Normal()
-    //{
-    //    throw new NotImplementedException();
-    //}
+    private void Normal()
+    {
+        throw new NotImplementedException();
+    }
 
-    //private void Transform()
-    //{
-    //    throw new NotImplementedException();
-    //}
+    private void Transform()
+    {
+        throw new NotImplementedException();
+    }
 
-    //private void Damage()
-    //{
-    //    throw new NotImplementedException();
-    //}
+    private void Damage()
+    {
+        throw new NotImplementedException();
+    }
 
-    //private void Groggy()
-    //{
-    //    throw new NotImplementedException();
-    //}
+    private void Groggy()
+    {
+        throw new NotImplementedException();
+    }
 
-    //private void Die()
-    //{
-    //    throw new NotImplementedException();
-    //}
+    private void Die()
+    {
+        throw new NotImplementedException();
+    }
 }

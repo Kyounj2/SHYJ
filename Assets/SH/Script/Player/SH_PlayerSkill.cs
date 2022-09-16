@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SH_PlayerSkill : MonoBehaviour
 {
+    SH_PlayerFSM fsm;
     Transform cam;
 
     public GameObject originalBody;
@@ -15,6 +16,7 @@ public class SH_PlayerSkill : MonoBehaviour
 
     void Start()
     {
+        fsm = GetComponent<SH_PlayerFSM>();
         cam = Camera.main.transform;
 
         mimicBody.SetActive(false);
