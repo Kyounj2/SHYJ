@@ -27,9 +27,9 @@ public class SH_PlayerHP : MonoBehaviour
 
     }
 
-    public void SetMaxHP(int maxHP)
+    public void SetMaxHP(int value)
     {
-        this.maxHP = maxHP;
+        maxHP = value;
     }
 
     public void OnHealed(int amount)
@@ -37,20 +37,15 @@ public class SH_PlayerHP : MonoBehaviour
         hp += amount;
         print(hp);
 
-        hp = Mathf.Clamp(hp, 0, maxHP);
-
-        if (hp > maxHP)
-        {
-            hp = maxHP;
-        }
+        hp = Mathf.Clamp(hp, 0, 100);
     }
 
     public void OnDamaged(int amount)
     {
         hp -= amount;
-        print(hp);
 
-        hp = Mathf.Clamp(hp, 0, maxHP);
+        hp = Mathf.Clamp(hp, 0, 100);
+        print(hp);
 
         if (hp <= 0)
         {
