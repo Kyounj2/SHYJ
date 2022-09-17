@@ -47,7 +47,7 @@ public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
         fsm = GetComponent<SH_PlayerFSM>();
     }
     
-    void PlayerMovement()
+    public void PlayerMovement()
     {
         if (photonView.IsMine)
         {

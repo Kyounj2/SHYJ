@@ -28,6 +28,11 @@ public class SH_PlayerRot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    public void PlayerRot()
+    {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             index = SwitchIndex(index);
@@ -47,7 +52,7 @@ public class SH_PlayerRot : MonoBehaviour
         rotX += mx * rotSpeed * Time.deltaTime;
         rotY -= my * rotSpeed * Time.deltaTime;
 
-        rotY = Mathf.Clamp(rotY , -70.0f, 85.0f);
+        rotY = Mathf.Clamp(rotY, -70.0f, 85.0f);
 
         // 3. 입력값으로 회전량을 세팅해주고싶다.
         // 3-1. rotX의 값은 Player에 세팅해주고싶다.

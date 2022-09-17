@@ -28,6 +28,10 @@ public class SH_PlayerFSM : MonoBehaviour
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
+
+        pm = GetComponent<SH_PlayerMove>();
+        pr = GetComponent<SH_PlayerRot>();
+        ps = GetComponent<SH_PlayerSkill>();
     }
 
     void Update()
@@ -145,7 +149,7 @@ public class SH_PlayerFSM : MonoBehaviour
 
     private void Normal()
     {
-        throw new NotImplementedException();
+        pm.PlayerMovement();
     }
 
     private void Transform()
