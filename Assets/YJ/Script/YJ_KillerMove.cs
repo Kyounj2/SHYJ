@@ -53,6 +53,9 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
     void Start()
     {
+        if (photonView.IsMine)
+            Campos.gameObject.SetActive(true);
+
         cc = GetComponent<CharacterController>();
 
         anim = GetComponent<Animator>();
@@ -129,6 +132,8 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     // 카메라 rot구현
     void KillerRot()
     {
+        if (photonView.IsMine == false) return;
+
         float mx = Input.GetAxis("Mouse X");
         float my = Input.GetAxis("Mouse Y");
 
