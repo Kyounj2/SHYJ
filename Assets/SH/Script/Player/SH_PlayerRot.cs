@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 // y축 회전은 몸통이 하고
 // x축 회전은 카메라가 하고 싶다.
-public class SH_PlayerRot : MonoBehaviour
+public class SH_PlayerRot : MonoBehaviourPun
 {
     Transform cam;
     public Transform player;
@@ -23,6 +24,13 @@ public class SH_PlayerRot : MonoBehaviour
         Cursor.visible = false;
 
         cam = Camera.main.transform;
+
+        // 만약에 내것이라면
+        if (photonView.IsMine == true)
+        {
+            // camPos를 활성화 한다.
+            cam.gameObject.SetActive(true);
+        }
     }
 
     // Update is called once per frame
