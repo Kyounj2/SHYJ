@@ -9,3 +9,4 @@ obj/
 *.sln
 .vsconfig
 .vs
+Assets/Scenes/GameScene.unity
