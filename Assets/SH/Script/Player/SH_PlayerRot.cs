@@ -20,17 +20,18 @@ public class SH_PlayerRot : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
+        // 만약에 내것이라면
+        if (photonView.IsMine)
+        {
+            // camPos를 활성화 한다.
+            camPivot.gameObject.SetActive(true);
+        }
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
         cam = Camera.main.transform;
 
-        // 만약에 내것이라면
-        if (photonView.IsMine == true)
-        {
-            // camPos를 활성화 한다.
-            cam.gameObject.SetActive(true);
-        }
     }
 
     // Update is called once per frame
