@@ -111,10 +111,11 @@ public class YJ_KillerMove : MonoBehaviour
         if(carryTime <= 0 )
         {
             transform.eulerAngles = new Vector3(0, rotX, 0); // 일단좌우만
-            Campos.transform.eulerAngles = new Vector3(-rotY, rotX, 0);
-
+            Camera.main.transform.eulerAngles = new Vector3(-rotY, rotX, 0);
+            //Campos.transform.eulerAngles = new Vector3(-rotY, 0, 0);
+            //Campos.transform.eulerAngles = new Vector3(-rotY, rotX, 0);
         }
-        else if (carryTime > 0.1 )
+        else if (carryTime > 0.5 )
         {
             if(carryTime < 10)
             {
@@ -155,7 +156,7 @@ public class YJ_KillerMove : MonoBehaviour
                     if(playerFSM.state == SH_PlayerFSM.State.Groggy)
                     {
                         if(Input.GetKeyDown(KeyCode.F))
-                        {
+                            {
                             playerFSM.ChangeState(SH_PlayerFSM.State.Catched);
                             state = State.Carry;
                         }
@@ -217,7 +218,10 @@ public class YJ_KillerMove : MonoBehaviour
 
         if(Physics.Raycast(ray, out hit, 1.5f))
         {
-            hp = hit.transform.GetComponent<SH_PlayerHP>();
+            if(hit.transform.gameObject.layer == 29)
+            {
+                hp = hit.transform.GetComponent<SH_PlayerHP>();
+            }
         }
 
         // 점프하면서 공격했을때 바닥으로 내리기
