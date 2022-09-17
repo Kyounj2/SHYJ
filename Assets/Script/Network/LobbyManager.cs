@@ -100,7 +100,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         hash["role"] = role;
         //hash["mapID"] = 
         roomOption.CustomRoomProperties = hash;
-
         roomOption.CustomRoomPropertiesForLobby = new string[] { "role" };
 
         PhotonNetwork.CreateRoom(inputRoomName.text, roomOption, TypedLobby.Default);
@@ -128,7 +127,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        PhotonNetwork.LoadLevel("ReadyScene");
+        //PhotonNetwork.LoadLevel("ReadyScene");
+        PhotonNetwork.LoadLevel("SH_map");
         print("OnJoinedRoom");
     }
 
@@ -201,6 +201,22 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             RoomItem item = go.GetComponent<RoomItem>();
             item.SetInfo(info.Name, info.PlayerCount, info.MaxPlayers);
             //item.SetInfo(info);
+
+            // roomItem 버튼이 클릭되면 호출되는 함수 등록
+            item.onClickAction = SetRoomName;
+            //item.onClickAction = (room) =>
+            //{
+            //    inputRoomName.text = room;
+            //};
+
+            string desc = (string)info.CustomProperties["desc"];
         }
+    }
+
+    void SetRoomName(string room)
+    {
+        // 룸이름 설정
+        inputRoomName.text = room;
+        JoinRoom();
     }
 }

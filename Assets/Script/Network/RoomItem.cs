@@ -13,7 +13,7 @@ public class RoomItem : MonoBehaviour
     //int map_id
 
     // 클릭이 되었을 때 호출되는 함수를 가지고있는 변수
-    //public Action<string> onClickAction;
+    public Action<string> onClickAction;
 
     public void SetInfo(string roomName, int curPlayer, byte maxPlayer)
     {
@@ -21,11 +21,11 @@ public class RoomItem : MonoBehaviour
         roomInfo.text = roomName + "\t(" + curPlayer + " / " + maxPlayer + ")";
     }
 
-    //public void OnClick()
-    //{
-    //    if (onClickAction != null)
-    //    {
-    //        onClickAction(name);
-    //    }
-    //}
+    public void OnClick()
+    {
+        if (onClickAction != null)
+        {
+            onClickAction(name);
+        }
+    }
 }
