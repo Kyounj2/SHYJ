@@ -2302,7 +2302,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9076181715040959990
 Transform:
   m_ObjectHideFlags: 0
@@ -2394,7 +2394,6 @@ GameObject:
   - component: {fileID: 9076181716208236349}
   - component: {fileID: 9076181716208236351}
   - component: {fileID: 6473251759903398853}
-  - component: {fileID: -4339960347762445145}
   m_Layer: 30
   m_Name: Killer
   m_TagString: Untagged
@@ -2452,6 +2451,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   jumpPower: 3
+  nicName: {fileID: 0}
+  lerpSpeed: 100
   Campos: {fileID: 9076181715040959990}
   Campos2: {fileID: 9076181716054744036}
   hand: {fileID: 9076181715985880496}
@@ -2499,26 +2500,11 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 9076181716208236349}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &-4339960347762445145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9076181716208236355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &9076181716293098253
 GameObject:
   m_ObjectHideFlags: 0
