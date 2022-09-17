@@ -128,7 +128,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         //PhotonNetwork.LoadLevel("ReadyScene");
-        PhotonNetwork.LoadLevel("SH_map");
+        PhotonNetwork.LoadLevel("GameScene");
         print("OnJoinedRoom");
     }
 
