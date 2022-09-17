@@ -29,7 +29,7 @@ public class SH_PlayerRot : MonoBehaviourPun
         if (photonView.IsMine == true)
         {
             // camPos를 활성화 한다.
-            cam.gameObject.SetActive(true);
+            camPivot.gameObject.SetActive(true);
         }
     }
 
