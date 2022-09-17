@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 // y축 회전은 몸통이 하고
 // x축 회전은 카메라가 하고 싶다.
-public class SH_PlayerRot : MonoBehaviour
+public class SH_PlayerRot : MonoBehaviourPun
 {
     Transform cam;
     public Transform player;
@@ -23,6 +24,13 @@ public class SH_PlayerRot : MonoBehaviour
         Cursor.visible = false;
 
         cam = Camera.main.transform;
+
+        // 만약에 내것이라면
+        if (photonView.IsMine == true)
+        {
+            // camPos를 활성화 한다.
+            cam.gameObject.SetActive(true);
+        }
     }
 
     // Update is called once per frame
@@ -33,6 +41,9 @@ public class SH_PlayerRot : MonoBehaviour
 
     public void PlayerRot()
     {
+        // 만약에 내것이 아니라면 함수를 나간다.
+        if (photonView.IsMine == false) return;
+
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             index = SwitchIndex(index);
@@ -48,6 +59,7 @@ public class SH_PlayerRot : MonoBehaviour
         // 1. 마우스 입력을 받고싶다.
         float mx = Input.GetAxisRaw("Mouse X");
         float my = Input.GetAxisRaw("Mouse Y");
+
         // 2. 마우스 입력을 누적하고싶다.
         rotX += mx * rotSpeed * Time.deltaTime;
         rotY -= my * rotSpeed * Time.deltaTime;

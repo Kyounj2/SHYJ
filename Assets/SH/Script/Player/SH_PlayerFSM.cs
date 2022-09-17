@@ -150,6 +150,7 @@ public class SH_PlayerFSM : MonoBehaviour
     private void Normal()
     {
         pm.PlayerMovement();
+        pr.PlayerRot();
     }
 
     private void Transform()
