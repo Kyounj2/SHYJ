@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 // F키를 누르면 게이지를 채우고싶다
-public class YJ_Propmachines : MonoBehaviour
+public class YJ_Propmachines : MonoBehaviourPun
 {
     // 머신 전체 게이지
     public GameObject maghineGage;
@@ -55,6 +56,7 @@ public class YJ_Propmachines : MonoBehaviour
             if (Input.GetKey(KeyCode.F))
             {
                 enemySlider.value += 0.1f * Time.deltaTime;
+                //photonView.RPC("RpcEnemyInputF", RpcTarget.All);
             }
 
             if (enemySlider.value > 0.99)
@@ -74,24 +76,26 @@ public class YJ_Propmachines : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // 플레이어라면
-        if (other.gameObject.layer == 31)
+        if (other.gameObject.layer == 29)
         {
-            
+
             maghineGage.SetActive(true);
         }
 
         // 애너미라면
         if (other.gameObject.layer == 30)
         {
-            
+
             hitGage.SetActive(true);
         }
+
     }
 
     private void OnTriggerExit(Collider other)
     {
+
         // 플레이어라면
-        if(other.gameObject.layer == 31)
+        if (other.gameObject.layer == 29)
         {
             macineOn = false;
             playerSlider.enabled = false;
@@ -106,5 +110,19 @@ public class YJ_Propmachines : MonoBehaviour
             enemySlider.value = 0f;
             hitGage.SetActive(false);
         }
+
+    }
+
+    // 네트워크
+    [PunRPC]
+    public void RpcPlayerInputF()
+    {
+        playerSlider.value += 0.03f * Time.deltaTime;
+    }
+
+    [PunRPC]
+    public void RpcEnemyInputF()
+    {
+        enemySlider.value += 0.1f * Time.deltaTime;
     }
 }
