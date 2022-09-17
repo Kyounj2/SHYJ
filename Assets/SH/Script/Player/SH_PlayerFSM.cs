@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class SH_PlayerFSM : MonoBehaviour
+public class SH_PlayerFSM : MonoBehaviourPun
 {
     public enum State
     {
