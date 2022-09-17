@@ -100,6 +100,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         hash["role"] = role;
         //hash["mapID"] = 
         roomOption.CustomRoomProperties = hash;
+
         roomOption.CustomRoomPropertiesForLobby = new string[] { "role" };
 
         PhotonNetwork.CreateRoom(inputRoomName.text, roomOption, TypedLobby.Default);
@@ -121,12 +122,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void JoinRoom()
     {
         PhotonNetwork.JoinRoom(inputRoomName.text);
-        // PhotonNetwork.JoinRoom               : 선택한 방에 들어갈때
-        // PhotonNetwork.JoinOrCreateRoom       : 방이름을 설정해서 들어가려고 할때, 해당 이름의 방이
-        //                                        없다면 그 이름으로 방을 생성 후 입장
-        // PhotonNetwork.JoinRandomOrCreateRoom : 랜덤방을 들어가려고 할때, 조건에 맞는 방이 없다면
-        //                                        내가 방을 생성 후 입장
-        // PhotonNetwork.JoinRandomRoom         : 랜덤한 방 들어가겠다
     }
 
     // 방 입장이 성공했을 때 호출되는 함수
@@ -159,16 +154,53 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void DeleteRoomListUI()
     {
-        foreach(Transform tr in roomListContent)
+        foreach (Transform tr in roomListContent)
+        {
+            Destroy(tr.gameObject);
+        }
+
     }
 
     private void UpdateRoomCache(List<RoomInfo> roomList)
     {
-        
+        for (int i = 0; i < roomList.Count; i++)
+        {
+            // 수정, 삭제
+            if (roomCache.ContainsKey(roomList[i].Name))
+            {
+                // 만약에 해당 룸이 삭제된것이라면
+                if (roomList[i].RemovedFromList)
+                {
+                    // roomCache에서 해당 정보를 삭제
+                    roomCache.Remove(roomList[i].Name);
+                }
+                // 그렇지 않다면
+                else
+                {
+                    // 정보 수정
+                    roomCache[roomList[i].Name] = roomList[i];
+                }
+            }
+            // 추가
+            else
+            {
+                roomCache[roomList[i].Name] = roomList[i];
+            }
+        }
     }
+
+    public GameObject roomItemfactory;
 
     private void CreateRoomListUI()
     {
-        
+        foreach (RoomInfo info in roomCache.Values)
+        {
+            // 룸아이템 만든다.
+            GameObject go = Instantiate(roomItemfactory, roomListContent);
+            // 룸아이템 정보를 셋팅 (방제목 (0/0))
+            RoomItem item = go.GetComponent<RoomItem>();
+            item.SetInfo(info.Name, info.PlayerCount, info.MaxPlayers);
+            //item.SetInfo(info);
+        }
     }
 }

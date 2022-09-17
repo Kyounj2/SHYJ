@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class RoomItem : MonoBehaviour
     //int map_id
 
     // 클릭이 되었을 때 호출되는 함수를 가지고있는 변수
-    //public Action<string, int> onClickAction;
+    //public Action<string> onClickAction;
 
     public void SetInfo(string roomName, int curPlayer, byte maxPlayer)
     {
@@ -24,7 +25,7 @@ public class RoomItem : MonoBehaviour
     //{
     //    if (onClickAction != null)
     //    {
-    //        onClickAction(name)
+    //        onClickAction(name);
     //    }
     //}
 }

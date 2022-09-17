@@ -422,7 +422,8 @@ MonoBehaviour:
   btnRoomItemFactory: {fileID: 8896066843776106109, guid: 8330c536aeee75246922217584e1bd9e, type: 3}
   inputRoomName: {fileID: 1487891235}
   popUp: {fileID: 1233582913}
-  trListContent: {fileID: 582669209}
+  roomListContent: {fileID: 582669209}
+  roomItemfactory: {fileID: 8896066843776106107, guid: 8330c536aeee75246922217584e1bd9e, type: 3}
 --- !u!1 &460602636
 GameObject:
   m_ObjectHideFlags: 0
