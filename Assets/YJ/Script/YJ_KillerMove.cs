@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Photon.Pun;
 
-public class YJ_KillerMove : MonoBehaviour
+public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 {
     public float speed = 5;
     public float jumpPower = 3;
@@ -19,6 +21,21 @@ public class YJ_KillerMove : MonoBehaviour
     int jumpCount = 0; // 2단점프
 
     Animator anim;
+
+    // 닉네임 UI
+    public Text nicName;
+
+    // 도착위치
+    Vector3 receivePos;
+
+    // 회전되야 하는 값
+    Quaternion receiveRot;
+
+    // 보간속력
+    public float lerpSpeed = 100;
+
+    // PlayerState 가져오기
+    State PlayerState;
 
     public enum State
     {
@@ -41,57 +58,69 @@ public class YJ_KillerMove : MonoBehaviour
         anim = GetComponent<Animator>();
 
         state = State.Move;
+
     }
 
     
     void Update()
     {
-        // 마우스커서 숨기기
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
-        print("현재상태 : " + state);
-        KillerRot();
-
-        switch(state)
+        if(photonView.IsMine)
         {
-            case State.Move:
-                KillerMove();
-                if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W))
-                {
-                    anim.SetInteger("vv", 1);
-                }
-                else
-                {
-                    anim.SetInteger("vv", 0);
-                }
+            // 마우스커서 숨기기
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
 
-                if (carryTime > 0.3)
-                {
-                    playerTr.gameObject.transform.position = shoulderPos.transform.position;
-                    playerFSM.body.gameObject.transform.localEulerAngles = transform.localEulerAngles + new Vector3(100, 0, 180);
-                }
-                break;
-            case State.Attack:
-                anim.SetBool("Attack", true);
-                Attack();
-                break;
-            case State.Skill_1: // 스피드업
-                Skill_SpeedUp();
-                break;
-            case State.Skill_2: // 비명지르기
-                Skill_Scream();
-                break;
-            case State.Skill_3: // 발전기 저주
-                break;
-            case State.Carry:
-                anim.SetBool("Carry", true);
-                Carry();
-                break;
-            case State.Die:
-                break;
+            print("현재상태 : " + state);
+            KillerRot();
+
+            switch(state)
+            {
+                case State.Move:
+                    KillerMove();
+                    if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W))
+                    {
+                        anim.SetInteger("vv", 1);
+                    }
+                    else
+                    {
+                        anim.SetInteger("vv", 0);
+                    }
+
+                    if (carryTime > 0.3)
+                    {
+                        playerTr.gameObject.transform.position = shoulderPos.transform.position;
+                        playerFSM.body.gameObject.transform.localEulerAngles = transform.localEulerAngles + new Vector3(100, 0, 180);
+                    }
+                    break;
+                case State.Attack:
+                    anim.SetBool("Attack", true);
+                    Attack();
+                    break;
+                case State.Skill_1: // 스피드업
+                    Skill_SpeedUp();
+                    break;
+                case State.Skill_2: // 비명지르기
+                    Skill_Scream();
+                    break;
+                case State.Skill_3: // 발전기 저주
+                    break;
+                case State.Carry:
+                    anim.SetBool("Carry", true);
+                    Carry();
+                    break;
+                case State.Die:
+                    break;
+
+            }
 
         }
+        else
+        {
+            // Lerp를 이용해서 목적지, 목적방향까지 이동 및 회전
+            transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
+        }
+
     }
 
     public Transform Campos;
@@ -305,6 +334,24 @@ public class YJ_KillerMove : MonoBehaviour
         else if(carryTime > 0.32)
         {
             state = State.Move;
+        }
+    }
+
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        // 데이터 보내기
+        if (stream.IsWriting) // 내가 데이터를 보낼 수 있는 상태인 경우 (ismine)
+        {
+            // positon, rotation
+            stream.SendNext(transform.position); // Value타입만 보낼 수 있음
+            stream.SendNext(transform.rotation);
+        }
+        // 데이터 받기
+        else // if(stream.IsReading)
+        {
+            receivePos = (Vector3)stream.ReceiveNext(); // 강제형변환필요
+            receiveRot = (Quaternion)stream.ReceiveNext();
         }
     }
 }
