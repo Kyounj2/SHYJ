@@ -73,7 +73,7 @@ public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
 
             dir.y = yVelocity;
 
-            anim.SetFloat("Speed", v);
+            photonView.RPC("RpcSetFloat", RpcTarget.All, v);
 
             cc.Move(dir * walkSpeed * Time.deltaTime);
         }
@@ -83,6 +83,12 @@ public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
             transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
         }
+    }
+
+    [PunRPC]
+    public void RpcSetFloat(float v)
+    {
+        anim.SetFloat("Speed", v);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

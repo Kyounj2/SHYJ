@@ -21,7 +21,7 @@ public class SH_PlayerRot : MonoBehaviourPun
         FIRST,
         THIRD
     }
-    ViewState view = ViewState.FIRST;
+    //ViewState view = ViewState.FIRST;
 
     void Start()
     {
