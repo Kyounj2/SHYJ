@@ -181,7 +181,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
     private void Catched()
     {
-        pr.PlayerRot(SH_PlayerRot.ViewState.THIRD);
+        //pr.PlayerRot(SH_PlayerRot.ViewState.THIRD);
     }
 
     private void Seated()

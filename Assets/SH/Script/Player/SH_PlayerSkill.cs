@@ -3,14 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public struct MimicInfo
-{
-    public GameObject go;
-    public MeshFilter mf;
-    public MeshRenderer mr;
-    public MeshCollider mc;
-}
-
 public class SH_PlayerSkill : MonoBehaviourPun
 {
     SH_PlayerFSM fsm;
@@ -18,9 +10,9 @@ public class SH_PlayerSkill : MonoBehaviourPun
 
     public GameObject originalBody;
     public GameObject mimicBody;
-    MeshFilter tbMeshFilter;
-    MeshRenderer tbMeshRenderer;
-    MeshCollider tbMeshCollider;
+    MeshFilter mybMeshFilter;
+    MeshRenderer myMeshRenderer;
+    MeshCollider myMeshCollider;
 
     void Start()
     {
@@ -28,11 +20,9 @@ public class SH_PlayerSkill : MonoBehaviourPun
         cam = Camera.main.transform;
 
         mimicBody.SetActive(false);
-        tbMeshFilter = mimicBody.GetComponent<MeshFilter>();
-        tbMeshRenderer = mimicBody.GetComponent<MeshRenderer>();
-        tbMeshCollider = mimicBody.GetComponent<MeshCollider>();
-
-        wrap.Add("target", target);
+        mybMeshFilter = mimicBody.GetComponent<MeshFilter>();
+        myMeshRenderer = mimicBody.GetComponent<MeshRenderer>();
+        myMeshCollider = mimicBody.GetComponent<MeshCollider>();
     }
 
     void Update()
@@ -40,8 +30,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
         
     }
 
-    Dictionary<string, MimicInfo> wrap = new Dictionary<string, MimicInfo>();
-    MimicInfo target;
+    GameObject targetBody;
 
     public void SkillOnMimic()
     {
@@ -52,17 +41,9 @@ public class SH_PlayerSkill : MonoBehaviourPun
         {
             if (hit.collider.CompareTag("Transformable"))
             {
-                GameObject targetBody = hit.collider.gameObject;
+                targetBody = hit.collider.gameObject;
 
-                target.go = targetBody;
-                target.mf = targetBody.GetComponent<MeshFilter>();
-                target.mr = targetBody.GetComponent<MeshRenderer>();
-                target.mc = targetBody.GetComponent<MeshCollider>();
-
-                //targetMF = targetBody.GetComponent<MeshFilter>();
-                //targetMR = targetBody.GetComponent<MeshRenderer>();
-                //targetMC = targetBody.GetComponent<MeshCollider>();
-                photonView.RPC("RpcSkillOnMimic", RpcTarget.All, target);
+                photonView.RPC("RpcSkillOnMimic", RpcTarget.All);
 
                 fsm.ChangeState(SH_PlayerFSM.State.Transform);
             }
@@ -83,14 +64,14 @@ public class SH_PlayerSkill : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void RpcSkillOnMimic(Dictionary<string, MimicInfo> wrap)
+    public void RpcSkillOnMimic()
     {
         originalBody.SetActive(false);
         mimicBody.SetActive(true);
 
-        tbMeshFilter.mesh = wrap["target"].mf.mesh;
-        tbMeshRenderer.material = wrap["target"].mr.material;
-        tbMeshCollider.sharedMesh = wrap["target"].mc.sharedMesh;
-        mimicBody.transform.localScale = wrap["target"].go.transform.localScale;
+        mybMeshFilter.mesh = targetBody.GetComponent<MeshFilter>().mesh;
+        myMeshRenderer.material = targetBody.GetComponent<MeshRenderer>().material;
+        myMeshCollider.sharedMesh = targetBody.GetComponent<MeshCollider>().sharedMesh;
+        mimicBody.transform.localScale = targetBody.transform.localScale;
     }
 }
