@@ -73,7 +73,7 @@ public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
 
             dir.y = yVelocity;
 
-            photonView.RPC("RpcSetFloat", RpcTarget.All, v);
+            //photonView.RPC("RpcSetFloat", RpcTarget.All, v);
 
             cc.Move(dir * walkSpeed * Time.deltaTime);
         }
