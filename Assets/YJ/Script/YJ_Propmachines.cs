@@ -24,6 +24,8 @@ public class YJ_Propmachines : MonoBehaviourPun
     Slider enemySlider;
     bool macineOff = false;
 
+
+
     void Start()
     {
         // 플레이거 가동용 게이지
@@ -47,6 +49,7 @@ public class YJ_Propmachines : MonoBehaviourPun
             if (Input.GetKey(KeyCode.F))
             {
                 playerSlider.value += 0.1f * Time.deltaTime;
+                // Rpc로 메인값변경 또보내기
                 //photonView.RPC("RpcEnemyInputF", RpcTarget.All);
             }
         }
@@ -68,7 +71,7 @@ public class YJ_Propmachines : MonoBehaviourPun
 
             if (enemySlider.value > 0.99)
             {
-                playerSlider.value -= 0.3f;
+                playerSlider.value -= 0.3f; // rpc로 기계 자체를 깎기
                 enemySlider.value = 1f;
                 if(enemySlider.value >= 1f)
                 {
@@ -79,6 +82,21 @@ public class YJ_Propmachines : MonoBehaviourPun
 
             }
         }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        // 데이터 보내기
+        if (stream.IsWriting) // 내가 데이터를 보낼 수 있는 상태인 경우 (ismine)
+        {
+            // positon, rotation
+            stream.SendNext(playerSlider.value);
+        }
+        // 데이터 받기
+        //else // if(stream.IsReading)
+        //{
+        //    playerSlider.value = (float)stream.ReceiveNext();
+        //}
     }
 
     GameObject enemyObject;

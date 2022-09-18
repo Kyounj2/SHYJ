@@ -126,7 +126,8 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     if (carryTime > 0.3)
                     {
                         // 3인칭 모드로 바꾸기
-                        playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, shoulderVec);//, new Vector3(100, 0, 180));
+                        // 내손에 놓고 움직이기
+                        playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, shoulderPos.transform.position);//, new Vector3(100, 0, 180));
                         //playerTr.gameObject.transform.position = shoulderPos.transform.position;
                         //playerFSM.body.gameObject.transform.localEulerAngles = transform.localEulerAngles + new Vector3(100, 0, 180);
                     }
