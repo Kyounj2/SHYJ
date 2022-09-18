@@ -97,7 +97,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
         originalBody.SetActive(true);
         mimicBody.SetActive(false);
 
-        fsm.RpcOnChangeState(SH_PlayerFSM.State.Normal);
+        //fsm.RpcOnChangeState(SH_PlayerFSM.State.Normal);
     }
 
     public void SkillOnMimic(Vector3 origin, Vector3 dir)
@@ -114,7 +114,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
 
         if (Physics.Raycast(cameraRay, out hit, 50))
         {
-            print(hit.transform.name);
+            //print(hit.transform.name);
             if (hit.collider.CompareTag("Transformable"))
             {
                 originalBody.SetActive(false);

@@ -72,14 +72,14 @@ public class SH_PlayerFSM : MonoBehaviourPun
     [PunRPC]
     public void RpcOnChangeState(State s)
     {
-        preState = state;
-        EndState(preState);
-
         if (state == s)
         {
             print("같은 상태 입니다. : " + state);
             return;
         }
+
+        preState = state;
+        EndState(preState);
 
         state = s;
 
@@ -122,6 +122,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 break;
 
             case State.Transform:
+                ps.SkillOffMimic();
                 break;
 
             case State.Groggy:
@@ -129,7 +130,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
             case State.Catched:
                 pm.cc.enabled = true;
-                //body.localEulerAngles = new Vector3(0, 0, 0);
+                body.localEulerAngles = new Vector3(0, 0, 0);
                 print("end");
                 break;
 
@@ -145,24 +146,19 @@ public class SH_PlayerFSM : MonoBehaviourPun
     private void Normal()
     {
         pm.PlayerMovement();
-        pr.PlayerRot(SH_PlayerRot.ViewState.FIRST);
+        pr.PlayerRot(SH_PlayerRot.ViewState.FIRST, false);
         
         if (Input.GetButtonDown("Fire1"))
         {
             if (photonView.IsMine)
                 ps.SkillOnMimic(pr.targetCamPos.position, pr.targetCamPos.forward);
-        }
-        else if (Input.GetButtonDown("Fire2"))
-        {
-            if (photonView.IsMine)
-                ps.SkillOffMimic();
         }
     }
 
     private void Transform()
     {
         pm.PlayerMovement();
-        pr.PlayerRot(SH_PlayerRot.ViewState.THIRD);
+        pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, false);
         
         if (Input.GetButtonDown("Fire1"))
         {
@@ -172,21 +168,18 @@ public class SH_PlayerFSM : MonoBehaviourPun
         else if (Input.GetButtonDown("Fire2"))
         {
             if (photonView.IsMine)
-                ps.SkillOffMimic();
+                ChangeState(State.Normal);
         }
     }
 
-    //public Transform fuckingPosition;
-
     private void Catched()
     {
-        //pm.CatchedMove(fuckingPosition);
-        //pr.PlayerRot(SH_PlayerRot.ViewState.THIRD);
+        pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, true);
     }
 
     private void Seated()
     {
-        pr.PlayerRot(SH_PlayerRot.ViewState.THIRD);
+        pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, true);
     }
 
     private void Die()

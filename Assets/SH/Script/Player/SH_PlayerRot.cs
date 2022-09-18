@@ -42,7 +42,7 @@ public class SH_PlayerRot : MonoBehaviourPun
 
     }
 
-    public void PlayerRot(ViewState s)
+    public void PlayerRot(ViewState s, bool isLookAround)
     {
         if (photonView.IsMine == false) return;
 
@@ -76,8 +76,15 @@ public class SH_PlayerRot : MonoBehaviourPun
 
         rotY = Mathf.Clamp(rotY, -70.0f, 85.0f);
 
-        player.transform.localEulerAngles = new Vector3(0, rotX, 0);
-        camPivot.transform.localEulerAngles = new Vector3(rotY, 0, 0);
+        if (isLookAround == false)
+        {
+            player.transform.localEulerAngles = new Vector3(0, rotX, 0);
+            camPivot.transform.localEulerAngles = new Vector3(rotY, 0, 0);
+        }
+        else
+        {
+            camPivot.transform.localEulerAngles = new Vector3(rotY, rotX, 0);
+        }
     }
 
     int SwitchIndex(int index)
@@ -89,7 +96,6 @@ public class SH_PlayerRot : MonoBehaviourPun
             case 1:
                 return 0;
             default:
-                print("�߸��� ���� �����Խ��ϴ�.");
                 return -1;
         }
     }

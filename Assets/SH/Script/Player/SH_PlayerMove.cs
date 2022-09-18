@@ -94,19 +94,6 @@ public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
         anim.SetFloat("Speed", v);
     }
 
-    //public void CatchedMove(Transform target)
-    //{
-    //    if (photonView.IsMine)
-    //    {
-    //        transform.position = target.position;
-    //    }
-    //    else
-    //    {
-    //        print("Killer가 아니면 나를 업을 수 없다 이자식아!!!");
-    //        transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
-    //    }
-    //}
-
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         // 데이터 보내기
