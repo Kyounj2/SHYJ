@@ -10,6 +10,7 @@ public class SH_PlayerRot : MonoBehaviourPun
     public Transform player;
     public Transform camPivot;
     public Transform[] camPos = new Transform[2];
+    public Transform targetCamPos;
     int index = 0;
 
     public float rotSpeed = 300;
@@ -51,11 +52,16 @@ public class SH_PlayerRot : MonoBehaviourPun
         //}
 
         if (s == ViewState.FIRST)
+        {
             index = 0;
+        }
         else if (s == ViewState.THIRD)
+        {
             index = 1;
+        }
+        targetCamPos = camPos[index];
 
-        cam.position = Vector3.Lerp(cam.position, camPos[index].position, 20 * Time.deltaTime);
+        cam.position = Vector3.Lerp(cam.position, targetCamPos.position, 20 * Time.deltaTime);
 
         if (Vector3.Distance(cam.position, camPos[index].position) < 0.05f)
         {

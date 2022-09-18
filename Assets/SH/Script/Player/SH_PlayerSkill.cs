@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using static UnityEngine.UI.Image;
 
 public class SH_PlayerSkill : MonoBehaviourPun
 {
@@ -80,19 +81,21 @@ public class SH_PlayerSkill : MonoBehaviourPun
         fsm.RpcOnChangeState(SH_PlayerFSM.State.Normal);
     }
 
-    public void SkillOnMimic()
+    public void SkillOnMimic(Vector3 origin, Vector3 dir)
     {
-        photonView.RPC("RpcSkillOnMimic", RpcTarget.All);
+        photonView.RPC("RpcSkillOnMimic", RpcTarget.All, origin, dir);
     }
 
     [PunRPC]
-    public void RpcSkillOnMimic()
+    public void RpcSkillOnMimic(Vector3 origin, Vector3 dir)
     {
-        Ray cameraRay = new Ray(cam.position, cam.forward);
+        Ray cameraRay = new Ray(origin, dir);
+        Debug.DrawLine(cameraRay.origin, cameraRay.direction * 50, Color.red);
         RaycastHit hit;
 
         if (Physics.Raycast(cameraRay, out hit, 50))
         {
+            print(hit.transform.name);
             if (hit.collider.CompareTag("Transformable"))
             {
                 originalBody.SetActive(false);
@@ -105,7 +108,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
                 myMeshCollider.sharedMesh = targetBody.GetComponent<MeshCollider>().sharedMesh;
                 mimicBody.transform.localScale = targetBody.transform.localScale;
 
-                fsm.RpcOnChangeState(SH_PlayerFSM.State.Transform);
+                photonView.RPC("RpcOnChangeState", RpcTarget.All, SH_PlayerFSM.State.Transform);
+                //fsm.RpcOnChangeState(SH_PlayerFSM.State.Transform);
             }
         }
     }
