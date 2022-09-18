@@ -11,6 +11,7 @@ public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
     [HideInInspector] public CharacterController cc;
 
     public float walkSpeed = 10;
+    public float runSpeed = 15;
     Vector3 dir;
 
     public float jumpPower = 5;
@@ -34,6 +35,8 @@ public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
 
     // PlayerState ÄÄÆ÷³ÍÆ®
     SH_PlayerFSM fsm;
+
+    public float stamina;
 
     void Start()
     {
