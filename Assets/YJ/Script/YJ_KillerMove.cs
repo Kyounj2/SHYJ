@@ -334,12 +334,12 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         if (carryTime < 0.29)
         {
             //playerTr.gameObject.transform.position = hand.transform.position;
-            photonView.RPC("RpcPlayerPos", RpcTarget.All, hand);
+            photonView.RPC("RpcPlayerPos", RpcTarget.All, hand.transform.position);
         }
         else if (carryTime > 0.28 && carryTime < 0.32)
         {
             //playerTr.gameObject.transform.position = shoulderPos.transform.position;
-            photonView.RPC("RpcPlayerPos", RpcTarget.All, shoulderPos);
+            photonView.RPC("RpcPlayerPos", RpcTarget.All, shoulderPos.transform.position);
         }
         else if (carryTime > 0.32)
         {
@@ -406,9 +406,9 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     }
 
     [PunRPC]
-    public void RpcPlayerPos(GameObject pos)
+    public void RpcPlayerPos(Vector3 pos)
     {
-        playerTr.gameObject.transform.position = pos.transform.position;
+        playerTr.gameObject.transform.position = pos;
     }
 
     //[PunRPC]
