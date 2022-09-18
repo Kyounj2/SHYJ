@@ -76,6 +76,12 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
     public void ChangeState(State s)
     {
+        photonView.RPC("RpcOnChangeState", RpcTarget.All, s);
+    }
+
+    [PunRPC]
+    public void RpcOnChangeState(State s)
+    {
         preState = state;
         EndState(preState);
 
@@ -120,6 +126,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
     public void EndState(State s)
     {
+        //photonView.RPC("RpcEndState", RpcTarget.All, s);
         switch (s)
         {
             case State.Normal:
@@ -147,6 +154,36 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 break;
         }
     }
+
+    //public void RpcEndState(State s)
+    //{
+    //    switch (s)
+    //    {
+    //        case State.Normal:
+    //            break;
+
+    //        case State.Transform:
+    //            break;
+
+    //        case State.Damage:
+    //            break;
+
+    //        case State.Groggy:
+    //            break;
+
+    //        case State.Catched:
+    //            pm.cc.enabled = true;
+    //            body.localEulerAngles = new Vector3(0, 0, 0);
+    //            break;
+
+    //        case State.Seated:
+    //            pm.cc.enabled = true;
+    //            break;
+
+    //        case State.Die:
+    //            break;
+    //    }
+    //}
 
     private void Normal()
     {

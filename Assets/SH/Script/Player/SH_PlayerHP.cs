@@ -45,6 +45,12 @@ public class SH_PlayerHP : MonoBehaviourPun
 
     public void OnDamaged(int amount)
     {
+        photonView.RPC("RpcOnDamaged", RpcTarget.All, amount);
+    }
+
+    [PunRPC]
+    public void RpcOnDamaged(int amount)
+    {
         hp -= amount;
 
         hp = Mathf.Clamp(hp, 0, 100);
@@ -53,14 +59,8 @@ public class SH_PlayerHP : MonoBehaviourPun
         if (hp <= 0)
         {
             // 죽거나, 그로기 상태이고 싶다.
-            fsm.ChangeState(SH_PlayerFSM.State.Groggy);
+            fsm.RpcOnChangeState(SH_PlayerFSM.State.Groggy);
         }
-    }
-
-    [PunRPC]
-    public void RpcOnDamaged(int amount)
-    {
-
     }
 
 }
