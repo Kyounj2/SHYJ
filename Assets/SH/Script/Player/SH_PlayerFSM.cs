@@ -36,14 +36,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            ChangeState(State.Groggy);
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            ChangeState(State.Catched);
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            ChangeState(State.Seated);
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-            ChangeState(State.Normal);
+        if (photonView.IsMine == false) return;
 
         switch (state)
         {

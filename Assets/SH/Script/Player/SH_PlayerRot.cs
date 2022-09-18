@@ -70,8 +70,8 @@ public class SH_PlayerRot : MonoBehaviourPun
 
         rotY = Mathf.Clamp(rotY, -70.0f, 85.0f);
 
-        //player.transform.localEulerAngles = new Vector3(0, rotX, 0);
-        //camPivot.transform.localEulerAngles = new Vector3(rotY, 0, 0);
+        player.transform.localEulerAngles = new Vector3(0, rotX, 0);
+        camPivot.transform.localEulerAngles = new Vector3(rotY, 0, 0);
     }
 
     int SwitchIndex(int index)
