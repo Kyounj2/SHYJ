@@ -561,6 +561,7 @@ MonoBehaviour:
   player: {fileID: 7638943795464201119}
   cc: {fileID: 0}
   walkSpeed: 8
+  runSpeed: 15
   jumpPower: 3
   jumpRayLen: 1.2
   rayBase:
@@ -577,6 +578,7 @@ MonoBehaviour:
   maxJumpCount: 1
   nickName: {fileID: 0}
   lerpSpeed: 100
+  stamina: 0
 --- !u!114 &7638943795464201105
 MonoBehaviour:
   m_ObjectHideFlags: 0
