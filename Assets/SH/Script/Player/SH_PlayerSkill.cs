@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using static UnityEngine.GraphicsBuffer;
 
 public struct MimicInfo
 {
@@ -23,7 +22,6 @@ public class SH_PlayerSkill : MonoBehaviourPun
     MeshRenderer tbMeshRenderer;
     MeshCollider tbMeshCollider;
 
-
     void Start()
     {
         fsm = GetComponent<SH_PlayerFSM>();
@@ -33,6 +31,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
         tbMeshFilter = mimicBody.GetComponent<MeshFilter>();
         tbMeshRenderer = mimicBody.GetComponent<MeshRenderer>();
         tbMeshCollider = mimicBody.GetComponent<MeshCollider>();
+
+        wrap.Add("target", target);
     }
 
     void Update()
@@ -40,7 +40,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
         
     }
 
-    //Dictionary<string, MimicInfo> target = new Dictionary<string, MimicInfo>();
+    Dictionary<string, MimicInfo> wrap = new Dictionary<string, MimicInfo>();
     MimicInfo target;
 
     public void SkillOnMimic()
@@ -83,14 +83,14 @@ public class SH_PlayerSkill : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void RpcSkillOnMimic(MimicInfo target)
+    public void RpcSkillOnMimic(Dictionary<string, MimicInfo> wrap)
     {
         originalBody.SetActive(false);
         mimicBody.SetActive(true);
 
-        tbMeshFilter.mesh = target.mf.mesh;
-        tbMeshRenderer.material = target.mr.material;
-        tbMeshCollider.sharedMesh = target.mc.sharedMesh;
-        mimicBody.transform.localScale = target.go.transform.localScale;
+        tbMeshFilter.mesh = wrap["target"].mf.mesh;
+        tbMeshRenderer.material = wrap["target"].mr.material;
+        tbMeshCollider.sharedMesh = wrap["target"].mc.sharedMesh;
+        mimicBody.transform.localScale = wrap["target"].go.transform.localScale;
     }
 }
