@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-// yÃà È¸ÀüÀº ¸öÅëÀÌ ÇÏ°í
-// xÃà È¸ÀüÀº Ä«¸Þ¶ó°¡ ÇÏ°í ½Í´Ù.
+// yï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï°ï¿½
+// xï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½ï¿½ï¿½ ï¿½Ï°ï¿½ ï¿½Í´ï¿½.
 public class SH_PlayerRot : MonoBehaviourPun
 {
     Transform cam;
@@ -20,10 +20,10 @@ public class SH_PlayerRot : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
-        // ¸¸¾à¿¡ ³»°ÍÀÌ¶ó¸é
+        // ï¿½ï¿½ï¿½à¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½
         if (photonView.IsMine)
         {
-            // camPos¸¦ È°¼ºÈ­ ÇÑ´Ù.
+            // camPosï¿½ï¿½ È°ï¿½ï¿½È­ ï¿½Ñ´ï¿½.
             camPivot.gameObject.SetActive(true);
         }
 
@@ -37,12 +37,12 @@ public class SH_PlayerRot : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void PlayerRot()
     {
-        // ¸¸¾à¿¡ ³»°ÍÀÌ ¾Æ´Ï¶ó¸é ÇÔ¼ö¸¦ ³ª°£´Ù.
+        // ï¿½ï¿½ï¿½à¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
         if (photonView.IsMine == false) return;
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -57,20 +57,20 @@ public class SH_PlayerRot : MonoBehaviourPun
             cam.position = camPos[index].position;
         }
 
-        // 1. ¸¶¿ì½º ÀÔ·ÂÀ» ¹Þ°í½Í´Ù.
+        // 1. ï¿½ï¿½ï¿½ì½º ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½Þ°ï¿½ï¿½Í´ï¿½.
         float mx = Input.GetAxisRaw("Mouse X");
         float my = Input.GetAxisRaw("Mouse Y");
 
-        // 2. ¸¶¿ì½º ÀÔ·ÂÀ» ´©ÀûÇÏ°í½Í´Ù.
+        // 2. ï¿½ï¿½ï¿½ì½º ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½Í´ï¿½.
         rotX += mx * rotSpeed * Time.deltaTime;
         rotY -= my * rotSpeed * Time.deltaTime;
 
         rotY = Mathf.Clamp(rotY, -70.0f, 85.0f);
 
-        // 3. ÀÔ·Â°ªÀ¸·Î È¸Àü·®À» ¼¼ÆÃÇØÁÖ°í½Í´Ù.
-        // 3-1. rotXÀÇ °ªÀº Player¿¡ ¼¼ÆÃÇØÁÖ°í½Í´Ù.
+        // 3. ï¿½Ô·Â°ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ï¿½Í´ï¿½.
+        // 3-1. rotXï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Playerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ï¿½Í´ï¿½.
         player.transform.localEulerAngles = new Vector3(0, rotX, 0);
-        // 3-2. rotYÀÇ °ªÀº camPivot¿¡ ¼¼ÆÃÇØÁÖ°í ½Í´Ù.
+        // 3-2. rotYï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ camPivotï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ ï¿½Í´ï¿½.
         camPivot.transform.localEulerAngles = new Vector3(rotY, 0, 0);
     }
 
@@ -83,7 +83,7 @@ public class SH_PlayerRot : MonoBehaviourPun
             case 1:
                 return 0;
             default:
-                print("Àß¸øµÈ °ªÀÌ µé¾î¿Ô½À´Ï´Ù.");
+                print("ï¿½ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½Ï´ï¿½.");
                 return -1;
         }
     }
