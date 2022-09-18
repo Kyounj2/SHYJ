@@ -13,6 +13,7 @@ public class YJ_Propmachines : MonoBehaviourPun
     // 플레이어용 머신작동
     Slider playerSlider;
     bool macineOn = false;
+    bool enemy = false;
 
     // 애너미전용 게이지
     public GameObject hitGage;
@@ -33,7 +34,11 @@ public class YJ_Propmachines : MonoBehaviourPun
     void Update()
     {
         // 머신게이지가 켜져있고 플레이어가 F를 눌렀을때
-        if(macineOn)
+        if (hitGage.activeSelf)
+        {
+            macineOff = true;
+        }
+        if (macineOn)
         {
             playerSlider.enabled = true;
             if (Input.GetKey(KeyCode.F))
@@ -41,11 +46,11 @@ public class YJ_Propmachines : MonoBehaviourPun
         }
 
         // 힛게이지가 켜져있고 애너미가 F를 눌렀을때
-        //if(hitGage.activeSelf)
-        //{
-        //    macineOff = true;
-        //}
-        if(!macineOn)
+        if (enemy)
+        {
+            macineOn = true;
+        }
+        if (macineOn)
         {
             enemySlider.enabled = true;
 
@@ -61,13 +66,16 @@ public class YJ_Propmachines : MonoBehaviourPun
                 enemySlider.value = 1f;
                 if(enemySlider.value >= 1f)
                 {
-                    macineOff = false;
-                    hitGage.SetActive(false);
+                    enemyObject.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine = false;
+                    enemy = false;
+                    macineOn = false;
                 }
 
             }
         }
     }
+
+    GameObject enemyObject;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -82,8 +90,9 @@ public class YJ_Propmachines : MonoBehaviourPun
         // 애너미라면
         if (other.gameObject.layer == 30)
         {
+            enemyObject = other.gameObject;
             other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine = true;
-            macineOn = other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine;
+            enemy = other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine;
             //hitGage.SetActive(true);
         }
     }

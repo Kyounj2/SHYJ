@@ -97,6 +97,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
             else
             {
                 test_ui.SetActive(false);
+                test_ui.GetComponent<Slider>().value = 0;
             }
             //ChangeState(State.Move); ¾È‰Î
 
