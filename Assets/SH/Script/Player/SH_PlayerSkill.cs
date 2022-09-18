@@ -96,6 +96,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
                 originalBody.SetActive(false);
                 mimicBody.SetActive(true);
 
+                targetBody = hit.collider.gameObject;
+
                 mybMeshFilter.mesh = targetBody.GetComponent<MeshFilter>().mesh;
                 myMeshRenderer.material = targetBody.GetComponent<MeshRenderer>().material;
                 myMeshCollider.sharedMesh = targetBody.GetComponent<MeshCollider>().sharedMesh;
