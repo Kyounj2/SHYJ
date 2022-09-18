@@ -174,11 +174,13 @@ public class SH_PlayerFSM : MonoBehaviourPun
             if (photonView.IsMine)
                 ps.SkillOffMimic();
         }
-        
     }
+
+    //public Transform fuckingPosition;
 
     private void Catched()
     {
+        //pm.CatchedMove(fuckingPosition);
         //pr.PlayerRot(SH_PlayerRot.ViewState.THIRD);
     }
 
