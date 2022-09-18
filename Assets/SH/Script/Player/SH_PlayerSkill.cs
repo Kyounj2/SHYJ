@@ -68,7 +68,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
     public void SkillOffMimic()
     {
         photonView.RPC("RpcSkillOffMimic", RpcTarget.All);
-        fsm.ChangeState(SH_PlayerFSM.State.Normal);
+        //fsm.ChangeState(SH_PlayerFSM.State.Normal);
     }
 
     [PunRPC]
@@ -76,6 +76,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
     {
         originalBody.SetActive(true);
         mimicBody.SetActive(false);
+
+        fsm.RpcOnChangeState(SH_PlayerFSM.State.Normal);
     }
 
     public void SkillOnMimic()
