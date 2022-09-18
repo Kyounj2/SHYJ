@@ -34,16 +34,16 @@ public class YJ_Propmachines : MonoBehaviourPun
     void Update()
     {
         // 머신게이지가 켜져있고 플레이어가 F를 눌렀을때
-        if (hitGage.activeSelf)
-        {
-            macineOff = true;
-        }
-        if (macineOn)
-        {
-            playerSlider.enabled = true;
-            if (Input.GetKey(KeyCode.F))
-                playerSlider.value += 0.03f * Time.deltaTime;
-        }
+        //if (hitGage.activeSelf)
+        //{
+        //    macineOff = true;
+        //}
+        //if (macineOn)
+        //{
+        //    playerSlider.enabled = true;
+        //    if (Input.GetKey(KeyCode.F))
+        //        playerSlider.value += 0.03f * Time.deltaTime;
+        //}
 
         // 힛게이지가 켜져있고 애너미가 F를 눌렀을때
         if (enemy)
@@ -76,16 +76,18 @@ public class YJ_Propmachines : MonoBehaviourPun
     }
 
     GameObject enemyObject;
+    GameObject playerObject;
 
     private void OnTriggerEnter(Collider other)
     {
-        
 
-        //// 플레이어라면
-        //if (other.gameObject.layer == 29)
-        //{
 
-        //}
+        // 플레이어라면
+        if (other.gameObject.layer == 29)
+        {
+            playerObject = other.gameObject;
+            //other.gameObject.GetComponent<SH_PlayerMove>(),
+        }
 
         // 애너미라면
         if (other.gameObject.layer == 30)
