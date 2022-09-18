@@ -331,15 +331,18 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         //playerFSM.body.gameObject.transform.up = transform.forward;
         playerFSM.body.gameObject.transform.localEulerAngles = transform.localEulerAngles + new Vector3(100, 0, 180);
 
+        Vector3 handVec = hand.transform.position;
+        Vector3 shoulderVec = shoulderPos.transform.position;
+
         if (carryTime < 0.29)
         {
             //playerTr.gameObject.transform.position = hand.transform.position;
-            photonView.RPC("RpcPlayerPos", RpcTarget.All, hand.transform.position);
+            photonView.RPC("RpcPlayerPos", RpcTarget.All, handVec);
         }
         else if (carryTime > 0.28 && carryTime < 0.32)
         {
             //playerTr.gameObject.transform.position = shoulderPos.transform.position;
-            photonView.RPC("RpcPlayerPos", RpcTarget.All, shoulderPos.transform.position);
+            photonView.RPC("RpcPlayerPos", RpcTarget.All, shoulderVec);
         }
         else if (carryTime > 0.32)
         {
