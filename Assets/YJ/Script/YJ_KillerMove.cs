@@ -298,20 +298,26 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     void Skill_Scream()
     {
         skill_2Time += Time.deltaTime;
+
+        // 반경 5미터 내의 콜라이더들을 수집
         colls = Physics.OverlapSphere(transform.position, 5f);
 
         for (int i = 0; i < colls.Length; i++)
         {
+            // 플레이어가 있다면
             if (colls[i].gameObject.layer == 29)
             {
-                // 혁신이꺼 Rpc로 바꾸기
+                // colls의 게임오브젝트에서 데미지 함수 실행
+                hp = colls[i].gameObject.GetComponent<SH_PlayerHP>();
+                hp.OnDamaged(10);
+                break;
             }
         }
 
         if (skill_2Time > 1.5f)
         {
             Array.Clear(colls, 0, colls.Length); // 배열 안의 목록 전부 삭제
-            state = State.Move;
+            state = State.Move; // 무브로 다시 변경
             skill_2Time = 0;
         }
     }
