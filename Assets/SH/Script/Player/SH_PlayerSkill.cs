@@ -31,8 +31,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
 
     }
 
-    Dictionary<string, GameObject> mimicInfo = new Dictionary<string, GameObject>();
-    GameObject targetBody;
+    //Dictionary<string, GameObject> mimicInfo = new Dictionary<string, GameObject>();
+    //GameObject targetBody;
 
     //public void SkillOnMimic()
     //{
@@ -97,8 +97,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
             {
                 originalBody.SetActive(false);
                 mimicBody.SetActive(true);
-
-                targetBody = hit.collider.gameObject;
+                    
+                GameObject targetBody = hit.collider.gameObject;
 
                 mybMeshFilter.mesh = targetBody.GetComponent<MeshFilter>().mesh;
                 myMeshRenderer.material = targetBody.GetComponent<MeshRenderer>().material;
