@@ -152,6 +152,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     Carry();
                     break;
                 case State.Down:
+                    print("다운상태로 변경하자");
                     Down();
                     photonView.RPC("RpcSetBool", RpcTarget.All, "Carry", false);
                     photonView.RPC("RpcSetBool", RpcTarget.All, "Down", true);
@@ -175,14 +176,21 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     // 플레이어를 의자포지션에 내려놓고싶다
     public bool triggerChair = false;
     public Transform chairPos;
+    float downTime = 0;
     private void Down()
     {
-        if(triggerChair)
+        carryTime = 0;
+        downTime += Time.deltaTime;
+
+        playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, chairPos.transform.position);
+
+        if(downTime > 1.5f)
         {
-            if(Input.GetKeyDown(KeyCode.F))
-            {
-                playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, chairPos.transform.position);
-            }
+            print("드디어 다운하고 넘어가죠");
+            photonView.RPC("RpcSetBool", RpcTarget.All, "Down", false);
+            downTime = 0;
+            playerFSM.ChangeState(SH_PlayerFSM.State.Seated);
+            state = State.Move;
         }
     }
 
@@ -209,14 +217,14 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
             //Campos.transform.eulerAngles = new Vector3(-rotY, 0, 0);
             //Campos.transform.eulerAngles = new Vector3(-rotY, rotX, 0);
         }
-        else if (carryTime > 0.5)
+        else if (carryTime > 0.1)
         {
-            if (carryTime < 10)
+            if (carryTime < 0.2)
             {
                 // 3인칭 카메라로 변경
                 Campos.transform.position = Vector3.Lerp(Campos.transform.position, Campos2.transform.position, Time.deltaTime);
             }
-            //Campos.transform.position = Campos2.transform.position;
+            Campos.transform.position = Campos2.transform.position;
             transform.eulerAngles = new Vector3(0, rotX, 0);
             Campos.transform.forward = transform.forward;
             //Camera.main.transform.eulerAngles = new Vector3(16, 0, 0);
@@ -292,6 +300,16 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         if (Input.GetKeyDown(KeyCode.Alpha2) && carryTime <= 0)
         {
             state = State.Skill_2;
+        }
+
+        // 의자에 가까이 다가갔을때
+        if (triggerChair)
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                print("의자에앉아 짜증나니깐");
+                state = State.Down;
+            }
         }
 
         cc.Move(dir * speed * Time.deltaTime);
@@ -414,6 +432,8 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         {
             state = State.Move;
         }
+
+
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

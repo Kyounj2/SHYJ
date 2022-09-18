@@ -2456,6 +2456,8 @@ MonoBehaviour:
   nicName: {fileID: 0}
   lerpSpeed: 100
   currState: 0
+  triggerChair: 0
+  chairPos: {fileID: 0}
   Campos: {fileID: 9076181715040959990}
   Campos2: {fileID: 9076181716054744036}
   hand: {fileID: 9076181715985880496}
