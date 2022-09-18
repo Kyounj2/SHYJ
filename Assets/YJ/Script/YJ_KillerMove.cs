@@ -54,6 +54,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         Skill_2,
         Skill_3,
         Carry,
+        Down,
         Die
     }
 
@@ -146,8 +147,14 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                 case State.Skill_3: // 발전기 저주
                     break;
                 case State.Carry:
-                    anim.SetBool("Carry", true);
+                    photonView.RPC("RpcSetBool", RpcTarget.All, "Carry", true);
+                    //anim.SetBool("Carry", true);
                     Carry();
+                    break;
+                case State.Down:
+                    Down();
+                    photonView.RPC("RpcSetBool", RpcTarget.All, "Carry", false);
+                    photonView.RPC("RpcSetBool", RpcTarget.All, "Down", true);
                     break;
                 case State.Die:
                     break;
@@ -164,7 +171,20 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
     }
 
-
+    // 의자 트리거가 활성화되면
+    // 플레이어를 의자포지션에 내려놓고싶다
+    public bool triggerChair = false;
+    public Transform chairPos;
+    private void Down()
+    {
+        if(triggerChair)
+        {
+            if(Input.GetKeyDown(KeyCode.F))
+            {
+                playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, chairPos.transform.position);
+            }
+        }
+    }
 
     public Transform Campos;
     public Transform Campos2;
@@ -193,6 +213,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         {
             if (carryTime < 10)
             {
+                // 3인칭 카메라로 변경
                 Campos.transform.position = Vector3.Lerp(Campos.transform.position, Campos2.transform.position, Time.deltaTime);
             }
             //Campos.transform.position = Campos2.transform.position;
