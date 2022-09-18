@@ -4475,6 +4475,14 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5480570462272513640, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
+      propertyPath: hitGage
+      value: 
+      objectReference: {fileID: 549269059}
+    - target: {fileID: 5480570462272513640, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
+      propertyPath: maghineGage
+      value: 
+      objectReference: {fileID: 1335278970}
     - target: {fileID: 5480570462272513641, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
       propertyPath: m_RootOrder
       value: 8

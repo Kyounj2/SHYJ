@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e65e48d989615414cb9ce1245ba6da95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maghineGage: {fileID: 0}
+  maghineGage: {fileID: 5480570462093050890}
   hitGage: {fileID: 0}
 --- !u!65 &5480570462272513639
 BoxCollider:
