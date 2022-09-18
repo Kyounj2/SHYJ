@@ -2326,6 +2326,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Prop_Trigger
       objectReference: {fileID: 0}
+    - target: {fileID: 5480570462532282903, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
+      propertyPath: originValue
+      value: 
+      objectReference: {fileID: 1335278972}
     - target: {fileID: 5480570462975298453, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
