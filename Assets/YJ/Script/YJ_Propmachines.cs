@@ -75,38 +75,41 @@ public class YJ_Propmachines : MonoBehaviourPun
 
     private void OnTriggerEnter(Collider other)
     {
-        // 플레이어라면
-        if (other.gameObject.layer == 29 && photonView.IsMine)
-        {
-            maghineGage.SetActive(true);
-        }
+        other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine = true;
 
-        // 애너미라면
-        if (other.gameObject.layer == 30 && photonView.IsMine)
-        {
-            hitGage.SetActive(true);
-        }
+        //// 플레이어라면
+        //if (other.gameObject.layer == 29)
+        //{
+
+        //}
+
+        //// 애너미라면
+        //if (other.gameObject.layer == 30)
+        //{
+        //    hitGage.SetActive(true);
+        //}
     }
 
     private void OnTriggerExit(Collider other)
     {
+        other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine = false;
 
-        // 플레이어라면
-        if (other.gameObject.layer == 29)
-        {
-            macineOn = false;
-            playerSlider.enabled = false;
-            maghineGage.SetActive(false);
-        }
+        //// 플레이어라면
+        //if (other.gameObject.layer == 29)
+        //{
+        //    macineOn = false;
+        //    playerSlider.enabled = false;
+        //    maghineGage.SetActive(false);
+        //}
 
-        // 애너미라면
-        if (other.gameObject.layer == 30)
-        {
-            macineOff = false;
-            enemySlider.enabled = false;
-            enemySlider.value = 0f;
-            hitGage.SetActive(false);
-        }
+        //// 애너미라면
+        //if (other.gameObject.layer == 30)
+        //{
+        //    macineOff = false;
+        //    enemySlider.enabled = false;
+        //    enemySlider.value = 0f;
+        //    hitGage.SetActive(false);
+        //}
 
     }
 
