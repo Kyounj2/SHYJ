@@ -91,7 +91,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
         Ray cameraRay = new Ray(cam.position, cam.forward);
         RaycastHit hit;
 
-        if (Physics.Raycast(cameraRay, out hit, 10))
+        if (Physics.Raycast(cameraRay, out hit, 50))
         {
             if (hit.collider.CompareTag("Transformable"))
             {
