@@ -4,6 +4,14 @@ using UnityEngine;
 using Photon.Pun;
 using static UnityEngine.GraphicsBuffer;
 
+public struct MimicInfo
+{
+    public GameObject go;
+    public MeshFilter mf;
+    public MeshRenderer mr;
+    public MeshCollider mc;
+}
+
 public class SH_PlayerSkill : MonoBehaviourPun
 {
     SH_PlayerFSM fsm;
@@ -32,10 +40,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
         
     }
 
-    GameObject targetBody;
-    MeshFilter targetMF;
-    MeshRenderer targetMR;
-    MeshCollider targetMC;
+    //Dictionary<string, MimicInfo> target = new Dictionary<string, MimicInfo>();
+    MimicInfo target;
 
     public void SkillOnMimic()
     {
@@ -46,11 +52,17 @@ public class SH_PlayerSkill : MonoBehaviourPun
         {
             if (hit.collider.CompareTag("Transformable"))
             {
-                targetBody = hit.collider.gameObject;
-                targetMF = targetBody.GetComponent<MeshFilter>();
-                targetMR = targetBody.GetComponent<MeshRenderer>();
-                targetMC = targetBody.GetComponent<MeshCollider>();
-                photonView.RPC("RpcSkillOnMimic", RpcTarget.All);
+                GameObject targetBody = hit.collider.gameObject;
+
+                target.go = targetBody;
+                target.mf = targetBody.GetComponent<MeshFilter>();
+                target.mr = targetBody.GetComponent<MeshRenderer>();
+                target.mc = targetBody.GetComponent<MeshCollider>();
+
+                //targetMF = targetBody.GetComponent<MeshFilter>();
+                //targetMR = targetBody.GetComponent<MeshRenderer>();
+                //targetMC = targetBody.GetComponent<MeshCollider>();
+                photonView.RPC("RpcSkillOnMimic", RpcTarget.All, target);
 
                 fsm.ChangeState(SH_PlayerFSM.State.Transform);
             }
@@ -71,14 +83,14 @@ public class SH_PlayerSkill : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void RpcSkillOnMimic()
+    public void RpcSkillOnMimic(MimicInfo target)
     {
         originalBody.SetActive(false);
         mimicBody.SetActive(true);
 
-        tbMeshFilter.mesh = targetMF.mesh;
-        tbMeshRenderer.material = targetMR.material;
-        tbMeshCollider.sharedMesh = targetMC.sharedMesh;
-        mimicBody.transform.localScale = targetBody.transform.localScale;
+        tbMeshFilter.mesh = target.mf.mesh;
+        tbMeshRenderer.material = target.mr.material;
+        tbMeshCollider.sharedMesh = target.mc.sharedMesh;
+        mimicBody.transform.localScale = target.go.transform.localScale;
     }
 }
