@@ -10,10 +10,10 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     public bool isNearPropMachine = false;
     public void testUI(bool b)
     {
-        test_ui.SetActive(b);
+        enemy_ui.SetActive(b);
     }
 
-    public GameObject test_ui;
+    public GameObject enemy_ui;
 
     public float speed = 5;
     public float jumpPower = 3;
@@ -71,9 +71,9 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         state = State.Move;
         //ChangeState(State.Move);
 
-        test_ui = GameObject.Find("EnemyMachineGage");
+        enemy_ui = GameObject.Find("EnemyMachineGage");
 
-        test_ui.SetActive(false);
+        enemy_ui.SetActive(false);
     }
 
     // 현재상태
@@ -92,12 +92,12 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         {
             if(isNearPropMachine)
             {
-                test_ui.SetActive(true);
+                enemy_ui.SetActive(true);
             }
             else
             {
-                test_ui.SetActive(false);
-                test_ui.GetComponent<Slider>().value = 0;
+                enemy_ui.SetActive(false);
+                enemy_ui.GetComponent<Slider>().value = 0;
             }
             //ChangeState(State.Move); 안됌
 

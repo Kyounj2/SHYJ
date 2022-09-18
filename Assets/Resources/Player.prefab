@@ -596,6 +596,7 @@ MonoBehaviour:
   camPos:
   - {fileID: 7638943795748116689}
   - {fileID: 7638943796217042068}
+  targetCamPos: {fileID: 0}
   rotSpeed: 300
 --- !u!114 &4457835542336944317
 MonoBehaviour:
@@ -609,6 +610,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9785012c83b26a54d843a083202d8fd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player_ui: {fileID: 0}
+  isNearPropMachine: 0
   originalBody: {fileID: 7404924087313344026}
   mimicBody: {fileID: 1115306659}
 --- !u!114 &3990998246288271246

@@ -8,17 +8,17 @@ using Photon.Realtime;
 public class YJ_MachineTopGage : MonoBehaviourPun, IPunObservable
 {
     public Slider originValue;
-    Slider sliderValue;
+    Slider slider;
     void Start()
     {
-        sliderValue = GetComponent<Slider>();
+        slider = GetComponent<Slider>();
     }
 
     
     void Update()
     {
         transform.LookAt(Camera.main.transform.position);
-        sliderValue.value = originValue.value;
+        slider.value = originValue.value;
     }
 
 
@@ -28,7 +28,7 @@ public class YJ_MachineTopGage : MonoBehaviourPun, IPunObservable
         if (stream.IsWriting) // 내가 데이터를 보낼 수 있는 상태인 경우 (ismine)
         {
             // positon, rotation
-            stream.SendNext(sliderValue.value);
+            stream.SendNext(slider.value);
         }
         // 데이터 받기
         else // if(stream.IsReading)
