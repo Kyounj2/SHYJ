@@ -47,7 +47,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 break;
 
             case State.Groggy:
-                Catched();
+                Groggy();
                 break;
 
             case State.Catched:
@@ -170,6 +170,12 @@ public class SH_PlayerFSM : MonoBehaviourPun
             if (photonView.IsMine)
                 ChangeState(State.Normal);
         }
+    }
+
+    private void Groggy()
+    {
+        pm.PlayerMovement();
+        pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, false);
     }
 
     private void Catched()

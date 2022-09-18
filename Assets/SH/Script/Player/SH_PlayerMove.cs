@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
+using System;
 
 public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
 {
@@ -10,8 +11,11 @@ public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
     Animator anim;
     [HideInInspector] public CharacterController cc;
 
+    float speed;
     public float walkSpeed = 10;
     public float runSpeed = 15;
+    public float groggySpeed = 5;
+    public float transformSpeed = 10;
     Vector3 dir;
 
     public float jumpPower = 5;
@@ -78,13 +82,36 @@ public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
 
             //photonView.RPC("RpcSetFloat", RpcTarget.All, v);
 
-            cc.Move(dir * walkSpeed * Time.deltaTime);
+            speed = ChangeSpeed(fsm.state);
+
+            cc.Move(dir * speed * Time.deltaTime);
         }
         else
         {
             // Lerp를 이용해서 목적지, 목적방향까지 이동 및 회전
             transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
+        }
+    }
+
+    private float ChangeSpeed(SH_PlayerFSM.State s)
+    {
+        switch (s)
+        {
+            case SH_PlayerFSM.State.Normal:
+                if (Input.GetKey(KeyCode.LeftShift))
+                    return runSpeed;
+                else
+                    return walkSpeed;
+
+            case SH_PlayerFSM.State.Transform:
+                return transformSpeed;
+
+            case SH_PlayerFSM.State.Groggy:
+                return groggySpeed;
+
+            default:
+                return 0;
         }
     }
 
