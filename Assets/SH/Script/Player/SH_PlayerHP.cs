@@ -37,6 +37,12 @@ public class SH_PlayerHP : MonoBehaviourPun
 
     public void OnHealed(int amount)
     {
+        photonView.RPC("RpcOnHealed", RpcTarget.All, amount);
+    }
+
+    [PunRPC]
+    public void RpcOnHealed(int amount)
+    {
         hp += amount;
         print(hp);
 
