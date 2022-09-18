@@ -149,11 +149,13 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
         if (Input.GetButtonDown("Fire1"))
         {
-            ps.SkillOnMimic();
+            if (photonView.IsMine)
+                ps.SkillOnMimic();
         }
         else if (Input.GetButtonDown("Fire2"))
         {
-            ps.SkillOffMimic();
+            if (photonView.IsMine)
+                ps.SkillOffMimic();
         }
     }
 

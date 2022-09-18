@@ -67,11 +67,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
 
     public void SkillOffMimic()
     {
-        if (photonView.IsMine)
-        {
-            photonView.RPC("RpcSkillOffMimic", RpcTarget.All);
-            //fsm.ChangeState(SH_PlayerFSM.State.Normal);
-        }
+        photonView.RPC("RpcSkillOffMimic", RpcTarget.All);
+        //fsm.ChangeState(SH_PlayerFSM.State.Normal);
     }
 
     [PunRPC]
@@ -85,8 +82,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
 
     public void SkillOnMimic()
     {
-        if (photonView.IsMine)
-            photonView.RPC("RpcSkillOnMimic", RpcTarget.All);
+        photonView.RPC("RpcSkillOnMimic", RpcTarget.All);
     }
 
     [PunRPC]
