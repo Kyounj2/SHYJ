@@ -175,12 +175,30 @@ public class SH_PlayerFSM : MonoBehaviourPun
     {
         pm.PlayerMovement();
         pr.PlayerRot(SH_PlayerRot.ViewState.FIRST);
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            ps.SkillOnMimic();
+        }
+        else if (Input.GetButtonDown("Fire2"))
+        {
+            ps.SkillOffMimic();
+        }
     }
 
     private void Transform()
     {
         pm.PlayerMovement();
         pr.PlayerRot(SH_PlayerRot.ViewState.THIRD);
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            ps.SkillOnMimic();
+        }
+        else if (Input.GetButtonDown("Fire2"))
+        {
+            ps.SkillOffMimic();
+        }
     }
 
     private void Groggy()

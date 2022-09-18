@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class SH_PlayerSkill : MonoBehaviour
+public class SH_PlayerSkill : MonoBehaviourPun
 {
     SH_PlayerFSM fsm;
     Transform cam;
@@ -27,19 +28,10 @@ public class SH_PlayerSkill : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Mimic();
-        }
-        else if (Input.GetButtonDown("Fire2"))
-        {
-            originalBody.SetActive(true);
-            mimicBody.SetActive(false);
-            fsm.ChangeState(SH_PlayerFSM.State.Normal);
-        }
+        
     }
 
-    void Mimic()
+    public void SkillOnMimic()
     {
         Ray cameraRay = new Ray(cam.position, cam.forward);
         RaycastHit hit;
@@ -50,16 +42,35 @@ public class SH_PlayerSkill : MonoBehaviour
             {
                 GameObject tb = hit.collider.gameObject;
 
-                originalBody.SetActive(false);
-                mimicBody.SetActive(true);
-
-                tbMeshFilter.mesh = tb.GetComponent<MeshFilter>().mesh;
-                tbMeshRenderer.material = tb.GetComponent<MeshRenderer>().material;
-                tbMeshCollider.sharedMesh = tb.GetComponent<MeshCollider>().sharedMesh;
-                mimicBody.transform.localScale = tb.transform.localScale;
+                photonView.RPC("RpcSkillOnMimic", RpcTarget.All, tb);
 
                 fsm.ChangeState(SH_PlayerFSM.State.Transform);
             }
         }
+    }
+
+    public void SkillOffMimic()
+    {
+        photonView.RPC("RpcSkillOffMimic", RpcTarget.All);
+        fsm.ChangeState(SH_PlayerFSM.State.Normal);
+    }
+
+    [PunRPC]
+    public void RpcSkillOffMimic()
+    {
+        originalBody.SetActive(true);
+        mimicBody.SetActive(false);
+    }
+
+    [PunRPC]
+    public void RpcSkillOnMimic(GameObject tb)
+    {
+        originalBody.SetActive(false);
+        mimicBody.SetActive(true);
+
+        tbMeshFilter.mesh = tb.GetComponent<MeshFilter>().mesh;
+        tbMeshRenderer.material = tb.GetComponent<MeshRenderer>().material;
+        tbMeshCollider.sharedMesh = tb.GetComponent<MeshCollider>().sharedMesh;
+        mimicBody.transform.localScale = tb.transform.localScale;
     }
 }
