@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-// y�� ȸ���� ������ �ϰ�
-// x�� ȸ���� ī�޶��� �ϰ� �ʹ�.
+
 public class SH_PlayerRot : MonoBehaviourPun
 {
     Transform cam;
@@ -17,13 +16,17 @@ public class SH_PlayerRot : MonoBehaviourPun
     float rotX;
     float rotY;
 
-    // Start is called before the first frame update
+    public enum ViewState
+    {
+        FIRST,
+        THIRD
+    }
+    ViewState view = ViewState.FIRST;
+
     void Start()
     {
-        // ���࿡ �����̶���
         if (photonView.IsMine)
         {
-            // camPos�� Ȱ��ȭ �Ѵ�.
             camPivot.gameObject.SetActive(true);
         }
 
@@ -31,46 +34,43 @@ public class SH_PlayerRot : MonoBehaviourPun
         Cursor.visible = false;
 
         cam = Camera.main.transform;
-
     }
 
-    // Update is called once per frame
     void Update()
     {
 
     }
 
-    public void PlayerRot()
+    public void PlayerRot(ViewState s)
     {
-        // ���࿡ ������ �ƴ϶��� �Լ��� ������.
         if (photonView.IsMine == false) return;
 
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            index = SwitchIndex(index);
+        //if (Input.GetKeyDown(KeyCode.Tab))
+        //{
+        //    index = SwitchIndex(index);
+        //}
 
-        }
-        cam.position = Vector3.Lerp(cam.position, camPos[index].position, 10 * Time.deltaTime);
+        if (s == ViewState.FIRST)
+            index = 0;
+        else if (s == ViewState.THIRD)
+            index = 1;
+
+        cam.position = Vector3.Lerp(cam.position, camPos[index].position, 20 * Time.deltaTime);
 
         if (Vector3.Distance(cam.position, camPos[index].position) < 0.05f)
         {
             cam.position = camPos[index].position;
         }
 
-        // 1. ���콺 �Է��� �ް��ʹ�.
         float mx = Input.GetAxisRaw("Mouse X");
         float my = Input.GetAxisRaw("Mouse Y");
 
-        // 2. ���콺 �Է��� �����ϰ��ʹ�.
         rotX += mx * rotSpeed * Time.deltaTime;
         rotY -= my * rotSpeed * Time.deltaTime;
 
         rotY = Mathf.Clamp(rotY, -70.0f, 85.0f);
 
-        // 3. �Է°����� ȸ������ �������ְ��ʹ�.
-        // 3-1. rotX�� ���� Player�� �������ְ��ʹ�.
         player.transform.localEulerAngles = new Vector3(0, rotX, 0);
-        // 3-2. rotY�� ���� camPivot�� �������ְ� �ʹ�.
         camPivot.transform.localEulerAngles = new Vector3(rotY, 0, 0);
     }
 
