@@ -75,21 +75,17 @@ public class YJ_Propmachines : MonoBehaviourPun
 
     private void OnTriggerEnter(Collider other)
     {
-        if(photonView.IsMine)
+        // 플레이어라면
+        if (other.gameObject.layer == 29 && photonView.IsMine)
         {
-            // 플레이어라면
-            if (other.gameObject.layer == 29)
-            {
-                maghineGage.SetActive(true);
-            }
-
-            // 애너미라면
-            if (other.gameObject.layer == 30)
-            {
-                hitGage.SetActive(true);
-            }
+            maghineGage.SetActive(true);
         }
 
+        // 애너미라면
+        if (other.gameObject.layer == 30 && photonView.IsMine)
+        {
+            hitGage.SetActive(true);
+        }
     }
 
     private void OnTriggerExit(Collider other)

@@ -105,7 +105,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     if (carryTime > 0.3)
                     {
                         // 3인칭 모드로 바꾸기
-                        playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, shoulderPos.transform.position);
+                        playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, shoulderVec);//, new Vector3(100, 0, 180));
                         //playerTr.gameObject.transform.position = shoulderPos.transform.position;
                         //playerFSM.body.gameObject.transform.localEulerAngles = transform.localEulerAngles + new Vector3(100, 0, 180);
                     }
@@ -196,7 +196,24 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         if (Physics.Raycast(ray, out player, 2.5f))
         {
-            RpcPlayerGroggy();
+            if (player.collider.gameObject.layer == 29)
+            {
+                playerFSM = player.transform.GetComponent<SH_PlayerFSM>();
+                playerTr = player.transform;
+
+                if (playerFSM != null)
+                {
+                    if (playerFSM.state == SH_PlayerFSM.State.Groggy)
+                    {
+                        if (Input.GetKeyDown(KeyCode.F))
+                        {
+                            playerFSM.ChangeState(SH_PlayerFSM.State.Catched);
+                            state = State.Carry;
+                        }
+                    }
+                }
+            }
+            //RpcPlayerGroggy();
             //photonView.RPC("RpcPlayerGroggy", RpcTarget.All);
         }
 
@@ -326,26 +343,28 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
     public GameObject shoulderPos;
     float carryTime = 0;
+    Vector3 handVec;
+    Vector3 shoulderVec;
     void Carry()
     {
         carryTime += Time.deltaTime;
         playerTr.gameObject.GetComponent<CharacterController>().enabled = false;
         //playerFSM.body.gameObject.transform.up = transform.forward;
-        playerFSM.body.gameObject.transform.localEulerAngles = transform.localEulerAngles + new Vector3(100, 0, 180);
+        //playerFSM.body.gameObject.transform.localEulerAngles = transform.localEulerAngles + new Vector3(100, 0, 180);
 
-        Vector3 handVec = hand.transform.position;
-        Vector3 shoulderVec = shoulderPos.transform.position;
+        handVec = hand.transform.position;
+        shoulderVec = shoulderPos.transform.position;
 
         if (carryTime < 0.29)
         {
             //playerTr.gameObject.transform.position = hand.transform.position;
-            playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, handVec);
+            playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, handVec); //, new Vector3(100, 0, 0));
             //photonView.RPC("RpcPlayerPos", RpcTarget.All, handVec);
         }
         else if (carryTime > 0.28 && carryTime < 0.32)
         {
             //playerTr.gameObject.transform.position = shoulderPos.transform.position;
-            playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, shoulderVec);
+            playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, shoulderVec); //, new Vector3(100, 0, 180));
             //photonView.RPC("RpcPlayerPos", RpcTarget.All, shoulderVec);
         }
         else if (carryTime > 0.32)
@@ -375,23 +394,23 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     [PunRPC]
     void RpcPlayerGroggy()
     {
-        if (player.collider.gameObject.layer == 29)
-        {
-            playerFSM = player.transform.GetComponent<SH_PlayerFSM>();
-            playerTr = player.transform;
+        //if (player.collider.gameObject.layer == 29)
+        //{
+        //    playerFSM = player.transform.GetComponent<SH_PlayerFSM>();
+        //    playerTr = player.transform;
 
-            if (playerFSM != null)
-            {
-                if (playerFSM.state == SH_PlayerFSM.State.Groggy)
-                {
-                    if (Input.GetKeyDown(KeyCode.F))
-                    {
-                        playerFSM.ChangeState(SH_PlayerFSM.State.Catched);
-                        state = State.Carry;
-                    }
-                }
-            }
-        }
+        //    if (playerFSM != null)
+        //    {
+        //        if (playerFSM.state == SH_PlayerFSM.State.Groggy)
+        //        {
+        //            if (Input.GetKeyDown(KeyCode.F))
+        //            {
+        //                playerFSM.ChangeState(SH_PlayerFSM.State.Catched);
+        //                state = State.Carry;
+        //            }
+        //        }
+        //    }
+        //}
     }
 
     [PunRPC]

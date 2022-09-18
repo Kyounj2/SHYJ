@@ -107,6 +107,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 break;
 
             case State.Catched:
+                body.localEulerAngles = new Vector3(100, 0, 180);
                 pm.cc.enabled = false;
                 anim.SetTrigger("Catched");
                 break;
@@ -137,7 +138,8 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
             case State.Catched:
                 pm.cc.enabled = true;
-                body.localEulerAngles = new Vector3(0, 0, 0);
+                //body.localEulerAngles = new Vector3(0, 0, 0);
+                print("end");
                 break;
 
             case State.Seated:
@@ -181,7 +183,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
     private void Catched()
     {
-        pr.PlayerRot(SH_PlayerRot.ViewState.THIRD);
+        //pr.PlayerRot(SH_PlayerRot.ViewState.THIRD);
     }
 
     private void Seated()
@@ -195,8 +197,9 @@ public class SH_PlayerFSM : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void RpcPlayerPos(Vector3 pos)
+    public void RpcPlayerPos(Vector3 pos)//, Vector3 rot)
     {
         transform.position = pos;
+        //transform.localEulerAngles = transform.localEulerAngles + new Vector3(100, 0, 180);
     }
 }
