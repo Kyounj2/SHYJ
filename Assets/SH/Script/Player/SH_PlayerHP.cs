@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Photon.Pun;
 
-public class SH_PlayerHP : MonoBehaviour
+
+public class SH_PlayerHP : MonoBehaviourPun
 {
     float hp;
     float maxHP;
@@ -53,4 +56,11 @@ public class SH_PlayerHP : MonoBehaviour
             fsm.ChangeState(SH_PlayerFSM.State.Groggy);
         }
     }
+
+    [PunRPC]
+    public void RpcOnDamaged(int amount)
+    {
+
+    }
+
 }
