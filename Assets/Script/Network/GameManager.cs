@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.SerializationRate = 60;
         // RPC 호출 빈도
         PhotonNetwork.SendRate = 60;
-
         // 플레이어를 생성한다.
         PhotonNetwork.Instantiate("Player", transform.position, Quaternion.identity);
     }

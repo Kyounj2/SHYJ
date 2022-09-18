@@ -10,7 +10,6 @@ public class SH_PlayerFSM : MonoBehaviourPun
     {
         Normal,
         Transform,
-        Damage,
         Groggy,
         Catched,
         Seated,
@@ -56,10 +55,6 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 Transform();
                 break;
 
-            case State.Damage:
-                Damage();
-                break;
-
             case State.Groggy:
                 Groggy();
                 break;
@@ -102,9 +97,6 @@ public class SH_PlayerFSM : MonoBehaviourPun
             case State.Transform:
                 break;
 
-            case State.Damage:
-                break;
-
             case State.Groggy:
                 anim.SetTrigger("Groggy");
                 break;
@@ -135,9 +127,6 @@ public class SH_PlayerFSM : MonoBehaviourPun
             case State.Transform:
                 break;
 
-            case State.Damage:
-                break;
-
             case State.Groggy:
                 break;
 
@@ -165,9 +154,6 @@ public class SH_PlayerFSM : MonoBehaviourPun
     //        case State.Transform:
     //            break;
 
-    //        case State.Damage:
-    //            break;
-
     //        case State.Groggy:
     //            break;
 
@@ -188,17 +174,13 @@ public class SH_PlayerFSM : MonoBehaviourPun
     private void Normal()
     {
         pm.PlayerMovement();
-        pr.PlayerRot();
+        pr.PlayerRot(SH_PlayerRot.ViewState.FIRST);
     }
 
     private void Transform()
     {
-        throw new NotImplementedException();
-    }
-
-    private void Damage()
-    {
-        throw new NotImplementedException();
+        pm.PlayerMovement();
+        pr.PlayerRot(SH_PlayerRot.ViewState.THIRD);
     }
 
     private void Groggy()

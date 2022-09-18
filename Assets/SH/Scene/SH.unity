@@ -1188,6 +1188,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3990998246288271246, guid: 16ceb6c7f746e05488c34741a1fbee9a, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7638943795464201106, guid: 16ceb6c7f746e05488c34741a1fbee9a, type: 3}
       propertyPath: m_Name
       value: Player
@@ -5805,6 +5809,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   jumpPower: 3
+  nicName: {fileID: 0}
+  lerpSpeed: 100
+  currState: 0
   Campos: {fileID: 1946930058}
   Campos2: {fileID: 0}
   hand: {fileID: 0}

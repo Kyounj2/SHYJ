@@ -35,6 +35,7 @@ public class SH_PlayerSkill : MonoBehaviour
         {
             originalBody.SetActive(true);
             mimicBody.SetActive(false);
+            fsm.ChangeState(SH_PlayerFSM.State.Normal);
         }
     }
 
@@ -56,6 +57,8 @@ public class SH_PlayerSkill : MonoBehaviour
                 tbMeshRenderer.material = tb.GetComponent<MeshRenderer>().material;
                 tbMeshCollider.sharedMesh = tb.GetComponent<MeshCollider>().sharedMesh;
                 mimicBody.transform.localScale = tb.transform.localScale;
+
+                fsm.ChangeState(SH_PlayerFSM.State.Transform);
             }
         }
     }
