@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using static UnityEngine.UI.Image;
 
 public class SH_PlayerSkill : MonoBehaviourPun
 {
+
+    public GameObject player_ui;
+    public bool isNearPropMachine = false;
+
     SH_PlayerFSM fsm;
     Transform cam;
 
@@ -25,11 +30,25 @@ public class SH_PlayerSkill : MonoBehaviourPun
         myMeshRenderer = mimicBody.GetComponent<MeshRenderer>();
         myMeshCollider = mimicBody.GetComponent<MeshCollider>();
         mimicBody.SetActive(false);
+
+        player_ui = GameObject.Find("PlayerMachineGage");
+
+        player_ui.SetActive(false);
     }
 
     void Update()
     {
-
+        if(photonView.IsMine)
+        {
+            if (isNearPropMachine)
+            {
+                player_ui.SetActive(true);
+            }
+            else
+            {
+                player_ui.SetActive(false);
+            }
+        }
     }
 
     //Dictionary<string, GameObject> mimicInfo = new Dictionary<string, GameObject>();

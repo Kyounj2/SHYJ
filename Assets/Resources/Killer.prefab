@@ -2450,7 +2450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isNearPropMachine: 0
-  test_ui: {fileID: 0}
+  enemy_ui: {fileID: 0}
   speed: 5
   jumpPower: 3
   nicName: {fileID: 0}

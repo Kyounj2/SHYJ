@@ -12,8 +12,10 @@ public class YJ_Propmachines : MonoBehaviourPun
 
     // 플레이어용 머신작동
     Slider playerSlider;
-    bool macineOn = false;
+    bool macineOn_e = false;
+    bool macineOn_p = false;
     bool enemy = false;
+    bool player = false;
 
     // 애너미전용 게이지
     public GameObject hitGage;
@@ -34,23 +36,27 @@ public class YJ_Propmachines : MonoBehaviourPun
     void Update()
     {
         // 머신게이지가 켜져있고 플레이어가 F를 눌렀을때
-        //if (hitGage.activeSelf)
-        //{
-        //    macineOff = true;
-        //}
-        //if (macineOn)
-        //{
-        //    playerSlider.enabled = true;
-        //    if (Input.GetKey(KeyCode.F))
-        //        playerSlider.value += 0.03f * Time.deltaTime;
-        //}
+        if(player)
+        {
+            macineOn_p = true;
+        }
+        if(macineOn_p)
+        {
+            playerSlider.enabled = true;
+
+            if (Input.GetKey(KeyCode.F))
+            {
+                playerSlider.value += 0.1f * Time.deltaTime;
+                //photonView.RPC("RpcEnemyInputF", RpcTarget.All);
+            }
+        }
 
         // 힛게이지가 켜져있고 애너미가 F를 눌렀을때
         if (enemy)
         {
-            macineOn = true;
+            macineOn_e = true;
         }
-        if (macineOn)
+        if (macineOn_e)
         {
             enemySlider.enabled = true;
 
@@ -68,7 +74,7 @@ public class YJ_Propmachines : MonoBehaviourPun
                 {
                     enemyObject.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine = false;
                     enemy = false;
-                    macineOn = false;
+                    macineOn_e = false;
                 }
 
             }
@@ -86,7 +92,8 @@ public class YJ_Propmachines : MonoBehaviourPun
         if (other.gameObject.layer == 29)
         {
             playerObject = other.gameObject;
-            //other.gameObject.GetComponent<SH_PlayerMove>(),
+            other.gameObject.GetComponent<SH_PlayerSkill>().isNearPropMachine = true;
+            player = other.gameObject.GetComponent<SH_PlayerSkill>().isNearPropMachine;
         }
 
         // 애너미라면
@@ -103,22 +110,19 @@ public class YJ_Propmachines : MonoBehaviourPun
     {
 
         //// 플레이어라면
-        //if (other.gameObject.layer == 29)
-        //{
-        //    macineOn = false;
-        //    playerSlider.enabled = false;
-        //    maghineGage.SetActive(false);
-        //}
+        if (other.gameObject.layer == 29)
+        {
+            other.gameObject.GetComponent<SH_PlayerSkill>().isNearPropMachine = false;
+            macineOn_p = other.gameObject.GetComponent<SH_PlayerSkill>().isNearPropMachine;
+            player = false;
+            macineOn_p = false;
+        }
 
         // 애너미라면
         if (other.gameObject.layer == 30)
         {
             other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine = false;
-            macineOn = other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine;
-            //macineOff = false;
-            //enemySlider.enabled = false;
-            //enemySlider.value = 0f;
-            //hitGage.SetActive(false);
+            macineOn_e = other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine;
         }
 
     }
