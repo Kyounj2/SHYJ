@@ -7,6 +7,14 @@ using Photon.Pun;
 
 public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 {
+    public bool isNearPropMachine = false;
+    public void testUI(bool b)
+    {
+        test_ui.SetActive(b);
+    }
+
+    public GameObject test_ui;
+
     public float speed = 5;
     public float jumpPower = 3;
     float rotSpeed = 205;
@@ -63,6 +71,9 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         //state = State.Move;
         ChangeState(State.Move);
 
+        test_ui = GameObject.Find("EnemyMachineGage");
+
+        test_ui.SetActive(false);
     }
 
     // 현재상태
@@ -76,8 +87,17 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
     void Update()
     {
+
         if (photonView.IsMine)
         {
+            if(isNearPropMachine)
+            {
+                test_ui.SetActive(true);
+            }
+            else
+            {
+                test_ui.SetActive(false);
+            }
             //ChangeState(State.Move); 안됌
 
             //// 마우스커서 숨기기
