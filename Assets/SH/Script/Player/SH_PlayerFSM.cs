@@ -193,4 +193,10 @@ public class SH_PlayerFSM : MonoBehaviourPun
     {
         throw new NotImplementedException();
     }
+
+    [PunRPC]
+    public void RpcPlayerPos(Vector3 pos)
+    {
+        transform.position = pos;
+    }
 }

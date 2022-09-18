@@ -105,8 +105,9 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     if (carryTime > 0.3)
                     {
                         // 3인칭 모드로 바꾸기
-                        playerTr.gameObject.transform.position = shoulderPos.transform.position;
-                        playerFSM.body.gameObject.transform.localEulerAngles = transform.localEulerAngles + new Vector3(100, 0, 180);
+                        playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, shoulderPos.transform.position);
+                        //playerTr.gameObject.transform.position = shoulderPos.transform.position;
+                        //playerFSM.body.gameObject.transform.localEulerAngles = transform.localEulerAngles + new Vector3(100, 0, 180);
                     }
                     break;
                 case State.Attack:
@@ -195,7 +196,8 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         if (Physics.Raycast(ray, out player, 2.5f))
         {
-            photonView.RPC("RpcPlayerGroggy", RpcTarget.All);
+            RpcPlayerGroggy();
+            //photonView.RPC("RpcPlayerGroggy", RpcTarget.All);
         }
 
         if (cc.isGrounded)
@@ -337,12 +339,14 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         if (carryTime < 0.29)
         {
             //playerTr.gameObject.transform.position = hand.transform.position;
-            photonView.RPC("RpcPlayerPos", RpcTarget.All, handVec);
+            playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, handVec);
+            //photonView.RPC("RpcPlayerPos", RpcTarget.All, handVec);
         }
         else if (carryTime > 0.28 && carryTime < 0.32)
         {
             //playerTr.gameObject.transform.position = shoulderPos.transform.position;
-            photonView.RPC("RpcPlayerPos", RpcTarget.All, shoulderVec);
+            playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, shoulderVec);
+            //photonView.RPC("RpcPlayerPos", RpcTarget.All, shoulderVec);
         }
         else if (carryTime > 0.32)
         {
@@ -408,11 +412,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         anim.SetBool(s, b);
     }
 
-    [PunRPC]
-    public void RpcPlayerPos(Vector3 pos)
-    {
-        playerTr.gameObject.transform.position = pos;
-    }
+    
 
     //[PunRPC]
     //public void RPCChangeState(State s)
