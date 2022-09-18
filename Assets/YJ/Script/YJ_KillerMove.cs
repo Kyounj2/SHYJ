@@ -68,8 +68,8 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
         anim = GetComponent<Animator>();
 
-        //state = State.Move;
-        ChangeState(State.Move);
+        state = State.Move;
+        //ChangeState(State.Move);
 
         test_ui = GameObject.Find("EnemyMachineGage");
 
@@ -80,10 +80,10 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     public State currState;
 
     // 상태 변경
-    public void ChangeState(State s)
-    {
-        photonView.RPC("RPCChangeState", RpcTarget.All, s);
-    }
+    //public void ChangeState(State s)
+    //{
+    //    photonView.RPC("RPCChangeState", RpcTarget.All, s);
+    //}
 
     void Update()
     {
