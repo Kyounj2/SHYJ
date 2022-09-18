@@ -36,8 +36,6 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
     void Update()
     {
-        if (photonView.IsMine == false) return;
-
         switch (state)
         {
             case State.Normal:
