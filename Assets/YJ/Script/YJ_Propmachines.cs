@@ -71,8 +71,7 @@ public class YJ_Propmachines : MonoBehaviourPun
 
     private void OnTriggerEnter(Collider other)
     {
-        other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine = true;
-        macineOn = other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine;
+        
 
         //// 플레이어라면
         //if (other.gameObject.layer == 29)
@@ -80,17 +79,17 @@ public class YJ_Propmachines : MonoBehaviourPun
 
         //}
 
-        //// 애너미라면
-        //if (other.gameObject.layer == 30)
-        //{
-        //    hitGage.SetActive(true);
-        //}
+        // 애너미라면
+        if (other.gameObject.layer == 30)
+        {
+            other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine = true;
+            macineOn = other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine;
+            //hitGage.SetActive(true);
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine = false;
-        macineOn = other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine;
 
         //// 플레이어라면
         //if (other.gameObject.layer == 29)
@@ -100,14 +99,16 @@ public class YJ_Propmachines : MonoBehaviourPun
         //    maghineGage.SetActive(false);
         //}
 
-        //// 애너미라면
-        //if (other.gameObject.layer == 30)
-        //{
-        //    macineOff = false;
-        //    enemySlider.enabled = false;
-        //    enemySlider.value = 0f;
-        //    hitGage.SetActive(false);
-        //}
+        // 애너미라면
+        if (other.gameObject.layer == 30)
+        {
+            other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine = false;
+            macineOn = other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine;
+            //macineOff = false;
+            //enemySlider.enabled = false;
+            //enemySlider.value = 0f;
+            //hitGage.SetActive(false);
+        }
 
     }
 
