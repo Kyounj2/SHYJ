@@ -562,6 +562,8 @@ MonoBehaviour:
   cc: {fileID: 0}
   walkSpeed: 8
   runSpeed: 15
+  groggySpeed: 5
+  transformSpeed: 10
   jumpPower: 3
   jumpRayLen: 1.2
   rayBase:
