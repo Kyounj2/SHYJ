@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using static UnityEngine.GraphicsBuffer;
 
 public class SH_PlayerSkill : MonoBehaviourPun
 {
@@ -32,6 +33,9 @@ public class SH_PlayerSkill : MonoBehaviourPun
     }
 
     GameObject targetBody;
+    MeshFilter targetMF;
+    MeshRenderer targetMR;
+    MeshCollider targetMC;
 
     public void SkillOnMimic()
     {
@@ -43,7 +47,9 @@ public class SH_PlayerSkill : MonoBehaviourPun
             if (hit.collider.CompareTag("Transformable"))
             {
                 targetBody = hit.collider.gameObject;
-
+                targetMF = targetBody.GetComponent<MeshFilter>();
+                targetMR = targetBody.GetComponent<MeshRenderer>();
+                targetMC = targetBody.GetComponent<MeshCollider>();
                 photonView.RPC("RpcSkillOnMimic", RpcTarget.All);
 
                 fsm.ChangeState(SH_PlayerFSM.State.Transform);
@@ -70,9 +76,9 @@ public class SH_PlayerSkill : MonoBehaviourPun
         originalBody.SetActive(false);
         mimicBody.SetActive(true);
 
-        tbMeshFilter.mesh = targetBody.GetComponent<MeshFilter>().mesh;
-        tbMeshRenderer.material = targetBody.GetComponent<MeshRenderer>().material;
-        tbMeshCollider.sharedMesh = targetBody.GetComponent<MeshCollider>().sharedMesh;
+        tbMeshFilter.mesh = targetMF.mesh;
+        tbMeshRenderer.material = targetMR.material;
+        tbMeshCollider.sharedMesh = targetMC.sharedMesh;
         mimicBody.transform.localScale = targetBody.transform.localScale;
     }
 }
