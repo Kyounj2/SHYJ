@@ -147,6 +147,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
         pm.PlayerMovement();
         pr.PlayerRot(SH_PlayerRot.ViewState.FIRST);
 
+
         if (Input.GetButtonDown("Fire1"))
         {
             if (photonView.IsMine)
@@ -157,6 +158,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
             if (photonView.IsMine)
                 ps.SkillOffMimic();
         }
+
     }
 
     private void Transform()
@@ -164,6 +166,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
         pm.PlayerMovement();
         pr.PlayerRot(SH_PlayerRot.ViewState.THIRD);
 
+
         if (Input.GetButtonDown("Fire1"))
         {
             if (photonView.IsMine)
@@ -174,6 +177,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
             if (photonView.IsMine)
                 ps.SkillOffMimic();
         }
+
     }
 
     private void Catched()

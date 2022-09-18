@@ -89,10 +89,12 @@ public class SH_PlayerSkill : MonoBehaviourPun
     public void RpcSkillOnMimic()
     {
         Ray cameraRay = new Ray(cam.position, cam.forward);
+        Debug.DrawLine(cameraRay.origin, cameraRay.direction * 50, Color.red);
         RaycastHit hit;
 
         if (Physics.Raycast(cameraRay, out hit, 50))
         {
+            print(hit.transform.name);
             if (hit.collider.CompareTag("Transformable"))
             {
                 originalBody.SetActive(false);
@@ -105,7 +107,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
                 myMeshCollider.sharedMesh = targetBody.GetComponent<MeshCollider>().sharedMesh;
                 mimicBody.transform.localScale = targetBody.transform.localScale;
 
-                fsm.RpcOnChangeState(SH_PlayerFSM.State.Transform);
+                photonView.RPC("RpcOnChangeState", RpcTarget.All, SH_PlayerFSM.State.Transform);
+                //fsm.RpcOnChangeState(SH_PlayerFSM.State.Transform);
             }
         }
     }
