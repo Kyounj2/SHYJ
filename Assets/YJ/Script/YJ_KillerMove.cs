@@ -45,6 +45,9 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     // PlayerState 가져오기
     State PlayerState;
 
+    // 1인칭 카메라시점 저장
+    Transform cameraOriginPos;
+
     public enum State
     {
         //Idle,
@@ -63,7 +66,10 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     void Start()
     {
         if (photonView.IsMine)
+        {
             Campos.gameObject.SetActive(true);
+            cameraOriginPos = Campos.transform;
+        }
 
         cc = GetComponent<CharacterController>();
 
@@ -75,6 +81,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         enemy_ui = GameObject.Find("EnemyMachineGage");
 
         enemy_ui.SetActive(false);
+
     }
 
     // 현재상태
@@ -88,7 +95,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
     void Update()
     {
-
+        print(cameraOriginPos.transform.position);
         if (photonView.IsMine)
         {
             if(isNearPropMachine)
@@ -126,11 +133,8 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
                     if (carryTime > 0.3)
                     {
-                        // 3인칭 모드로 바꾸기
                         // 내손에 놓고 움직이기
                         playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, shoulderPos.transform.position);//, new Vector3(100, 0, 180));
-                        //playerTr.gameObject.transform.position = shoulderPos.transform.position;
-                        //playerFSM.body.gameObject.transform.localEulerAngles = transform.localEulerAngles + new Vector3(100, 0, 180);
                     }
                     break;
                 case State.Attack:
@@ -179,6 +183,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     float downTime = 0;
     private void Down()
     {
+        Campos.transform.position = Vector3.Lerp(Campos.transform.position, camPosOrigin.transform.position, 5 * Time.deltaTime);
         carryTime = 0;
         downTime += Time.deltaTime;
 
@@ -188,12 +193,13 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         {
             print("드디어 다운하고 넘어가죠");
             photonView.RPC("RpcSetBool", RpcTarget.All, "Down", false);
-            downTime = 0;
             playerFSM.ChangeState(SH_PlayerFSM.State.Seated);
             state = State.Move;
+            downTime = 0;
         }
     }
 
+    public Transform camPosOrigin;
     public Transform Campos;
     public Transform Campos2;
 

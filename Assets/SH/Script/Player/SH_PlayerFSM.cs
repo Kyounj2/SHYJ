@@ -104,6 +104,8 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 break;
 
             case State.Seated:
+                Transform player = body.GetComponentInParent<Transform>();
+                player.localEulerAngles = new Vector3(0, 270, 0);
                 pm.cc.enabled = false;
                 anim.SetTrigger("Seated");
                 break;
@@ -135,6 +137,8 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 break;
 
             case State.Seated:
+                Transform player = body.GetComponentInParent<Transform>();
+                player.localEulerAngles = new Vector3(0, 0, 0);
                 pm.cc.enabled = true;
                 break;
 

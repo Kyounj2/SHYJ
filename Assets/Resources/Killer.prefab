@@ -980,6 +980,37 @@ Transform:
   m_Father: {fileID: 3385314155872366240}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4371112714849802433
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7782307285253140885}
+  m_Layer: 30
+  m_Name: CamposOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7782307285253140885
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4371112714849802433}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.010000017, z: 4.8600006}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9076181716208236348}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4422787322524189036
 GameObject:
   m_ObjectHideFlags: 0
@@ -2317,7 +2348,7 @@ Transform:
   m_Children:
   - {fileID: 9076181716293098248}
   m_Father: {fileID: 9076181716208236348}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9076181715985880496
 GameObject:
@@ -2415,6 +2446,7 @@ Transform:
   m_Children:
   - {fileID: 7109881463080865332}
   - {fileID: 9076181716054744036}
+  - {fileID: 7782307285253140885}
   - {fileID: 9076181715040959990}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -2458,6 +2490,7 @@ MonoBehaviour:
   currState: 0
   triggerChair: 0
   chairPos: {fileID: 0}
+  camPosOrigin: {fileID: 7782307285253140885}
   Campos: {fileID: 9076181715040959990}
   Campos2: {fileID: 9076181716054744036}
   hand: {fileID: 9076181715985880496}

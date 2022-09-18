@@ -2301,6 +2301,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 549269059}
     - target: {fileID: 5480570462272513640, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
+      propertyPath: originGage
+      value: 
+      objectReference: {fileID: 312136521}
+    - target: {fileID: 5480570462272513640, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
       propertyPath: maghineGage
       value: 
       objectReference: {fileID: 1335278970}
@@ -2356,6 +2360,10 @@ PrefabInstance:
       propertyPath: originValue
       value: 
       objectReference: {fileID: 1335278972}
+    - target: {fileID: 5480570462532282904, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
+      propertyPath: m_Value
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 5480570462975298453, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -2368,8 +2376,17 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6228606791087440124, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
+--- !u!1 &312136521 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5480570462532282906, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
+  m_PrefabInstance: {fileID: 312136520}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &313262281
 GameObject:
   m_ObjectHideFlags: 0
@@ -9889,7 +9906,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.85
+  m_Value: 0.3
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
