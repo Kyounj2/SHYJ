@@ -19,6 +19,7 @@ public class YJ_MachineTopGage : MonoBehaviourPun, IPunObservable
     {
         transform.LookAt(Camera.main.transform.position);
         sliderValue.value = originValue.value;
+        
     }
 
 
@@ -28,15 +29,11 @@ public class YJ_MachineTopGage : MonoBehaviourPun, IPunObservable
         if (stream.IsWriting) // 내가 데이터를 보낼 수 있는 상태인 경우 (ismine)
         {
             // positon, rotation
-            //stream.SendNext(transform.position); // Value타입만 보낼 수 있음
-            //stream.SendNext(transform.rotation);
             stream.SendNext(sliderValue.value);
         }
         // 데이터 받기
         else // if(stream.IsReading)
         {
-            //receivePos = (Vector3)stream.ReceiveNext(); // 강제형변환필요
-            //receiveRot = (Quaternion)stream.ReceiveNext();
             originValue.value = (float)stream.ReceiveNext();
         }
     }

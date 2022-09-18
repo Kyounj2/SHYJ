@@ -48,6 +48,8 @@ MonoBehaviour:
   - RpcEnemyInputF
   - RpcPlayerInputF
   - RpcOnDamaged
+  - RpcOnChangeState
+  - RpcPlayerPos
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

@@ -333,18 +333,19 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
         if (carryTime < 0.29)
         {
-            playerTr.gameObject.transform.position = hand.transform.position;
+            //playerTr.gameObject.transform.position = hand.transform.position;
+            photonView.RPC("RpcPlayerPos", RpcTarget.All, hand);
         }
         else if (carryTime > 0.28 && carryTime < 0.32)
         {
-            playerTr.gameObject.transform.position = shoulderPos.transform.position;
+            //playerTr.gameObject.transform.position = shoulderPos.transform.position;
+            photonView.RPC("RpcPlayerPos", RpcTarget.All, shoulderPos);
         }
         else if (carryTime > 0.32)
         {
             state = State.Move;
         }
     }
-
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -402,6 +403,12 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     public void RpcSetBool(string s, bool b)
     {
         anim.SetBool(s, b);
+    }
+
+    [PunRPC]
+    public void RpcPlayerPos(GameObject pos)
+    {
+        playerTr.gameObject.transform.position = pos.transform.position;
     }
 
     //[PunRPC]
