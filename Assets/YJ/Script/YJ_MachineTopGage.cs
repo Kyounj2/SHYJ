@@ -19,7 +19,6 @@ public class YJ_MachineTopGage : MonoBehaviourPun, IPunObservable
     {
         transform.LookAt(Camera.main.transform.position);
         sliderValue.value = originValue.value;
-        
     }
 
 

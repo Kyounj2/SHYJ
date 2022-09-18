@@ -56,11 +56,15 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 break;
 
             case State.Groggy:
-                Groggy();
+                Catched();
+                break;
+
+            case State.Catched:
+                Catched();
                 break;
 
             case State.Seated:
-                Die();
+                Seated();
                 break;
 
             case State.Die:
@@ -91,6 +95,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
         switch (state)
         {
             case State.Normal:
+                pm.cc.enabled = true;
                 anim.SetTrigger("Idle");
                 break;
 
@@ -144,33 +149,6 @@ public class SH_PlayerFSM : MonoBehaviourPun
         }
     }
 
-    //public void RpcEndState(State s)
-    //{
-    //    switch (s)
-    //    {
-    //        case State.Normal:
-    //            break;
-
-    //        case State.Transform:
-    //            break;
-
-    //        case State.Groggy:
-    //            break;
-
-    //        case State.Catched:
-    //            pm.cc.enabled = true;
-    //            body.localEulerAngles = new Vector3(0, 0, 0);
-    //            break;
-
-    //        case State.Seated:
-    //            pm.cc.enabled = true;
-    //            break;
-
-    //        case State.Die:
-    //            break;
-    //    }
-    //}
-
     private void Normal()
     {
         pm.PlayerMovement();
@@ -201,9 +179,14 @@ public class SH_PlayerFSM : MonoBehaviourPun
         }
     }
 
-    private void Groggy()
+    private void Catched()
     {
-        throw new NotImplementedException();
+        pr.PlayerRot(SH_PlayerRot.ViewState.THIRD);
+    }
+
+    private void Seated()
+    {
+        pr.PlayerRot(SH_PlayerRot.ViewState.THIRD);
     }
 
     private void Die()

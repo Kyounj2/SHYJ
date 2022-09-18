@@ -2270,14 +2270,14 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 5480570462272513637, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
-      propertyPath: ObservedComponents.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5480570462272513637, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
-      propertyPath: ObservedComponents.Array.data[0]
+    - target: {fileID: 5480570462272513640, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
+      propertyPath: hitGage
       value: 
-      objectReference: {fileID: 312136521}
+      objectReference: {fileID: 549269059}
+    - target: {fileID: 5480570462272513640, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
+      propertyPath: maghineGage
+      value: 
+      objectReference: {fileID: 1335278970}
     - target: {fileID: 5480570462272513641, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -2340,17 +2340,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
---- !u!114 &312136521 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5480570462532282903, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
-  m_PrefabInstance: {fileID: 312136520}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8616be43700069a408838b76b2403bf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &313262281
 GameObject:
   m_ObjectHideFlags: 0
@@ -33780,7 +33769,7 @@ GameObject:
   - component: {fileID: 4435114447495008056}
   m_Layer: 0
   m_Name: pumpkin_08
-  m_TagString: Untagged
+  m_TagString: Transformable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

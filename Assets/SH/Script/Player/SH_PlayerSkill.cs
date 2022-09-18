@@ -31,6 +31,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
         
     }
 
+    GameObject targetBody;
+
     public void SkillOnMimic()
     {
         Ray cameraRay = new Ray(cam.position, cam.forward);
@@ -40,9 +42,9 @@ public class SH_PlayerSkill : MonoBehaviourPun
         {
             if (hit.collider.CompareTag("Transformable"))
             {
-                GameObject tb = hit.collider.gameObject;
+                targetBody = hit.collider.gameObject;
 
-                photonView.RPC("RpcSkillOnMimic", RpcTarget.All, tb);
+                photonView.RPC("RpcSkillOnMimic", RpcTarget.All);
 
                 fsm.ChangeState(SH_PlayerFSM.State.Transform);
             }
@@ -63,14 +65,14 @@ public class SH_PlayerSkill : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void RpcSkillOnMimic(GameObject tb)
+    public void RpcSkillOnMimic()
     {
         originalBody.SetActive(false);
         mimicBody.SetActive(true);
 
-        tbMeshFilter.mesh = tb.GetComponent<MeshFilter>().mesh;
-        tbMeshRenderer.material = tb.GetComponent<MeshRenderer>().material;
-        tbMeshCollider.sharedMesh = tb.GetComponent<MeshCollider>().sharedMesh;
-        mimicBody.transform.localScale = tb.transform.localScale;
+        tbMeshFilter.mesh = targetBody.GetComponent<MeshFilter>().mesh;
+        tbMeshRenderer.material = targetBody.GetComponent<MeshRenderer>().material;
+        tbMeshCollider.sharedMesh = targetBody.GetComponent<MeshCollider>().sharedMesh;
+        mimicBody.transform.localScale = targetBody.transform.localScale;
     }
 }

@@ -41,7 +41,7 @@ public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
         anim = GetComponentInChildren<Animator>();
 
         // 닉네임 설정
-        nickName.text = photonView.Owner.NickName;
+        //nickName.text = photonView.Owner.NickName;
 
         // PlayerState 컴포넌트 가져오기
         fsm = GetComponent<SH_PlayerFSM>();
