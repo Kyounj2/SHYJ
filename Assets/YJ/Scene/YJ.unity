@@ -4543,6 +4543,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6228606791087440124, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
 --- !u!1 &591739932
@@ -6180,11 +6184,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d7265f31b211f49a2845119f3379f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isNearPropMachine: 0
+  enemy_ui: {fileID: 0}
   speed: 5
   jumpPower: 3
   nicName: {fileID: 0}
   lerpSpeed: 100
   currState: 0
+  triggerChair: 0
+  chairPos: {fileID: 0}
+  camPosOrigin: {fileID: 0}
   Campos: {fileID: 1946930058}
   Campos2: {fileID: 196357528}
   hand: {fileID: 265905100}

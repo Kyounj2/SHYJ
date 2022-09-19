@@ -14,6 +14,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     }
 
     public GameObject enemy_ui;
+    public GameObject player_ui;
 
     public float speed = 5;
     public float jumpPower = 3;
@@ -69,6 +70,8 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         {
             Campos.gameObject.SetActive(true);
             cameraOriginPos = Campos.transform;
+            player_ui = GameObject.Find("PlayerMachineGage");
+            player_ui.SetActive(false);
         }
 
         cc = GetComponent<CharacterController>();
