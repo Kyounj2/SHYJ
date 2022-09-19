@@ -10,6 +10,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
 {
 
     public GameObject player_ui;
+    public GameObject enemy_ui;
     public bool isNearPropMachine = false;
 
     SH_PlayerFSM fsm;
@@ -23,6 +24,13 @@ public class SH_PlayerSkill : MonoBehaviourPun
 
     void Start()
     {
+        if(photonView.IsMine)
+        {
+            enemy_ui = GameObject.Find("EnemyMachineGage");
+            enemy_ui.SetActive(false);
+        }
+
+
         fsm = GetComponent<SH_PlayerFSM>();
         cam = Camera.main.transform;
 

@@ -7,7 +7,11 @@ using Photon.Pun;
 // F키를 누르면 게이지를 채우고싶다
 public class YJ_Propmachines : MonoBehaviourPun
 {
-    // 머신 전체 게이지
+    // 전체 머신 게이지
+    public GameObject originGage;
+    Slider originGageSlider;
+
+    // 플레이어 머신 게이지
     public GameObject maghineGage;
 
     // 플레이어용 머신작동
@@ -32,6 +36,7 @@ public class YJ_Propmachines : MonoBehaviourPun
         //maghineGage.SetActive(false);
         playerSlider = maghineGage.GetComponent<Slider>();
         enemySlider = hitGage.GetComponent<Slider>();
+        originGageSlider = originGage.GetComponent<Slider>();
     }
 
     
@@ -50,6 +55,7 @@ public class YJ_Propmachines : MonoBehaviourPun
             {
                 playerSlider.value += 0.1f * Time.deltaTime;
                 // Rpc로 메인값변경 또보내기
+                originGage.transform.GetComponent<PhotonView>().RPC("SliderValue", RpcTarget.All, 0.1f * Time.deltaTime);
                 //photonView.RPC("RpcEnemyInputF", RpcTarget.All);
             }
         }
@@ -71,7 +77,8 @@ public class YJ_Propmachines : MonoBehaviourPun
 
             if (enemySlider.value > 0.99)
             {
-                playerSlider.value -= 0.3f; // rpc로 기계 자체를 깎기
+                //playerSlider.value -= 0.3f; // rpc로 기계 자체를 깎기
+                originGage.transform.GetComponent<PhotonView>().RPC("SliderValue", RpcTarget.All, -0.3f);
                 enemySlider.value = 1f;
                 if(enemySlider.value >= 1f)
                 {

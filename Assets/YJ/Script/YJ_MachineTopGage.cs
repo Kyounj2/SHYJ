@@ -7,11 +7,10 @@ using Photon.Realtime;
 
 public class YJ_MachineTopGage : MonoBehaviourPun
 {
-    public Slider originValue;
-    Slider slider;
+
     void Start()
     {
-        slider = GetComponent<Slider>();
+
     }
 
     
@@ -19,6 +18,12 @@ public class YJ_MachineTopGage : MonoBehaviourPun
     {
         transform.LookAt(Camera.main.transform.position);
         //slider.value = originValue.value;
+    }
+
+    [PunRPC]
+    public void SliderValue(float i)
+    {
+        transform.GetComponent<Slider>().value += i;
     }
 
     // 여기에 RPC구현
