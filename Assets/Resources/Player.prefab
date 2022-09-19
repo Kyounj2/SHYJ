@@ -613,6 +613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player_ui: {fileID: 0}
+  enemy_ui: {fileID: 0}
   isNearPropMachine: 0
   originalBody: {fileID: 7404924087313344026}
   mimicBody: {fileID: 1115306659}

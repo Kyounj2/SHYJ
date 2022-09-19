@@ -24,11 +24,11 @@ public class SH_PlayerSkill : MonoBehaviourPun
 
     void Start()
     {
-        if(photonView.IsMine)
-        {
-            enemy_ui = GameObject.Find("EnemyMachineGage");
-            enemy_ui.SetActive(false);
-        }
+        //if(photonView.IsMine)
+        //{
+        //    enemy_ui = GameObject.Find("EnemyMachineGage");
+        //    enemy_ui.SetActive(false);
+        //}
 
 
         fsm = GetComponent<SH_PlayerFSM>();
