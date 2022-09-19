@@ -82,7 +82,6 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         //ChangeState(State.Move);
 
         enemy_ui = GameObject.Find("EnemyMachineGage");
-
         enemy_ui.SetActive(false);
 
     }
@@ -98,7 +97,6 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
     void Update()
     {
-        print(cameraOriginPos.transform.position);
         if (photonView.IsMine)
         {
             if(isNearPropMachine)
