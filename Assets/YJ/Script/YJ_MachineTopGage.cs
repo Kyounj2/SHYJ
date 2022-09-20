@@ -10,37 +10,33 @@ public class YJ_MachineTopGage : MonoBehaviourPun
 
     void Start()
     {
-
+        escapemanager = GameObject.Find("EscapeManager").GetComponent<YJ_EscapeManager>();
     }
+
+    YJ_EscapeManager escapemanager;
 
     
     void Update()
     {
+        // 카메라 계속 바라보기
         transform.LookAt(Camera.main.transform.position);
-        //slider.value = originValue.value;
+        
+        if(transform.GetComponent<Slider>().value >= 1)
+        {
+            escapemanager.machineCountUp();
+            transform.gameObject.SetActive(false);
+        }
     }
 
+    // 슬라이드 값 포톤으로 보내주기
     [PunRPC]
     public void SliderValue(float i)
     {
         transform.GetComponent<Slider>().value += i;
     }
 
-    // 여기에 RPC구현
-    // 슬라이드값 조정 (여기있는 슬라이드값)
-
-    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    //public void SliderValue2(float i)
     //{
-    //    // 데이터 보내기
-    //    if (stream.IsWriting) // 내가 데이터를 보낼 수 있는 상태인 경우 (ismine)
-    //    {
-    //        // positon, rotation
-    //        stream.SendNext(slider.value);
-    //    }
-    //    // 데이터 받기
-    //    else // if(stream.IsReading)
-    //    {
-    //        originValue.value = (float)stream.ReceiveNext();
-    //    }
+    //    transform.GetComponent<Slider>().value += i;
     //}
 }

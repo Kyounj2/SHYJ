@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e65e48d989615414cb9ce1245ba6da95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originGage: {fileID: 0}
+  originGage: {fileID: 5480570462532282906}
   maghineGage: {fileID: 0}
   hitGage: {fileID: 0}
 --- !u!65 &5480570462272513639
@@ -294,7 +294,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 0
+  sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &5480570462532282906
@@ -421,7 +421,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 0
+  sceneViewId: 3
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &5480570462616098024

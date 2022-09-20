@@ -28,6 +28,8 @@ public class YJ_Propmachines : MonoBehaviourPun
     Slider enemySlider;
     bool macineOff = false;
 
+    // gage 다 찼을때 더이상 가동되지 않게할 bool값
+    bool end = false;
 
 
     void Start()
@@ -39,15 +41,30 @@ public class YJ_Propmachines : MonoBehaviourPun
         originGageSlider = originGage.GetComponent<Slider>();
     }
 
-    
+    //[PunRPC]
+    //public void SliderValue(float i)
+    //{
+    //    YJ_MachineTopGage m = originGage.transform.GetComponent<YJ_MachineTopGage>();
+    //    m.SliderValue2(i);
+    //}
+
     void Update()
     {
+        
+
+        // 슬라이드 꽉차면 작동못하게하기
+        if (originGageSlider.value >= 1)
+        {
+            end = true;
+        }
+
+
         // 머신게이지가 켜져있고 플레이어가 F를 눌렀을때
-        if(player)
+        if (player)
         {
             macineOn_p = true;
         }
-        if(macineOn_p)
+        if (macineOn_p)
         {
             playerSlider.enabled = true;
 
@@ -56,7 +73,7 @@ public class YJ_Propmachines : MonoBehaviourPun
                 playerSlider.value += 0.1f * Time.deltaTime;
                 // Rpc로 메인값변경 또보내기
                 originGage.transform.GetComponent<PhotonView>().RPC("SliderValue", RpcTarget.All, 0.1f * Time.deltaTime);
-                //photonView.RPC("RpcEnemyInputF", RpcTarget.All);
+
             }
         }
 
@@ -80,7 +97,7 @@ public class YJ_Propmachines : MonoBehaviourPun
                 //playerSlider.value -= 0.3f; // rpc로 기계 자체를 깎기
                 originGage.transform.GetComponent<PhotonView>().RPC("SliderValue", RpcTarget.All, -0.3f);
                 enemySlider.value = 1f;
-                if(enemySlider.value >= 1f)
+                if (enemySlider.value >= 1f)
                 {
                     enemyObject.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine = false;
                     enemy = false;
@@ -116,18 +133,22 @@ public class YJ_Propmachines : MonoBehaviourPun
         // 플레이어라면
         if (other.gameObject.layer == 29)
         {
+            if (end) return;
+
             playerObject = other.gameObject;
             other.gameObject.GetComponent<SH_PlayerSkill>().isNearPropMachine = true;
             player = other.gameObject.GetComponent<SH_PlayerSkill>().isNearPropMachine;
+            maghineGage.GetComponent<Slider>().value = originGageSlider.GetComponent<Slider>().value;
         }
 
         // 애너미라면
         if (other.gameObject.layer == 30)
         {
+            if (end) return;
+
             enemyObject = other.gameObject;
             other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine = true;
             enemy = other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine;
-            //hitGage.SetActive(true);
         }
     }
 
@@ -137,31 +158,26 @@ public class YJ_Propmachines : MonoBehaviourPun
         //// 플레이어라면
         if (other.gameObject.layer == 29)
         {
+            playerSlider.value = 0;
+            //if (end) return;
+
             other.gameObject.GetComponent<SH_PlayerSkill>().isNearPropMachine = false;
-            macineOn_p = other.gameObject.GetComponent<SH_PlayerSkill>().isNearPropMachine;
+            //macineOn_p = other.gameObject.GetComponent<SH_PlayerSkill>().isNearPropMachine;
             player = false;
             macineOn_p = false;
+
         }
 
         // 애너미라면
         if (other.gameObject.layer == 30)
         {
+            //if (end) return;
+
             other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine = false;
-            macineOn_e = other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine;
+            //macineOn_e = other.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine;
+            enemy = false;
+            macineOn_e = false;
         }
 
-    }
-
-    // 네트워크
-    [PunRPC]
-    public void RpcPlayerInputF()
-    {
-        playerSlider.value += 0.03f * Time.deltaTime;
-    }
-
-    [PunRPC]
-    public void RpcEnemyInputF()
-    {
-        enemySlider.value += 0.1f * Time.deltaTime;
     }
 }
