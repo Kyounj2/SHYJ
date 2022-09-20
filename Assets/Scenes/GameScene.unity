@@ -140,7 +140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 80432988761428695, guid: d46b2be5eec676d4bbfe98974d19f8dd, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 80432988761428695, guid: d46b2be5eec676d4bbfe98974d19f8dd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2470,6 +2470,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5480570462272513637, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5480570462272513640, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
       propertyPath: hitGage
       value: 
@@ -2480,7 +2484,7 @@ PrefabInstance:
       objectReference: {fileID: 1335278970}
     - target: {fileID: 5480570462272513641, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5480570462272513641, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2537,6 +2541,10 @@ PrefabInstance:
     - target: {fileID: 5480570462975298453, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6228606791087440124, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
+      propertyPath: sceneViewId
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bde89cd8b9824546be3e06cba4cbf0e, type: 3}
@@ -2846,7 +2854,7 @@ PrefabInstance:
       objectReference: {fileID: 238371988}
     - target: {fileID: 3786852812468095861, guid: 9589dc124e4e16c44bf63845001fb95e, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3786852812468095861, guid: 9589dc124e4e16c44bf63845001fb95e, type: 3}
       propertyPath: m_LocalPosition.x
