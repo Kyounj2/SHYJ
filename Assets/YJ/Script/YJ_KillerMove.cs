@@ -492,7 +492,10 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void RpcSetInteger(string s, int i)
     {
-        anim.SetInteger(s, i);
+        if(anim)
+        {
+            anim.SetInteger(s, i);
+        }
     }
 
     [PunRPC]
