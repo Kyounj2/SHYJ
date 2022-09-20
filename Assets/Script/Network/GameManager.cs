@@ -20,7 +20,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         // 플레이어를 생성한다.
         if(PhotonNetwork.IsMasterClient)
         {
+<<<<<<< HEAD
             PhotonNetwork.Instantiate("PLayer", transform.position, Quaternion.identity);
+=======
+            PhotonNetwork.Instantiate("Player", transform.position, Quaternion.identity);
+>>>>>>> YJ_v.0.13
         }
         else
         {

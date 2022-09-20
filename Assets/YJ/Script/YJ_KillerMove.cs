@@ -310,12 +310,15 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         }
 
         // 의자에 가까이 다가갔을때
-        if (triggerChair)
+        if(playerFSM != null)
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (triggerChair && playerFSM.state == SH_PlayerFSM.State.Catched)
             {
-                print("의자에앉아 짜증나니깐");
-                state = State.Down;
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    print("의자에앉아 짜증나니깐");
+                    state = State.Down;
+                }
             }
         }
 
@@ -492,7 +495,10 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void RpcSetInteger(string s, int i)
     {
-        anim.SetInteger(s, i);
+        if(anim)
+        {
+            anim.SetInteger(s, i);
+        }
     }
 
     [PunRPC]
