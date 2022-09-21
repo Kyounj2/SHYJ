@@ -4,19 +4,12 @@ using UnityEngine;
 
 public class UsersData : MonoBehaviour
 {
-    Dictionary<string, UserInfo> users = new Dictionary<string, UserInfo>();
+    //Dictionary<string, UserInfo> users = new Dictionary<string, UserInfo>();
+
+    public UserInfo[] users = new UserInfo[5];
+
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
-    }
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
     }
 }

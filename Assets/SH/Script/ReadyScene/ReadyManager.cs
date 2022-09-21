@@ -2,12 +2,15 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
 public class ReadyManager : MonoBehaviourPun
 {
     UserInfo userInfo;
+    UsersData usersData;
 
     public Button btnCharacter1;
     public Button btnCharacter2;
@@ -17,6 +20,13 @@ public class ReadyManager : MonoBehaviourPun
     string character;
 
     public Transform[] spawnPos = new Transform[5];
+    Transform myPos;
+    public Transform[] userIcon = new Transform[5];
+    Transform myIcon;
+
+    GameObject preCharacter;
+    GameObject preThumbnail;
+    int curPlayer;
 
     // Start is called befor the first frame update
     void Start()
@@ -29,14 +39,41 @@ public class ReadyManager : MonoBehaviourPun
         GameObject user = GameObject.Find("UserInfo");
         userInfo = user.GetComponent<UserInfo>();
 
+        GameObject users = GameObject.Find("UsersData");
+        usersData = users.GetComponent<UsersData>();
+
+        //curPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
+        curPlayer = 2;
+        print(curPlayer);
+
+        UserSpawn(curPlayer);
+    }
+
+    void UserSpawn(int p)
+    {
         if (userInfo.role == "Player")
         {
-            PhotonNetwork.Instantiate("Player", spawnPos[1].position, Quaternion.identity);
+            myPos = spawnPos[p];
+            myIcon = userIcon[p];
+            int startNum = Random.Range(0, 4);
+
+            preCharacter = myPos.GetChild(startNum).gameObject;
+            preThumbnail = myIcon.GetChild(startNum).gameObject;
+
+            preCharacter.SetActive(true);
+            preThumbnail.SetActive(true);
         }
-        else
+        else if (userInfo.role == "Killer")
         {
-            PhotonNetwork.Instantiate("Killer", spawnPos[0].position, Quaternion.identity);
+            myPos = spawnPos[0];
+            myIcon = userIcon[0];
+            myPos.GetChild(0).gameObject.SetActive(true);
+            myIcon.GetChild(0).gameObject.SetActive(true);
         }
+
+        myIcon.Find("Text (Legacy)").GetComponent<Text>().text = userInfo.nick_name;
+
+        character = "Character" + p;
     }
 
     // Update is called once per frame
@@ -48,32 +85,55 @@ public class ReadyManager : MonoBehaviourPun
 
     void GameStart()
     {
-        GameObject user = GameObject.Find("UserInfo");
-        UserInfo userInfo = user.GetComponent<UserInfo>();
-
-        if (userInfo != null)
-        {
-            userInfo.character = character;
-        }
+        SetUserInfo();
+        SetUsersData();
 
         PhotonNetwork.LoadLevel("GameScene");
     }
 
+    void SetUserInfo()
+    {
+        userInfo.character = character;
+        userInfo.order = curPlayer;
+    }
+
+    void SetUsersData()
+    {
+        usersData.users[curPlayer] = userInfo;
+    }
+
+    public void OnClickCharacter(int p)
+    {
+        preCharacter.SetActive(false);
+        preThumbnail.SetActive(false);
+
+        preCharacter = myPos.GetChild(p).gameObject;
+        preThumbnail = myIcon.GetChild(p).gameObject;
+
+        preCharacter.SetActive(true);
+        preThumbnail.SetActive(true);
+
+        character = "Character" + (p + 1);
+    }
+
     public void OnClickCharacter1()
     {
-        character = "Charater1";
+        OnClickCharacter(0);
     }
+
     public void OnClickCharacter2()
     {
-        character = "Charater2";
+        OnClickCharacter(1);
     }
+
     public void OnClickCharacter3()
     {
-        character = "Charater3";
+        OnClickCharacter(2);
     }
+
     public void OnClickCharacter4()
     {
-        character = "Charater4";
+        OnClickCharacter(3);
     }
 }
  

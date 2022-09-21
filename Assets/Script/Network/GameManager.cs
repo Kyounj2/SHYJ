@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.TextCore.Text;
+using Photon.Realtime;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -11,21 +13,104 @@ public class GameManager : MonoBehaviourPunCallbacks
         instance = this;
     }
 
+    UserInfo userInfo;
+    UsersData usersData;
+
+    public GameObject character1Factory;
+    public GameObject character2Factory;
+    public GameObject character3Factory;
+    public GameObject character4Factory;
+
     void Start()
     {
         // OnPhotonSerializeView 호출 빈도
         PhotonNetwork.SerializationRate = 60;
         // RPC 호출 빈도
         PhotonNetwork.SendRate = 60;
-        // 플레이어를 생성한다.
-        if(PhotonNetwork.IsMasterClient)
+
+        GameObject user = GameObject.Find("UserInfo");
+        userInfo = user.GetComponent<UserInfo>();
+
+        GameObject users = GameObject.Find("UsersData");
+        usersData = users.GetComponent<UsersData>();
+
+        //// 플레이어를 생성한다.
+        //if(PhotonNetwork.IsMasterClient)
+        //{
+        //    PhotonNetwork.Instantiate("Player", transform.position, Quaternion.identity);
+        //}
+        //else
+        //{
+        //    PhotonNetwork.Instantiate("Player", transform.position, Quaternion.identity);
+        //}
+
+        CreatePlayer();
+    }
+
+    void CreatePlayer()
+    {
+        // 플레이어를 생성하고싶다.
+        GameObject player = null;
+
+        // 0. 유저의 역할군이 Player라면
+        if (userInfo.role == "Player")
         {
-            PhotonNetwork.Instantiate("Player", transform.position, Quaternion.identity);
+            // 1. Player프리팹을 생성하고 싶다.
+            player = PhotonNetwork.Instantiate("Player", transform.position, Quaternion.identity);
+            // 2. 유저가 Character1을 선택했다면
+            if (userInfo.character == "Character1")
+            {
+                // 3. Player안에 body의 자식으로 Character1을 생성하고 싶다.
+                Transform body = player.transform.Find("Body");
+                GameObject character = Instantiate(character1Factory, body);
+                character.transform.localPosition = Vector3.zero;
+                character.transform.localEulerAngles = Vector3.zero;
+                character.transform.localScale = Vector3.one * 0.5f;
+                character.SetActive(true);
+            }
+            else if (userInfo.character == "Character2")
+            {
+                // 3. Player안에 body의 자식으로 Character1을 생성하고 싶다.
+                Transform body = player.transform.Find("Body");
+                GameObject character = Instantiate(character2Factory, body);
+                character.transform.localPosition = Vector3.up;
+                character.transform.localEulerAngles = Vector3.zero;
+                character.transform.localScale = Vector3.one;
+                character.SetActive(true);
+            }
+            else if (userInfo.character == "Character3")
+            {
+                // 3. Player안에 body의 자식으로 Character1을 생성하고 싶다.
+                Transform body = player.transform.Find("Body");
+                GameObject character = Instantiate(character3Factory, body);
+                character.transform.localPosition = Vector3.up;
+                character.transform.localEulerAngles = Vector3.zero;
+                character.transform.localScale = Vector3.one;
+                character.SetActive(true);
+            }
+            else if (userInfo.character == "Character4")
+            {
+                // 3. Player안에 body의 자식으로 Character1을 생성하고 싶다.
+                Transform body = player.transform.Find("Body");
+                GameObject character = Instantiate(character4Factory, body);
+                character.transform.localPosition = Vector3.up;
+                character.transform.localEulerAngles = Vector3.zero;
+                character.transform.localScale = Vector3.one;
+                character.SetActive(true);
+            }
         }
-        else
+        else if (userInfo.role == "Killer")
         {
-            PhotonNetwork.Instantiate("Player", transform.position, Quaternion.identity);
+            player = PhotonNetwork.Instantiate("Killer", transform.position, Quaternion.identity);
         }
+
+        SetUserInfo(player);
+    }
+
+    void SetUserInfo(GameObject player)
+    {
+        userInfo.playerOBJ = player;
+        userInfo.is_alive = true;
     }
 
     void Update()

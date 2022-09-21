@@ -9,8 +9,9 @@ public class UserInfo : MonoBehaviour
     public string nick_name;
     public string role;
 
-    // 선택한 캐릭터, 준비완료
+    // 선택한 캐릭터, 자리번호(들어온 순서)
     public string character;
+    public int order;
 
     // 게임오브젝트, 생사여부
     public GameObject playerOBJ;
@@ -21,15 +22,5 @@ public class UserInfo : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);    
-    }
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
     }
 }
