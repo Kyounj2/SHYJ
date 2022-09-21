@@ -20,7 +20,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public GameObject popUp;
 
-    int role; // player : 1, enemy : 2
+    string role;
 
     // 방의 정보들
     Dictionary<string, RoomInfo> roomCache = new Dictionary<string, RoomInfo>();
@@ -30,21 +30,25 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void OnClickBtnRoleRandom()
     {
-        role = Random.Range(1, 3);
+        int num = Random.Range(0, 10);
+        if (num < 5)
+            role = "Player";
+        else
+            role = "Killer";
         // 다른 버튼 색 원래대로
         // 버튼 색 바꾸기
     }
 
     public void OnClickBtnRolePlayer()
     {
-        role = 1;
+        role = "Player";
         // 다른 버튼 색 원래대로
         // 버튼 색 바꾸기
     }
 
     public void OnClickBtnRoleEnemy()
     {
-        role = 2;
+        role = "Killer";
         // 다른 버튼 색 원래대로
         // 버튼 색 바꾸기
     }
@@ -127,8 +131,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        //PhotonNetwork.LoadLevel("ReadyScene");
-        PhotonNetwork.LoadLevel("GameScene");
+
+        GameObject user = GameObject.Find("UserInfo");
+        UserInfo userInfo = user.GetComponent<UserInfo>();
+
+        if (userInfo != null)
+        {
+            userInfo.nick_name = PhotonNetwork.NickName;
+            userInfo.role = role;
+        }
+
+        PhotonNetwork.LoadLevel("ReadyScene");
         print("OnJoinedRoom");
     }
 
@@ -158,7 +171,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             Destroy(tr.gameObject);
         }
-
     }
 
     private void UpdateRoomCache(List<RoomInfo> roomList)
