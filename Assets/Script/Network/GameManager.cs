@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         // 시작할때 서버에 접속한 인원 넣어주기 ( 애너미 제외 )
         liveCount = PhotonNetwork.CurrentCluster.Length -1;
 
+        print(liveCount);
+
         // OnPhotonSerializeView 호출 빈도
         PhotonNetwork.SerializationRate = 60;
         // RPC 호출 빈도
