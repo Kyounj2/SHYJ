@@ -37,11 +37,6 @@ public class SH_PlayerRot : MonoBehaviourPun
         cam = Camera.main.transform;
     }
 
-    void Update()
-    {
-
-    }
-
     public void PlayerRot(ViewState s, bool isLookAround)
     {
         if (photonView.IsMine == false) return;
