@@ -64,9 +64,21 @@ public class SH_PlayerHP : MonoBehaviourPun
 
         if (hp <= 0)
         {
-            // Á×°Å³ª, ±×·Î±â »óÅÂÀÌ°í ½Í´Ù.
+            // ï¿½×°Å³ï¿½, ï¿½×·Î±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½Í´ï¿½.
             fsm.RpcOnChangeState(SH_PlayerFSM.State.Groggy);
         }
     }
 
+    const float DEADLINE = 60.0f;
+    public float seatedTime = 0;
+    public void Seated()
+    {
+        seatedTime += Time.deltaTime;
+
+        if (seatedTime > DEADLINE)
+        {
+            fsm.ChangeState(SH_PlayerFSM.State.Die);
+        }
+    }
+    // hi
 }

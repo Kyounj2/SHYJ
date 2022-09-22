@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class UserInfo : MonoBehaviour
 {
-    // ´Ð³×ÀÓ, ¿ªÇÒ±º
+    // ï¿½Ð³ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½Ò±ï¿½
     public string nick_name;
     public string role;
 
-    // ¼±ÅÃÇÑ Ä³¸¯ÅÍ, ÀÚ¸®¹øÈ£(µé¾î¿Â ¼ø¼­)
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½, ï¿½Ú¸ï¿½ï¿½ï¿½È£(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
     public string character;
     public int order;
 
-    // °ÔÀÓ¿ÀºêÁ§Æ®, »ý»ç¿©ºÎ
+    // ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½Æ®, ï¿½ï¿½ï¿½ç¿©ï¿½ï¿½
     public GameObject playerOBJ;
 
     public bool is_alive;
@@ -21,7 +21,7 @@ public class UserInfo : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);    
+        DontDestroyOnLoad(gameObject);
     }
-
+    // hi
 }
