@@ -84,6 +84,10 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         enemy_ui = GameObject.Find("EnemyMachineGage");
         enemy_ui.SetActive(false);
 
+        // 데미지 ui 찾기
+        blood_1 = GameObject.Find("blood").GetComponent<Image>();
+        blood_2 = GameObject.Find("blood (1)").GetComponent<Image>();
+
     }
 
     // 현재상태
@@ -97,6 +101,9 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.J))
+            OnAttackUI();
+
         if (photonView.IsMine)
         {
             if(isNearPropMachine)
@@ -108,7 +115,6 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                 enemy_ui.SetActive(false);
                 enemy_ui.GetComponent<Slider>().value = 0;
             }
-            //ChangeState(State.Move); 안됌
 
             //// 마우스커서 숨기기
             //Cursor.visible = false;
@@ -119,8 +125,15 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
             switch (state)
             {
-                case State.Move:
+                case State.Move:                    
+                    blood1_C.a = 0;
+                    blood_1.color = blood1_C;
+                    blood2_C.a = 0;
+                    blood_2.color = blood2_C;
+                    bloodUITime = 0;
                     KillerMove();
+                    photonView.RPC("RpcSetBool", RpcTarget.All, "Skill_1", false);
+                    photonView.RPC("RpcSetBool", RpcTarget.All, "Skill_2", false);
                     if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W))
                     {
                         //anim.SetInteger("vv", 1);
@@ -144,11 +157,11 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     Attack();
                     break;
                 case State.Skill_1: // 스피드업
-                    photonView.RPC("RpcSetTrigger", RpcTarget.All, "Skill_1");
+                    photonView.RPC("RpcSetBool", RpcTarget.All, "Skill_1", true);
                     Skill_SpeedUp();
                     break;
                 case State.Skill_2: // 비명지르기
-                    photonView.RPC("RpcSetTrigger", RpcTarget.All, "Skill_2");
+                    photonView.RPC("RpcSetBool", RpcTarget.All, "Skill_2", true);
                     Skill_Scream();
                     break;
                 case State.Skill_3: // 발전기 저주
@@ -349,6 +362,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         {
             if (hp != null)
             {
+                OnAttackUI();
                 hp.OnDamaged(30); // 혁신이꺼 Rpc로 바꾸기
                 hp = null;
             }
@@ -373,7 +387,6 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
         if (skill_1Time > 1f)
         {
-            print("스킬사용 완료");
             state = State.Move;
             skill_1Time = 0;
         }
@@ -393,6 +406,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
             // 플레이어가 있다면
             if (colls[i].gameObject.layer == 29)
             {
+                OnAttackUI();
                 // colls의 게임오브젝트에서 데미지 함수 실행
                 hp = colls[i].gameObject.GetComponent<SH_PlayerHP>();
                 hp.OnDamaged(10);
@@ -408,6 +422,30 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         }
     }
 
+    Image blood_1;
+    Color blood1_C;
+
+    Image blood_2;
+    Color blood2_C;
+
+    float bloodUITime = 0;
+
+    void OnAttackUI()
+    {
+        bloodUITime += Time.deltaTime;
+
+        // 플레이어를 피격했을때 blood의 알파값으 80으로 올렸다가 다시 내려줄것
+        blood1_C = blood_1.color;
+        blood1_C.a = 80;
+        blood_1.color = blood1_C;
+
+        blood2_C = blood_2.color;
+        blood2_C.a = 80;
+        blood_2.color = blood2_C;
+
+    }
+
+
     public GameObject shoulderPos;
     float carryTime = 0;
     Vector3 handVec;
@@ -416,8 +454,6 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     {
         carryTime += Time.deltaTime;
         playerTr.gameObject.GetComponent<CharacterController>().enabled = false;
-        //playerFSM.body.gameObject.transform.up = transform.forward;
-        //playerFSM.body.gameObject.transform.localEulerAngles = transform.localEulerAngles + new Vector3(100, 0, 180);
 
         handVec = hand.transform.position;
         shoulderVec = shoulderPos.transform.position;
@@ -459,29 +495,9 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         }
     }
 
+
+
     // 네트워크모음
-    [PunRPC]
-    void RpcPlayerGroggy()
-    {
-        //if (player.collider.gameObject.layer == 29)
-        //{
-        //    playerFSM = player.transform.GetComponent<SH_PlayerFSM>();
-        //    playerTr = player.transform;
-
-        //    if (playerFSM != null)
-        //    {
-        //        if (playerFSM.state == SH_PlayerFSM.State.Groggy)
-        //        {
-        //            if (Input.GetKeyDown(KeyCode.F))
-        //            {
-        //                playerFSM.ChangeState(SH_PlayerFSM.State.Catched);
-        //                state = State.Carry;
-        //            }
-        //        }
-        //    }
-        //}
-    }
-
     [PunRPC]
     public void RpcSetTrigger(string trigger)
     {
@@ -503,108 +519,5 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         anim.SetBool(s, b);
     }
 
-    
 
-    //[PunRPC]
-    //public void RPCChangeState(State s)
-    //{
-    //    switch (s)
-    //    {
-    //        case State.Move:
-    //            print("된거야만거야 짜증나게");
-    //            //KillerMove();
-    //            //photonView.RPC("RPCKillerMove", RpcTarget.All);
-    //            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W))
-    //            {
-    //                //anim.SetInteger("vv", 1);
-    //                photonView.RPC("RpcSetInteger", RpcTarget.All, "vv", 1);
-    //            }
-    //            else
-    //            {
-    //                //anim.SetInteger("vv", 0);
-    //                photonView.RPC("RpcSetInteger", RpcTarget.All, "vv", 0);
-    //            }
-
-    //            if (carryTime > 0.3)
-    //            {
-    //                playerTr.gameObject.transform.position = shoulderPos.transform.position;
-    //                playerFSM.body.gameObject.transform.localEulerAngles = transform.localEulerAngles + new Vector3(100, 0, 180);
-    //            }
-    //            break;
-    //        case State.Attack:
-    //            anim.SetBool("Attack", true);
-    //            Attack();
-    //            break;
-    //        case State.Skill_1: // 스피드업
-    //            Skill_SpeedUp();
-    //            break;
-    //        case State.Skill_2: // 비명지르기
-    //            Skill_Scream();
-    //            break;
-    //        case State.Skill_3: // 발전기 저주
-    //            break;
-    //        case State.Carry:
-    //            anim.SetBool("Carry", true);
-    //            Carry();
-    //            break;
-    //        case State.Die:
-    //            break;
-
-    //    }
-    //}
-
-    //[PunRPC]
-    //public void RPCKillerMove()
-    //{
-    //    float h = Input.GetAxis("Horizontal");
-    //    float v = Input.GetAxis("Vertical");
-
-    //    yvel += gravity * Time.deltaTime;
-
-    //    // ray쏘고다니기
-    //    Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 2.5f, Color.red * 1f);
-    //    Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-    //    if (Physics.Raycast(ray, out player, 2.5f))
-    //    {
-    //        photonView.RPC("RpcPlayerGroggy", RpcTarget.All);
-    //    }
-
-    //    if (cc.isGrounded)
-    //    {
-    //        yvel = 0;
-    //        jumpCount = 0;
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.Space) && jumpCount < 2)
-    //    {
-    //        yvel = jumpPower;
-    //        jumpCount++;
-    //    }
-
-    //    dir = transform.right * h + transform.forward * v;
-    //    dir.Normalize();
-
-    //    dir.y = yvel;
-
-    //    // 마우스 왼쪽버튼 누르면 Attack으로 바꾸기
-    //    if (Input.GetButtonDown("Fire1") && carryTime <= 0)
-    //    {
-    //        state = State.Attack;
-    //    }
-
-    //    // 1번키 누르면 스피드업 스킬 가동
-    //    if (Input.GetKeyDown(KeyCode.Alpha1) && carryTime <= 0)
-    //    {
-    //        state = State.Skill_1;
-    //    }
-
-    //    // 2번키 누르면 비명 스킬 가동
-    //    if (Input.GetKeyDown(KeyCode.Alpha2) && carryTime <= 0)
-    //    {
-    //        state = State.Skill_2;
-    //    }
-
-    //    cc.Move(dir * speed * Time.deltaTime);
-
-
-    //}
 }
