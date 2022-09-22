@@ -23,6 +23,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
     SH_PlayerMove pm;
     SH_PlayerRot pr;
+    SH_PlayerHP ph;
     SH_PlayerSkill ps;
 
     void Start()
@@ -31,6 +32,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
         pm = GetComponent<SH_PlayerMove>();
         pr = GetComponent<SH_PlayerRot>();
+        ph = GetComponent<SH_PlayerHP>();  
         ps = GetComponent<SH_PlayerSkill>();
     }
 
@@ -140,6 +142,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 Transform player = body.GetComponentInParent<Transform>();
                 player.localEulerAngles = new Vector3(0, 0, 0);
                 pm.cc.enabled = true;
+                ph.seatedTime = 0;
                 break;
 
             case State.Die:
@@ -190,11 +193,32 @@ public class SH_PlayerFSM : MonoBehaviourPun
     private void Seated()
     {
         pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, true);
+        ph.Seated();
+        // hi
     }
-
+    
     private void Die()
     {
-        throw new NotImplementedException();
+        Ray ray = new Ray(transform.position + Vector3.up * 2, Vector3.down);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.CompareTag("Chair"))
+            {
+                Transform go = hit.transform;
+                go.position = Vector3.down * 0.2f * Time.deltaTime;
+                transform.position = Vector3.down * 0.2f * Time.deltaTime;
+
+                if (transform.position.y < -2)
+                {
+                    GameManager.instance.userInfo.is_alive = false;
+                    GameManager.instance.userInfo.is_escape = false;
+                    Destroy(go.gameObject);
+                    Destroy(gameObject);
+                }
+            }
+        }
     }
 
     [PunRPC]
