@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         instance = this;
     }
 
-    UserInfo userInfo;
+    [HideInInspector]
+    public UserInfo userInfo;
     UsersData usersData;
 
     public GameObject character1Factory;
@@ -21,8 +22,14 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject character3Factory;
     public GameObject character4Factory;
 
+    // 현재 살아있는 인원이 몇명인지 판단하기 (애너미 제외)
+    public int liveCount = 0;
+
     void Start()
     {
+        // 시작할때 서버에 접속한 인원 넣어주기 ( 애너미 제외 )
+        liveCount = PhotonNetwork.CurrentCluster.Length -1;
+
         // OnPhotonSerializeView 호출 빈도
         PhotonNetwork.SerializationRate = 60;
         // RPC 호출 빈도
@@ -113,8 +120,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         userInfo.is_alive = true;
     }
 
-    void Update()
+    [PunRPC]
+    void RpcliveCount()
     {
-        
+        liveCount--;
     }
 }

@@ -15,12 +15,13 @@ public class UserInfo : MonoBehaviour
 
     // 게임오브젝트, 생사여부
     public GameObject playerOBJ;
-    public bool is_alive;
 
-    public Action lobby2Ready;
+    public bool is_alive;
+    public bool is_escape;
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);    
     }
+
 }

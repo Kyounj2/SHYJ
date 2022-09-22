@@ -42,11 +42,11 @@ public class ReadyManager : MonoBehaviourPun
         GameObject users = GameObject.Find("UsersData");
         usersData = users.GetComponent<UsersData>();
 
-        //curPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
-        curPlayer = 2;
+        curPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
+        //curPlayer = 2;
         print(curPlayer);
 
-        UserSpawn(curPlayer);
+        UserSpawn(curPlayer + 1);
     }
 
     void UserSpawn(int p)

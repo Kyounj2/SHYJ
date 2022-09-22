@@ -26,7 +26,6 @@ public class YJ_Propmachines : MonoBehaviourPun
 
     // 애너미용 머신작동
     Slider enemySlider;
-    bool macineOff = false;
 
     // gage 다 찼을때 더이상 가동되지 않게할 bool값
     bool end = false;
