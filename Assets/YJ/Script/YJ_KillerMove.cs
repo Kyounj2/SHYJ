@@ -144,9 +144,11 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     Attack();
                     break;
                 case State.Skill_1: // 스피드업
+                    photonView.RPC("RpcSetTrigger", RpcTarget.All, "Skill_1");
                     Skill_SpeedUp();
                     break;
                 case State.Skill_2: // 비명지르기
+                    photonView.RPC("RpcSetTrigger", RpcTarget.All, "Skill_2");
                     Skill_Scream();
                     break;
                 case State.Skill_3: // 발전기 저주
@@ -221,8 +223,6 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         {
             transform.eulerAngles = new Vector3(0, rotX, 0); // 일단좌우만
             Camera.main.transform.eulerAngles = new Vector3(-rotY, rotX, 0);
-            //Campos.transform.eulerAngles = new Vector3(-rotY, 0, 0);
-            //Campos.transform.eulerAngles = new Vector3(-rotY, rotX, 0);
         }
         else if (carryTime > 0.1)
         {
@@ -234,7 +234,6 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
             Campos.transform.position = Campos2.transform.position;
             transform.eulerAngles = new Vector3(0, rotX, 0);
             Campos.transform.forward = transform.forward;
-            //Camera.main.transform.eulerAngles = new Vector3(16, 0, 0);
         }
     }
 
@@ -271,8 +270,6 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     }
                 }
             }
-            //RpcPlayerGroggy();
-            //photonView.RPC("RpcPlayerGroggy", RpcTarget.All);
         }
 
         if (cc.isGrounded)
@@ -316,7 +313,6 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
             {
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    print("의자에앉아 짜증나니깐");
                     state = State.Down;
                 }
             }
