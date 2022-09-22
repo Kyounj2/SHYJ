@@ -126,7 +126,6 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 break;
 
             case State.Transform:
-                ps.SkillOffMimic();
                 break;
 
             case State.Groggy:
@@ -154,29 +153,15 @@ public class SH_PlayerFSM : MonoBehaviourPun
     {
         pm.PlayerMovement();
         pr.PlayerRot(SH_PlayerRot.ViewState.FIRST, false);
-        
-        if (Input.GetButtonDown("Fire1"))
-        {
-            if (photonView.IsMine)
-                ps.SkillOnMimic(pr.targetCamPos.position, pr.targetCamPos.forward);
-        }
+        ps.SkillOnMimic(pr.targetCamPos.position, pr.targetCamPos.forward);
     }
 
     private void Transform()
     {
         pm.PlayerMovement();
         pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, false);
-        
-        if (Input.GetButtonDown("Fire1"))
-        {
-            if (photonView.IsMine)
-                ps.SkillOnMimic(pr.targetCamPos.position, pr.targetCamPos.forward);
-        }
-        else if (Input.GetButtonDown("Fire2"))
-        {
-            if (photonView.IsMine)
-                ChangeState(State.Normal);
-        }
+        ps.SkillOnMimic(pr.targetCamPos.position, pr.targetCamPos.forward);
+        ps.SkillOffMimic();
     }
 
     private void Groggy()
@@ -194,7 +179,6 @@ public class SH_PlayerFSM : MonoBehaviourPun
     {
         pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, true);
         ph.Seated();
-        // hi
     }
     
     private void Die()

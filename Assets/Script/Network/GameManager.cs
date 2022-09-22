@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.SerializationRate = 60;
         // RPC »£√‚ ∫Ûµµ
         PhotonNetwork.SendRate = 60;
-
+        
         GameObject user = GameObject.Find("UserInfo");
         userInfo = user.GetComponent<UserInfo>();
 
