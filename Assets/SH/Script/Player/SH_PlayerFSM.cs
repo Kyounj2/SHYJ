@@ -194,8 +194,9 @@ public class SH_PlayerFSM : MonoBehaviourPun
     {
         pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, true);
         ph.Seated();
+        // hi
     }
-
+    
     private void Die()
     {
         Ray ray = new Ray(transform.position + Vector3.up * 2, Vector3.down);
