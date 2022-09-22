@@ -8,7 +8,6 @@ using static UnityEngine.UI.Image;
 
 public class SH_PlayerSkill : MonoBehaviourPun
 {
-
     public GameObject player_ui;
     public GameObject enemy_ui;
     public bool isNearPropMachine = false;
@@ -29,7 +28,6 @@ public class SH_PlayerSkill : MonoBehaviourPun
         //    enemy_ui = GameObject.Find("EnemyMachineGage");
         //    enemy_ui.SetActive(false);
         //}
-
 
         fsm = GetComponent<SH_PlayerFSM>();
         cam = Camera.main.transform;
@@ -58,40 +56,6 @@ public class SH_PlayerSkill : MonoBehaviourPun
             }
         }
     }
-
-    //Dictionary<string, GameObject> mimicInfo = new Dictionary<string, GameObject>();
-    //GameObject targetBody;
-
-    //public void SkillOnMimic()
-    //{
-    //    Ray cameraRay = new Ray(cam.position, cam.forward);
-    //    RaycastHit hit;
-
-    //    if (Physics.Raycast(cameraRay, out hit, 10))
-    //    {
-    //        if (hit.collider.CompareTag("Transformable"))
-    //        {
-    //            //targetBody = hit.collider.gameObject;
-    //            //mimicInfo["target"] = targetBody;
-
-    //            photonView.RPC("RpcSkillOnMimic", RpcTarget.All);
-
-    //            fsm.ChangeState(SH_PlayerFSM.State.Transform);
-    //        }
-    //    }
-    //}
-
-    //[PunRPC]
-    //public void RpcSkillOnMimic()
-    //{
-    //    originalBody.SetActive(false);
-    //    mimicBody.SetActive(true);
-
-    //    mybMeshFilter.mesh = targetBody.GetComponent<MeshFilter>().mesh;
-    //    myMeshRenderer.material = targetBody.GetComponent<MeshRenderer>().material;
-    //    myMeshCollider.sharedMesh = targetBody.GetComponent<MeshCollider>().sharedMesh;
-    //    mimicBody.transform.localScale = targetBody.transform.localScale;
-    //}
 
     public void SkillOffMimic()
     {

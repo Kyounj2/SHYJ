@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 
-
 public class SH_PlayerHP : MonoBehaviourPun
 {
     float hp;
@@ -69,4 +68,15 @@ public class SH_PlayerHP : MonoBehaviourPun
         }
     }
 
+    const float DEADLINE = 60.0f;
+    public float seatedTime = 0;
+    public void Seated()
+    {
+        seatedTime += Time.deltaTime;
+        
+        if (seatedTime > DEADLINE)
+        {
+            fsm.ChangeState(SH_PlayerFSM.State.Die);
+        }
+    }
 }

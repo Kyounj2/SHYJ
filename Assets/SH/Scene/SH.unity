@@ -1240,6 +1240,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7638943795968508333, guid: 16ceb6c7f746e05488c34741a1fbee9a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16ceb6c7f746e05488c34741a1fbee9a, type: 3}
 --- !u!1 &221462167
@@ -5807,11 +5811,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d7265f31b211f49a2845119f3379f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isNearPropMachine: 0
+  enemy_ui: {fileID: 0}
+  player_ui: {fileID: 0}
   speed: 5
   jumpPower: 3
   nicName: {fileID: 0}
   lerpSpeed: 100
   currState: 0
+  triggerChair: 0
+  chairPos: {fileID: 0}
+  camPosOrigin: {fileID: 0}
   Campos: {fileID: 1946930058}
   Campos2: {fileID: 0}
   hand: {fileID: 0}
@@ -7880,6 +7890,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -9070748969904699067, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -7936,9 +7950,109 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6651105703291907134, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: -5888986704925769930, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: -5266785677919700964, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: -5119101871893595362, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: -4620282718447106903, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: -2580251839475376012, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: -2567555823779535870, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: -2354506953388749091, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: -1925361108589745000, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: -1301299962433576674, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: -1276816731923613103, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: -270084420956868377, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 418531781531307844, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 535860225954546435, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 725557647042468855, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
       propertyPath: m_Name
       value: electric chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 2714808554755423899, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 3232227985838439477, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587788796799408565, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 5090062054982439474, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 5387339473597475839, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568789175727428425, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 6258654841450785101, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695304551642739032, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 8728723278266805325, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}
+      propertyPath: m_TagString
+      value: Chair
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 200e64d84b0d7ee44aea6b38e3913e96, type: 3}

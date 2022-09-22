@@ -38,6 +38,9 @@ public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
     public float lerpSpeed = 100;
 
     // PlayerState ÄÄÆ÷³ÍÆ®
+    
+    
+    
     SH_PlayerFSM fsm;
 
     public float stamina;

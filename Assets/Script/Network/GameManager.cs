@@ -13,8 +13,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         instance = this;
     }
 
-    UserInfo userInfo;
-    UsersData usersData;
+    [HideInInspector] public UserInfo userInfo;
+    [HideInInspector] public UsersData usersData;
 
     public GameObject character1Factory;
     public GameObject character2Factory;
