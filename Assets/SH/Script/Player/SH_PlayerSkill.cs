@@ -62,7 +62,6 @@ public class SH_PlayerSkill : MonoBehaviourPun
     public void SkillOffMimic()
     {
         photonView.RPC("RpcSkillOffMimic", RpcTarget.All);
-        //fsm.ChangeState(SH_PlayerFSM.State.Normal);
     }
 
     [PunRPC]
@@ -74,7 +73,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
 
             originalBody.SetActive(true);
             mimicBody.SetActive(false);
-        fsm.RpcOnChangeState(SH_PlayerFSM.State.Normal);
+            fsm.RpcOnChangeState(SH_PlayerFSM.State.Normal);
         }
     }
 
@@ -83,12 +82,14 @@ public class SH_PlayerSkill : MonoBehaviourPun
         photonView.RPC("RpcSkillOnMimic", RpcTarget.All, origin, dir);
     }
 
+    Ray cameraRay;
+    RaycastHit hit;
+
     [PunRPC]
     public void RpcSkillOnMimic(Vector3 origin, Vector3 dir)
     {
-        Ray cameraRay = new Ray(origin, dir);
+        cameraRay = new Ray(origin, dir);
         Debug.DrawLine(cameraRay.origin, cameraRay.direction * 50, Color.red);
-        RaycastHit hit;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -108,11 +109,39 @@ public class SH_PlayerSkill : MonoBehaviourPun
                     myMeshCollider.sharedMesh = targetBody.GetComponent<MeshCollider>().sharedMesh;
                     mimicBody.transform.localScale = targetBody.transform.localScale;
 
-                    photonView.RPC("RpcOnChangeState", RpcTarget.All, SH_PlayerFSM.State.Transform);
-                    //fsm.RpcOnChangeState(SH_PlayerFSM.State.Transform);
+                    //photonView.RPC("RpcOnChangeState", RpcTarget.All, SH_PlayerFSM.State.Transform);
+                    fsm.RpcOnChangeState(SH_PlayerFSM.State.Transform);
                 }
             }
         }
     }
-    // hi
+
+    float rescueTime = 0;
+    const float RESCUESUCCESSTIME = 2;
+    public void Rescue()
+    {
+        if (Physics.Raycast(cameraRay, out hit))
+        {
+            if (hit.distance < 15)
+            {
+                SH_PlayerFSM outFSM = hit.transform.GetComponent<SH_PlayerFSM>();
+                if (outFSM.state == SH_PlayerFSM.State.Seated)
+                {
+                    //rescueUI.SetActive(true);
+                    if (Input.GetKeyDown(KeyCode.F))
+                    {
+                        rescueTime += Time.deltaTime;
+                        if (rescueTime > RESCUESUCCESSTIME)
+                        {
+                            outFSM.ChangeState(SH_PlayerFSM.State.Normal);
+
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+
 }

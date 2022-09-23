@@ -34,22 +34,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.SerializationRate = 60;
         // RPC 호출 빈도
         PhotonNetwork.SendRate = 60;
+        
+        GameObject user = GameObject.Find("UserInfo");
+        userInfo = user.GetComponent<UserInfo>();
 
-        //GameObject user = GameObject.Find("UserInfo");
-        //userInfo = user.GetComponent<UserInfo>();
-
-        //GameObject users = GameObject.Find("UsersData");
-        //usersData = users.GetComponent<UsersData>();
-
-        // 플레이어를 생성한다.
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.Instantiate("Player", transform.position, Quaternion.identity);
-        }
-        else
-        {
-            PhotonNetwork.Instantiate("Player", transform.position, Quaternion.identity);
-        }
+        GameObject users = GameObject.Find("UsersData");
+        usersData = users.GetComponent<UsersData>();
 
         CreatePlayer();
     }
