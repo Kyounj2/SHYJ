@@ -22,6 +22,9 @@ public class YJ_Portal : MonoBehaviourPun
     // 탈출인원 체크
     public int escapeCount;
 
+    // 죽었을때 볼 카메라
+    public GameObject dathCam;
+
     void Start()
     {
         
@@ -41,11 +44,26 @@ public class YJ_Portal : MonoBehaviourPun
 
         if (other.gameObject.layer == 29)
         {
-            GameManager.instance.userInfo.is_escape = true;
             escapeCount++;
+
+            //if(other.gameObject.GetComponent<PhotonView>().IsMine)
+            //{
+                GameManager.instance.userInfo.is_escape = true;
+                // 닿았을때 게임오브젝트를 끄고
+                photonView.RPC("RpcActiveFlase", RpcTarget.All, other);
+
+
+            //}
         }
 
-        // 닿았을때 게임오브젝트를 끄고
-        // DathCam을 생성하기
+        // DathCam을 생성하기? 켜기?
+        Instantiate(dathCam);
+        
+    }
+
+    [PunRPC]
+    void RpcActiveFlase(Collider player)
+    {
+        player.gameObject.SetActive(false);
     }
 }

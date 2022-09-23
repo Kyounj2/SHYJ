@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,36 +17,52 @@ public class YJ_DieCam : MonoBehaviour
     // 플레이어들을 담을 리스트
     [SerializeField]
     GameObject[] playerList = null;
-    
-    // 플레이어에게서 떨어질 일정거리
-    Vector3 des;
 
     // 마우스 좌우값
     float mouseX;
 
+    // 배열 불러올 숫자
+    int player = 0;
+
     void Start()
     {
-        des = new Vector3(0, 0, -5);
-
-        playerList = GameObject.FindGameObjectsWithTag("Player");
-
-        transform.position = playerList[player].transform.position;
-        //transform.LookAt(playerList[player].transform);
-        transform.parent = playerList[player].transform;
+        if(GameObject.FindGameObjectsWithTag("Player").Length > 0)
+        {
+            playerList = GameObject.FindGameObjectsWithTag("Player");
+            transform.position = playerList[player].transform.position;
+            lookAtPlayer = playerList[player];
+        }
+        //transform.parent = playerList[player].transform;
     }
 
-    // 넘어가기 전 숫자 저장
-    //int rPlayer = 0;
+
     void Update()
     {
-        // 카메라 회전
-        CamRot();
-
-        // 마우스 버튼 클릭 시 다음 캐릭터로 이동
-        if (Input.GetMouseButtonDown(0))
+        if (GameObject.FindGameObjectsWithTag("Player").Length > 0)
         {
-            //rPlayer = player;
-            NextPlayer();
+            // 카메라 회전
+            CamRot();
+
+            // 플레이어의 수가 지금 현재 찾은 수보다 적을경우
+            if (GameObject.FindGameObjectsWithTag("Player").Length < playerList.Length)
+            {
+                // 배열을 비우고 다시 넣어준다
+                Array.Clear(playerList, 0, playerList.Length);
+                playerList = null;
+
+                playerList = GameObject.FindGameObjectsWithTag("Player");
+            }
+
+            // 마우스 버튼 클릭 시 다음 캐릭터로 이동
+            if (Input.GetMouseButtonDown(0) || !lookAtPlayer.activeSelf)
+            {
+                //rPlayer = player;
+                NextPlayer();
+            }
+
+            if (lookAtPlayer.activeSelf)
+                transform.position = playerList[player].transform.position;
+
         }
     }
 
@@ -57,15 +74,15 @@ public class YJ_DieCam : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0, mouseX, 0);
     }
 
-
-    int player = 0;
-
+    GameObject lookAtPlayer;
+    // 마우스 클릭 시 다음 플레이어로 넘어가기
     void NextPlayer()
     {
         player++;
         if (player >= playerList.Length) player = 0;
 
-        transform.position = playerList[player].transform.position;
-        transform.parent = playerList[player].transform;
+        lookAtPlayer = playerList[player];
+        //transform.position = playerList[player].transform.position;
+        //transform.parent = playerList[player].transform;
     }
 }

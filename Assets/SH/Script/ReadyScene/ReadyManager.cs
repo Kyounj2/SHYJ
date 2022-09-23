@@ -5,7 +5,6 @@ using System.Data;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 
 public class ReadyManager : MonoBehaviourPun
 {

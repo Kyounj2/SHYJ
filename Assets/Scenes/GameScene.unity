@@ -136,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 80432988761428520, guid: d46b2be5eec676d4bbfe98974d19f8dd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 80432988761428695, guid: d46b2be5eec676d4bbfe98974d19f8dd, type: 3}
       propertyPath: m_RootOrder
@@ -181,6 +181,14 @@ PrefabInstance:
     - target: {fileID: 80432988761428695, guid: d46b2be5eec676d4bbfe98974d19f8dd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7721365700359782912, guid: d46b2be5eec676d4bbfe98974d19f8dd, type: 3}
+      propertyPath: dathCam
+      value: 
+      objectReference: {fileID: 1211553603996932545, guid: 35421208e817c6540b1dd044754c27f3, type: 3}
+    - target: {fileID: 8274159520216633812, guid: d46b2be5eec676d4bbfe98974d19f8dd, type: 3}
+      propertyPath: sceneViewId
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d46b2be5eec676d4bbfe98974d19f8dd, type: 3}
