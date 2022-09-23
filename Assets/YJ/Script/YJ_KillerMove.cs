@@ -68,6 +68,9 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
+            // 플레이어한테 붙일 것
+            GameManager.instance.AddPlayer(photonView);
+
             Campos.gameObject.SetActive(true);
             cameraOriginPos = Campos.transform;
             player_ui = GameObject.Find("PlayerMachineGage");
@@ -87,6 +90,8 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         // 데미지 ui 찾기
         blood_1 = GameObject.Find("blood").GetComponent<Image>();
         blood_2 = GameObject.Find("blood (1)").GetComponent<Image>();
+
+        //GameManager.instance.AddPlayer(photonView);
 
     }
 
@@ -158,6 +163,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     break;
                 case State.Skill_1: // 스피드업
                     photonView.RPC("RpcSetBool", RpcTarget.All, "Skill_1", true);
+                    
                     Skill_SpeedUp();
                     break;
                 case State.Skill_2: // 비명지르기
@@ -232,10 +238,21 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
         rotY = Mathf.Clamp(rotY, 1050, 1120); // 위아래 고정
 
+        // 1인칭 카메라
         if (carryTime <= 0)
         {
-            transform.eulerAngles = new Vector3(0, rotX, 0); // 일단좌우만
-            Camera.main.transform.eulerAngles = new Vector3(-rotY, rotX, 0);
+            if(state == State.Skill_1)
+            {
+                float rotZ = Mathf.Sin(120 * skill_1Time) * 50f * Time.deltaTime;
+                Debug.Log(rotZ);
+                transform.eulerAngles = new Vector3(0, rotX, 0); // 일단좌우만
+                Camera.main.transform.eulerAngles = new Vector3(-rotY, rotX, rotZ);
+            }
+            else
+            {
+                transform.eulerAngles = new Vector3(0, rotX, 0); // 일단좌우만
+                Camera.main.transform.eulerAngles = new Vector3(-rotY, rotX, 0);
+            }
         }
         else if (carryTime > 0.1)
         {
@@ -310,6 +327,9 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         // 1번키 누르면 스피드업 스킬 가동
         if (Input.GetKeyDown(KeyCode.Alpha1) && carryTime <= 0)
         {
+            camPosSave = Camera.main.transform.localPosition;
+            goDir = Camera.main.transform.forward;
+
             state = State.Skill_1;
         }
 
@@ -374,11 +394,13 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     }
 
     float skill_1Time = 0;
+    Vector3 camPosSave;
+    Vector3 goDir;
     // 스킬1번
     void Skill_SpeedUp()
     {
         skill_1Time += Time.deltaTime;
-        cc.Move(Camera.main.transform.forward * (speed * 5) * Time.deltaTime);
+        cc.Move(goDir.normalized * (speed * 5) * Time.deltaTime);
 
         if (Input.GetButtonDown("Fire1"))
         {
@@ -391,6 +413,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
             skill_1Time = 0;
         }
     }
+
 
     float skill_2Time = 0;
     public Collider[] colls;
@@ -409,7 +432,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                 OnAttackUI();
                 // colls의 게임오브젝트에서 데미지 함수 실행
                 hp = colls[i].gameObject.GetComponent<SH_PlayerHP>();
-                hp.OnDamaged(10);
+                if(hp != null) hp.OnDamaged(10);
                 break;
             }
         }
