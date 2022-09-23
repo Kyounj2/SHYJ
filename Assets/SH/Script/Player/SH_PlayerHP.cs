@@ -80,5 +80,4 @@ public class SH_PlayerHP : MonoBehaviourPun
             fsm.ChangeState(SH_PlayerFSM.State.Die);
         }
     }
-    // hi
 }

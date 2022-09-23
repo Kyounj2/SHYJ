@@ -23,5 +23,4 @@ public class UserInfo : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
-    // hi
 }

@@ -59,40 +59,6 @@ public class SH_PlayerSkill : MonoBehaviourPun
         }
     }
 
-    //Dictionary<string, GameObject> mimicInfo = new Dictionary<string, GameObject>();
-    //GameObject targetBody;
-
-    //public void SkillOnMimic()
-    //{
-    //    Ray cameraRay = new Ray(cam.position, cam.forward);
-    //    RaycastHit hit;
-
-    //    if (Physics.Raycast(cameraRay, out hit, 10))
-    //    {
-    //        if (hit.collider.CompareTag("Transformable"))
-    //        {
-    //            //targetBody = hit.collider.gameObject;
-    //            //mimicInfo["target"] = targetBody;
-
-    //            photonView.RPC("RpcSkillOnMimic", RpcTarget.All);
-
-    //            fsm.ChangeState(SH_PlayerFSM.State.Transform);
-    //        }
-    //    }
-    //}
-
-    //[PunRPC]
-    //public void RpcSkillOnMimic()
-    //{
-    //    originalBody.SetActive(false);
-    //    mimicBody.SetActive(true);
-
-    //    mybMeshFilter.mesh = targetBody.GetComponent<MeshFilter>().mesh;
-    //    myMeshRenderer.material = targetBody.GetComponent<MeshRenderer>().material;
-    //    myMeshCollider.sharedMesh = targetBody.GetComponent<MeshCollider>().sharedMesh;
-    //    mimicBody.transform.localScale = targetBody.transform.localScale;
-    //}
-
     public void SkillOffMimic()
     {
         photonView.RPC("RpcSkillOffMimic", RpcTarget.All);
@@ -102,10 +68,14 @@ public class SH_PlayerSkill : MonoBehaviourPun
     [PunRPC]
     public void RpcSkillOffMimic()
     {
-        originalBody.SetActive(true);
-        mimicBody.SetActive(false);
+        if (Input.GetMouseButton(1))
+        {
+            if (photonView.IsMine == false) return;
 
-        //fsm.RpcOnChangeState(SH_PlayerFSM.State.Normal);
+            originalBody.SetActive(true);
+            mimicBody.SetActive(false);
+        fsm.RpcOnChangeState(SH_PlayerFSM.State.Normal);
+        }
     }
 
     public void SkillOnMimic(Vector3 origin, Vector3 dir)
@@ -120,23 +90,27 @@ public class SH_PlayerSkill : MonoBehaviourPun
         Debug.DrawLine(cameraRay.origin, cameraRay.direction * 50, Color.red);
         RaycastHit hit;
 
-        if (Physics.Raycast(cameraRay, out hit, 50))
+        if (Input.GetMouseButtonDown(0))
         {
-            //print(hit.transform.name);
-            if (hit.collider.CompareTag("Transformable"))
+            if (photonView.IsMine == false) return;
+
+            if (Physics.Raycast(cameraRay, out hit, 50))
             {
-                originalBody.SetActive(false);
-                mimicBody.SetActive(true);
+                if (hit.collider.CompareTag("Transformable"))
+                {
+                    originalBody.SetActive(false);
+                    mimicBody.SetActive(true);
                     
-                GameObject targetBody = hit.collider.gameObject;
+                    GameObject targetBody = hit.collider.gameObject;
 
-                mybMeshFilter.mesh = targetBody.GetComponent<MeshFilter>().mesh;
-                myMeshRenderer.material = targetBody.GetComponent<MeshRenderer>().material;
-                myMeshCollider.sharedMesh = targetBody.GetComponent<MeshCollider>().sharedMesh;
-                mimicBody.transform.localScale = targetBody.transform.localScale;
+                    mybMeshFilter.mesh = targetBody.GetComponent<MeshFilter>().mesh;
+                    myMeshRenderer.material = targetBody.GetComponent<MeshRenderer>().material;
+                    myMeshCollider.sharedMesh = targetBody.GetComponent<MeshCollider>().sharedMesh;
+                    mimicBody.transform.localScale = targetBody.transform.localScale;
 
-                photonView.RPC("RpcOnChangeState", RpcTarget.All, SH_PlayerFSM.State.Transform);
-                //fsm.RpcOnChangeState(SH_PlayerFSM.State.Transform);
+                    photonView.RPC("RpcOnChangeState", RpcTarget.All, SH_PlayerFSM.State.Transform);
+                    //fsm.RpcOnChangeState(SH_PlayerFSM.State.Transform);
+                }
             }
         }
     }

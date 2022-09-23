@@ -30,28 +30,26 @@ public class GameManager : MonoBehaviourPunCallbacks
         // 시작할때 서버에 접속한 인원 넣어주기 ( 애너미 제외 )
         liveCount = PhotonNetwork.CurrentCluster.Length -1;
 
-        print(liveCount);
-
         // OnPhotonSerializeView 호출 빈도
         PhotonNetwork.SerializationRate = 60;
         // RPC 호출 빈도
         PhotonNetwork.SendRate = 60;
+        
+        GameObject user = GameObject.Find("UserInfo");
+        userInfo = user.GetComponent<UserInfo>();
 
-        //GameObject user = GameObject.Find("UserInfo");
-        //userInfo = user.GetComponent<UserInfo>();
+        GameObject users = GameObject.Find("UsersData");
+        usersData = users.GetComponent<UsersData>();
 
-        //GameObject users = GameObject.Find("UsersData");
-        //usersData = users.GetComponent<UsersData>();
-
-        // 플레이어를 생성한다.
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.Instantiate("Killer", transform.position, Quaternion.identity);
-        }
-        else
-        {
-            PhotonNetwork.Instantiate("Player", transform.position, Quaternion.identity);
-        }
+        //// 플레이어를 생성한다.
+        //if(PhotonNetwork.IsMasterClient)
+        //{
+        //    PhotonNetwork.Instantiate("Player", transform.position, Quaternion.identity);
+        //}
+        //else
+        //{
+        //    PhotonNetwork.Instantiate("Player", transform.position, Quaternion.identity);
+        //}
 
         CreatePlayer();
     }
