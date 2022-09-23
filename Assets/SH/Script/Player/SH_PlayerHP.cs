@@ -64,7 +64,6 @@ public class SH_PlayerHP : MonoBehaviourPun
 
         if (hp <= 0)
         {
-            // �װų�, �׷α� �����̰� �ʹ�.
             fsm.RpcOnChangeState(SH_PlayerFSM.State.Groggy);
         }
     }

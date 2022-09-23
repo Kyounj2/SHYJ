@@ -41,16 +41,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         GameObject users = GameObject.Find("UsersData");
         usersData = users.GetComponent<UsersData>();
 
-        //// 플레이어를 생성한다.
-        //if(PhotonNetwork.IsMasterClient)
-        //{
-        //    PhotonNetwork.Instantiate("Player", transform.position, Quaternion.identity);
-        //}
-        //else
-        //{
-        //    PhotonNetwork.Instantiate("Player", transform.position, Quaternion.identity);
-        //}
-
         CreatePlayer();
     }
 

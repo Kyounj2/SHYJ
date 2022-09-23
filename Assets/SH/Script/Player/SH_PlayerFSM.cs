@@ -142,6 +142,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 player.localEulerAngles = new Vector3(0, 0, 0);
                 pm.cc.enabled = true;
                 ph.seatedTime = 0;
+                ph.OnHealed(20);
                 break;
 
             case State.Die:
@@ -198,8 +199,8 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 {
                     GameManager.instance.userInfo.is_alive = false;
                     GameManager.instance.userInfo.is_escape = false;
-                    Destroy(go.gameObject);
-                    Destroy(gameObject);
+                    PhotonNetwork.Destroy(go.gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                 }
             }
         }

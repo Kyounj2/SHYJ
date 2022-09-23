@@ -141,8 +141,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             userInfo.role = role;
         }
 
-        //PhotonNetwork.LoadLevel("ReadyScene");
-        PhotonNetwork.LoadLevel("GameScene");
+        PhotonNetwork.LoadLevel("ReadyScene");
+        //PhotonNetwork.LoadLevel("GameScene");
         print("OnJoinedRoom");
     }
 
