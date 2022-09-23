@@ -41,13 +41,11 @@ public class YJ_Portal : MonoBehaviourPun
 
         if (other.gameObject.layer == 29)
         {
-            //if (other.transform.GetComponent<PhotonView>().IsMine)
-            //{
-
-            //}
-
             GameManager.instance.userInfo.is_escape = true;
             escapeCount++;
         }
+
+        // 닿았을때 게임오브젝트를 끄고
+        // DathCam을 생성하기
     }
 }
