@@ -30,7 +30,6 @@ public class SH_PlayerSkill : MonoBehaviourPun
         //    enemy_ui.SetActive(false);
         //}
 
-
         fsm = GetComponent<SH_PlayerFSM>();
         cam = Camera.main.transform;
 
@@ -124,17 +123,20 @@ public class SH_PlayerSkill : MonoBehaviourPun
         {
             if (hit.distance < 15)
             {
-                SH_PlayerFSM outFSM = hit.transform.GetComponent<SH_PlayerFSM>();
-                if (outFSM.state == SH_PlayerFSM.State.Seated)
+                SH_PlayerFSM hitFSM = hit.transform.GetComponent<SH_PlayerFSM>();
+                SH_PlayerHP hitHP = hit.transform.GetComponent<SH_PlayerHP>();
+                if (hitFSM.state == SH_PlayerFSM.State.Seated)
                 {
                     //rescueUI.SetActive(true);
                     if (Input.GetKeyDown(KeyCode.F))
                     {
                         rescueTime += Time.deltaTime;
+                        // 슬라이더 UI 올라가고
                         if (rescueTime > RESCUESUCCESSTIME)
                         {
-                            outFSM.ChangeState(SH_PlayerFSM.State.Normal);
-
+                            // 슬라이더 UI 없어지고
+                            hitFSM.ChangeState(SH_PlayerFSM.State.Normal);
+                            hitHP.OnHealed(20);
                         }
                     }
 
