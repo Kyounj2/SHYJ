@@ -51,7 +51,6 @@ public class ReadyManager : MonoBehaviourPun
         SetUserInfo();
         // 자기 정보를 방장한테 보내주고 싶다.
         PostUserInfo2Master(userInfo.nick_name, userInfo.role, userInfo.character, userInfo.order);
-        
 
         //========================================================================
         photonView.RPC("RandomNum", RpcTarget.All, startNum);
