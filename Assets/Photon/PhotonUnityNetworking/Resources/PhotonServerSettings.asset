@@ -63,6 +63,9 @@ MonoBehaviour:
   - RandomNum
   - RpcSetUsersData
   - RpcPostUserInfo2Master
+  - RpcCharacterChange
+  - RpcScreenUpdate
+  - RpcGameStart
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

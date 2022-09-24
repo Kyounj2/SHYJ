@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class UserInfo : MonoBehaviour
+public class UserInfo : MonoBehaviourPun
 {
     public string nick_name;
     public string role;
@@ -20,4 +21,15 @@ public class UserInfo : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
+
+    //private void Start()
+    //{
+    //    nick_name = photonView.Owner.NickName;
+    //    if (PhotonNetwork.IsMasterClient)
+    //    {
+    //        role = "Killer";
+    //    }
+    //    else
+    //        role = "Player";
+    //}
 }

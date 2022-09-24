@@ -45,7 +45,7 @@ public class ReadyManager : MonoBehaviourPun
 
         startNum = Random.Range(0, 4);
         character = "Character" + (startNum + 1);   
-        curPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
+        curPlayer = PhotonNetwork.CurrentRoom.PlayerCount - 1;
 
         // 자기 정보를 저장하고 싶다.
         SetUserInfo();
@@ -53,43 +53,31 @@ public class ReadyManager : MonoBehaviourPun
         PostUserInfo2Master(userInfo.nick_name, userInfo.role, userInfo.character, userInfo.order);
 
         //========================================================================
-        photonView.RPC("RandomNum", RpcTarget.All, startNum);
+    }
 
-        //curPlayer = 2;
-        //print(curPlayer);
-
-        UserSpawn(curPlayer);
+    void UserSpawn(int spawnOrder)
+    {
+        photonView.RPC("RpcUserSpawn", RpcTarget.All, spawnOrder);
     }
 
     [PunRPC]
-    void RandomNum(int recieveNum)
+    void RpcUserSpawn(int spawnOrder)
     {
-        if (photonView.IsMine)
-            return;
-        else
-            startNum = recieveNum;
-    }
-
-    void UserSpawn(int p)
-    {
-        photonView.RPC("RpcUserSpawn", RpcTarget.MasterClient, p, startNum);
-    }
-
-    [PunRPC]
-    void RpcUserSpawn(int p, int startCharacterNum)
-    {
-        if (userInfo.role == "Player")
+        if (spawnOrder != 0)
         {
-            myPos = spawnPos[p];
-            myIcon = userIcon[p];
+            myPos = spawnPos[spawnOrder];
+            myIcon = userIcon[spawnOrder];
 
-            preCharacter = myPos.GetChild(startCharacterNum).gameObject;
-            preThumbnail = myIcon.GetChild(startCharacterNum).gameObject;
+            print(usersData.users[spawnOrder].character);
+            int spawnCharacterNum = int.Parse(usersData.users[spawnOrder].character.Substring(9)) - 1;
+
+            preCharacter = myPos.GetChild(spawnCharacterNum).gameObject;
+            preThumbnail = myIcon.GetChild(spawnCharacterNum).gameObject;
 
             preCharacter.SetActive(true);
             preThumbnail.SetActive(true);
         }
-        else if (userInfo.role == "Killer")
+        else
         {
             myPos = spawnPos[0];
             myIcon = userIcon[0];
@@ -97,9 +85,7 @@ public class ReadyManager : MonoBehaviourPun
             myIcon.GetChild(0).gameObject.SetActive(true);
         }
 
-        myIcon.Find("Text (Legacy)").GetComponent<Text>().text = userInfo.nick_name;
-
-        character = "Character" + p;
+        myIcon.Find("Text (Legacy)").GetComponent<Text>().text = usersData.users[spawnOrder].nick_name;
     }
 
     private void PostUserInfo2Master(string nickName, string role, string character, int order)
@@ -108,11 +94,9 @@ public class ReadyManager : MonoBehaviourPun
     }
 
     UserInfo tempInfo = new UserInfo();
-
     [PunRPC]
     void RpcPostUserInfo2Master(string nickName, string role, string character, int order)
     {
-        print("userInfo.order : " + userInfo.order + ", order : " + order);
         // MasterClient는 본인의 정보를 등록한다.
         if (userInfo.order == order)
         {
@@ -133,7 +117,7 @@ public class ReadyManager : MonoBehaviourPun
         if (photonView.IsMine)
         {
             // 2. 취합한 정보를 다시 뿌려주고 싶다.
-            for (int i = 1; i <= order; i++)
+            for (int i = 0; i <= order; i++)
             {
                 UserInfo sendInfo = new UserInfo();
 
@@ -143,11 +127,13 @@ public class ReadyManager : MonoBehaviourPun
                 sendInfo.order = usersData.users[i].order;
                 print(order + " 반복문 " + i);
                 SetUsersData(sendInfo);
+                UserSpawn(i);
             }
         }
     }
 
-    // ==========================<방장만 호출하는 함수>===================================
+    // ====================<MasterClient의 정보를 받아 동기화 하는 부분>===================
+
     void SetUsersData(UserInfo receiveInfo)
     {
         photonView.RPC("RpcSetUsersData", RpcTarget.All, receiveInfo.nick_name,
@@ -178,15 +164,21 @@ public class ReadyManager : MonoBehaviourPun
     {
         Debug();
 
-        if (Input.GetKeyUp(KeyCode.Alpha0))
-            GameStart();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (Input.GetKeyUp(KeyCode.Alpha0))
+                GameStart();
+        }
     }
 
     void GameStart()
     {
-        SetUserInfo();
-        //PostUserInfo2Master();
+        photonView.RPC("RpcGameStart", RpcTarget.All);
+    }
 
+    [PunRPC]
+    public void RpcGameStart()
+    {
         PhotonNetwork.LoadLevel("GameScene");
     }
 
@@ -196,38 +188,77 @@ public class ReadyManager : MonoBehaviourPun
         userInfo.order = curPlayer;
     }
 
-    public void OnClickCharacter(int p)
+    public void OnClickCharacter(string changeCharacter)
     {
-        preCharacter.SetActive(false);
-        preThumbnail.SetActive(false);
-
-        preCharacter = myPos.GetChild(p).gameObject;
-        preThumbnail = myIcon.GetChild(p).gameObject;
-
-        preCharacter.SetActive(true);
-        preThumbnail.SetActive(true);
-
-        character = "Character" + (p + 1);
+        CharacterChange(changeCharacter, userInfo.order);
+        ScreenUpdate(userInfo.order);
     }
 
     public void OnClickCharacter1()
     {
-        OnClickCharacter(0);
+        OnClickCharacter("Character1");
     }
 
     public void OnClickCharacter2()
     {
-        OnClickCharacter(1);
+        OnClickCharacter("Character2");
     }
 
     public void OnClickCharacter3()
     {
-        OnClickCharacter(2);
+        OnClickCharacter("Character3");
     }
 
     public void OnClickCharacter4()
     {
-        OnClickCharacter(3);
+        OnClickCharacter("Character4");
+    }
+
+    public void CharacterChange(string character, int order)
+    {
+        userInfo.character = character;
+        photonView.RPC("RpcCharacterChange", RpcTarget.All, character, order);
+    }
+
+    [PunRPC]
+    public void RpcCharacterChange(string character, int order)
+    {
+        usersData.users[order].character = character;
+    }
+
+    public void ScreenUpdate(int changerOrder)
+    {
+        photonView.RPC("RpcScreenUpdate", RpcTarget.All, changerOrder);
+    }
+
+    [PunRPC]
+    public void RpcScreenUpdate(int changerOrder)
+    {
+        // 1. 정보가 바뀐 사람이 플레이어 라면
+        if (changerOrder != 0)
+        {
+            // 정보가 바뀐 플레이어의 정보를 참고 하여 스크린을 업데이트 하고 싶다.
+            // 1. 바뀐 정보를 참고하고 싶다.
+            myPos = spawnPos[changerOrder];
+            myIcon = userIcon[changerOrder];
+
+            // 2. myPos, myIcon의 자식을 모두 끄고 싶다.
+            for (int i = 0; i < 4; i++)
+            {
+                myPos.GetChild(i).gameObject.SetActive(false);
+                myIcon.GetChild(i).gameObject.SetActive(false);
+            }
+
+            int changeCharacterNum = int.Parse(usersData.users[changerOrder].character.Substring(9)) - 1;
+
+            myPos.GetChild(changeCharacterNum).gameObject.SetActive(true);
+            myIcon.GetChild(changeCharacterNum).gameObject.SetActive(true);
+        }
+        // 2. 정보가 바뀐 사람이 킬러(방장) 이라면
+        else
+        {
+            return;
+        }
     }
 
     void Debug()
