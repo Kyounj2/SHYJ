@@ -58,6 +58,8 @@ public class EndingManager : MonoBehaviour
         // 애너미가 이겼을때
         if (winner == 0)
         {
+            enemyPos.SetActive(true);
+            enemyName.enabled = true;
             GameObject winner = Instantiate(enemy);
             winner.transform.position = enemyPos.transform.position;
 
