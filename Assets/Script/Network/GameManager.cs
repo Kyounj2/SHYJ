@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             string prefabName = "Player" + userInfo.character.Substring(9);
             userOBJ[userInfo.order] = PhotonNetwork.Instantiate(prefabName, playerSpawnPosition.position, Quaternion.identity);
             //userOBJ[1] = PhotonNetwork.Instantiate("Player", playerSpawnPosition.position, Quaternion.identity);
-            //SetUserInfo(userOBJ[userInfo.order], userInfo.order);
+            SetUserInfo(userOBJ[userInfo.order], userInfo.order);
 
             //for (int i = 1; i < 2; i++)
             //{
@@ -139,9 +139,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void SetUserInfo(GameObject userOBJ, int order)
     {
-        usersData.users[order].playerOBJ = userOBJ;
-        usersData.users[order].is_alive = true;
-        usersData.users[order].is_escape = false;
+        //usersData.users[order].playerOBJ = userOBJ;
+        //usersData.users[order].is_alive = true;
+        //usersData.users[order].is_escape = false;
 
         if (order == userInfo.order)
         {

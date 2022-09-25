@@ -70,11 +70,11 @@ public class YJ_EscapeManager : MonoBehaviourPun
             portal.SetActive(true);
         }
 
-        // 현재 살아있는 인원만큼 탈출하면
-        //if (portal.GetComponent<YJ_Portal>().escapeCount >= GameManager.instance.liveCount)
-        //{
-        //    Ending("Player");
-        //}
+        //현재 살아있는 인원만큼 탈출하면
+        if (portal.GetComponent<YJ_Portal>().escapeCount >= GameManager.instance.liveCount)
+        {
+            Ending("Player");
+        }
 
 
         if (timer.GetComponent<YJ_Timer>().enemyWin)

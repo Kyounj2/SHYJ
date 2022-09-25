@@ -29,7 +29,7 @@ public class YJ_DieCam : MonoBehaviour
         if(GameObject.FindGameObjectsWithTag("Player").Length > 0)
         {
             playerList = GameObject.FindGameObjectsWithTag("Player");
-            transform.position = playerList[player].transform.position;
+            transform.position = playerList[player].transform.position + new Vector3(0, 1.7f, 0);
             lookAtPlayer = playerList[player];
         }
         //transform.parent = playerList[player].transform;
