@@ -3588,7 +3588,7 @@ GameObject:
   - component: {fileID: 5480570462272513640}
   - component: {fileID: 5480570462272513639}
   - component: {fileID: 5480570462272513637}
-  - component: {fileID: 3530456922054323613}
+  - component: {fileID: 8488426915159520759}
   m_Layer: 0
   m_Name: Prop_Trigger
   m_TagString: Untagged
@@ -3629,6 +3629,7 @@ MonoBehaviour:
   originGage: {fileID: 5480570462532282906}
   maghineGage: {fileID: 0}
   hitGage: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!65 &5480570462272513639
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3664,26 +3665,21 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!95 &3530456922054323613
-Animator:
-  serializedVersion: 4
+--- !u!111 &8488426915159520759
+Animation:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5480570462272513642}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6dac69790669d5e449b1f4368905f968, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 28dcde19ac5ae4c42bd50b6a1b395433, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &5480570462532282906
 GameObject:
   m_ObjectHideFlags: 0
@@ -3789,6 +3785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8616be43700069a408838b76b2403bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  machinesAnim: {fileID: 8488426915159520759}
 --- !u!114 &6228606791087440124
 MonoBehaviour:
   m_ObjectHideFlags: 0

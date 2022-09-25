@@ -30,6 +30,7 @@ public class YJ_Propmachines : MonoBehaviourPun
     // gage 다 찼을때 더이상 가동되지 않게할 bool값
     bool end = false;
 
+    public Animation anim;
 
     void Start()
     {
@@ -38,6 +39,9 @@ public class YJ_Propmachines : MonoBehaviourPun
         playerSlider = maghineGage.GetComponent<Slider>();
         enemySlider = hitGage.GetComponent<Slider>();
         originGageSlider = originGage.GetComponent<Slider>();
+
+        // 애니메이션
+        anim = GetComponent<Animation>();
     }
 
     //[PunRPC]
@@ -69,10 +73,12 @@ public class YJ_Propmachines : MonoBehaviourPun
 
             if (Input.GetKey(KeyCode.F))
             {
+                anim.Play();
                 playerSlider.value += 0.1f * Time.deltaTime;
                 // Rpc로 메인값변경 또보내기
                 originGage.transform.GetComponent<PhotonView>().RPC("SliderValue", RpcTarget.All, 0.1f * Time.deltaTime);
-
+                if (Input.GetKeyUp(KeyCode.F))
+                    anim.Stop();
             }
         }
 
@@ -87,7 +93,7 @@ public class YJ_Propmachines : MonoBehaviourPun
 
             if (Input.GetKey(KeyCode.F))
             {
-                enemySlider.value += 0.1f * Time.deltaTime;
+                enemySlider.value += 0.2f * Time.deltaTime;
                 //photonView.RPC("RpcEnemyInputF", RpcTarget.All);
             }
 

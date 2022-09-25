@@ -8,6 +8,8 @@ using Photon.Realtime;
 public class YJ_MachineTopGage : MonoBehaviourPun
 {
 
+    public Animation machinesAnim;
+
     void Start()
     {
         escapemanager = GameObject.Find("EscapeManager").GetComponent<YJ_EscapeManager>();
@@ -23,6 +25,7 @@ public class YJ_MachineTopGage : MonoBehaviourPun
         
         if(transform.GetComponent<Slider>().value >= 1)
         {
+            machinesAnim.Play();
             escapemanager.machineCountUp();
             transform.gameObject.SetActive(false);
         }
