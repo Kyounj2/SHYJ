@@ -133,7 +133,8 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 break;
 
             case State.Transform:
-                ps.RpcSkillOffMimic();
+                ps.originalBody.SetActive(true);
+                ps.mimicBody.SetActive(false);
                 break;
 
             case State.Groggy:

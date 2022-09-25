@@ -18,7 +18,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
     SH_PlayerFSM fsm;
     Transform cam;
 
-    GameObject originalBody;
+    public GameObject originalBody;
     public GameObject mimicBody;
     MeshFilter mybMeshFilter;
     MeshRenderer myMeshRenderer;
