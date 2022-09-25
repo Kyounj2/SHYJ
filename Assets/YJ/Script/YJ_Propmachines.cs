@@ -42,6 +42,8 @@ public class YJ_Propmachines : MonoBehaviourPun
 
         // 애니메이션
         anim = GetComponent<Animation>();
+
+        maghineGage.SetActive(false);
     }
 
     //[PunRPC]
