@@ -68,7 +68,7 @@ public class ReadyManager : MonoBehaviourPun
             myPos = spawnPos[spawnOrder];
             myIcon = userIcon[spawnOrder];
 
-            print(usersData.users[spawnOrder].character);
+            //print(usersData.users[spawnOrder].character);
             int spawnCharacterNum = int.Parse(usersData.users[spawnOrder].character.Substring(9)) - 1;
 
             preCharacter = myPos.GetChild(spawnCharacterNum).gameObject;
