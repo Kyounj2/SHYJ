@@ -35,7 +35,7 @@ public class EndingManager : MonoBehaviourPun
     public GameObject enemy;
     public GameObject player1, player2, player3, player4;
     GameObject[] playerObject;
-    int[] realObject = new int[4]; // 실제 캐릭터 이름
+    string[] realObject = new string[4]; // 실제 캐릭터 이름
 
     // 정보를 가져올 곳
     UsersData data;
@@ -47,6 +47,9 @@ public class EndingManager : MonoBehaviourPun
 
         // 데이터 받아오기
         data = GameObject.Find("UsersData").GetComponent<UsersData>();
+
+        // 플레이어 수
+        playerNum = PhotonNetwork.CurrentRoom.Players.Count - 1;
 
         // 이긴팀 받아오기
         winner = data.winner;
@@ -62,8 +65,17 @@ public class EndingManager : MonoBehaviourPun
         enemyRealName = data.users[0].nick_name;
         realName = new string[4] { data.users[1].nick_name, data.users[2].nick_name, data.users[3].nick_name, data.users[4].nick_name };
         // 플레이어 캐릭터 받아오기
-        realObject = new int[4] { (int.Parse(data.users[1].character.Substring(9))), (int.Parse(data.users[2].character.Substring(9))), (int.Parse(data.users[3].character.Substring(9))), (int.Parse(data.users[4].character.Substring(9))) };
+        realObject = new string[data.users.Length - 1];
+        for (int i = 0; i < realObject.Length; i++)
+        {
+            if (data.users[i +1].character != null)
+            {
+                realObject[i] = data.users[i+1].character.Substring(9);
+            }
 
+        }
+        //{ (data.users[1].character.Substring(9)), (data.users[2].character.Substring(9)), (data.users[3].character.Substring(9)), (data.users[4].character.Substring(9)) };
+        //print((int.Parse(data.users[1].character.Substring(9))));
         //// 처음시작할때 다 꺼두기
         //enemyPos.SetActive(false);
         //pos_1.SetActive(false);
@@ -90,11 +102,13 @@ public class EndingManager : MonoBehaviourPun
             // 플레이어 닉네임 모두 끄기? 아니지 안쓰면되잖아
 
             // 애너미 가운데 자리로 생성
-            GameObject winner = Instantiate(enemy);
-            winner.transform.position = enemyPos.transform.position;
+            GameObject winnerGO = Instantiate(enemy);
+            winnerGO.transform.position = enemyPos.transform.position;
 
             // 닉네임 배치
             enemyName.text = enemyRealName;
+
+            winner = 0;
 
             return;
         }
@@ -105,13 +119,16 @@ public class EndingManager : MonoBehaviourPun
             for (int i = 0; i < playerNum; i++)
             {
                 // 캐릭터 배치
-                GameObject p = Instantiate(playerObject[realObject[i]]);
+                GameObject p = Instantiate(playerObject[(int.Parse(realObject[i]))]);
+                p.SetActive(true);
                 p.transform.position = playerPos[i].transform.position;
+                p.transform.localScale = Vector3.one * 250;
 
                 // 이름 배치
                 NameList[i].text = realName[i];
             }
 
+            winner = 0;
             return;
         }
     }
