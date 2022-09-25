@@ -99,66 +99,37 @@ public class GameManager : MonoBehaviourPunCallbacks
         // 2. 방장이 아니면 Player를 생성하고 싶다.
         else
         {
-            userOBJ[1] = PhotonNetwork.Instantiate("Player", playerSpawnPosition.position, Quaternion.identity);
-            Transform body = userOBJ[1].transform.Find("Body");
-            GameObject model = Instantiate(character1Factory, body);
-            model.transform.localPosition = Vector3.zero;
-            model.transform.localEulerAngles = Vector3.zero;
-            model.transform.localScale = Vector3.one * 0.5f;
-            model.SetActive(true);
+            //userOBJ[1] = PhotonNetwork.Instantiate("Player", playerSpawnPosition.position, Quaternion.identity);
 
-            //for (int i = 1; i < 2; i++)
-            //{
-            //    userOBJ[i] = PhotonNetwork.Instantiate("Player", playerSpawnPosition.position, Quaternion.identity);
-            //    CreateCharacter(usersData.users[i].character, userOBJ[i]);
-            //    SetUserInfo(userOBJ[i], i);
-            //}
-        }
-
-    }
-
-    void CreateCharacter(string character, GameObject player) // 게임오브젝트 못넘긴다 다른방법 생각하기
-    {
-        photonView.RPC("RpcCreateCharacter", RpcTarget.All, character, player);
-    }
-
-    [PunRPC]
-    void RpcCreateCharacter(string character, GameObject player)
-    {
-        Transform body = player.transform.Find("Body");
-        GameObject model;
-        switch (character)
-        {
-            case "character1":
-                model = Instantiate(character1Factory, body);
-                model.transform.localPosition = Vector3.zero;
-                model.transform.localEulerAngles = Vector3.zero;
-                model.transform.localScale = Vector3.one * 0.5f;
-                model.SetActive(true);
-                break;
-            case "character2":
-                model = Instantiate(character2Factory, body);
-                model.transform.localPosition = Vector3.up;
-                model.transform.localEulerAngles = Vector3.zero;
-                model.transform.localScale = Vector3.one;
-                model.SetActive(true);
-                break;
-            case "character3":
-                model = Instantiate(character3Factory, body);
-                model.transform.localPosition = Vector3.up;
-                model.transform.localEulerAngles = Vector3.zero;
-                model.transform.localScale = Vector3.one;
-                model.SetActive(true);
-                break;
-            case "character4":
-                model = Instantiate(character4Factory, body);
-                model.transform.localPosition = Vector3.up;
-                model.transform.localEulerAngles = Vector3.zero;
-                model.transform.localScale = Vector3.one;
-                model.SetActive(true);
-                break;
+            for (int i = 1; i < 2; i++)
+            {
+                string prefabName = "Player" + usersData.users[i].character.Substring(9);
+                userOBJ[i] = PhotonNetwork.Instantiate(prefabName, playerSpawnPosition.position, Quaternion.identity);
+                SetUserInfo(userOBJ[i], i);
+            }
         }
     }
+
+    //void CreateCharacter(string character, GameObject player) // 게임오브젝트 못넘긴다 다른방법 생각하기
+    //{
+    //    Transform body = player.transform.Find("Body");
+    //    GameObject model;
+    //    switch (character)
+    //    {
+    //        case "character1":
+                
+    //            break;
+    //        case "character2":
+                
+    //            break;
+    //        case "character3":
+                
+    //            break;
+    //        case "character4":
+
+    //            break;
+    //    }
+    //}
 
     void SetUserInfo(GameObject userOBJ, int order)
     {

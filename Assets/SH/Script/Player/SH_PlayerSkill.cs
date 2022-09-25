@@ -30,7 +30,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
         //    enemy_ui.SetActive(false);
         //}
 
-        originalBody = GetComponent<Transform>().Find("Body").GetChild(1).gameObject;
+        originalBody = GetComponent<Transform>().Find("Body").GetChild(0).gameObject;
         originalBody.SetActive(true);
 
         fsm = GetComponent<SH_PlayerFSM>();
