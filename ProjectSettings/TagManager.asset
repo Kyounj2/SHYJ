@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Transformable
   - Enemy
+  - Chair
   layers:
   - Default
   - TransparentFX

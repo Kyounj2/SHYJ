@@ -25,6 +25,17 @@ public class SH_PlayerHP : MonoBehaviourPun
         fsm = GetComponent<SH_PlayerFSM>();
     }
 
+    private void Update()
+    {
+        if (photonView.IsMine)
+        {
+            if (Input.GetKeyUp(KeyCode.P))
+            {
+                OnDamaged(1000);
+            }
+        }
+    }
+
     void Mapping()
     {
 
@@ -68,7 +79,7 @@ public class SH_PlayerHP : MonoBehaviourPun
         }
     }
 
-    const float DEADLINE = 60.0f;
+    const float DEADLINE = 20.0f;
     public float seatedTime = 0;
     public void Seated()
     {
