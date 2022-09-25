@@ -381,7 +381,7 @@ MonoBehaviour:
   cc: {fileID: 0}
   walkSpeed: 6
   runSpeed: 8
-  groggySpeed: 2
+  groggySpeed: 1
   transformSpeed: 10
   jumpPower: 2
   jumpRayLen: 1.2
@@ -434,6 +434,7 @@ MonoBehaviour:
   player_ui: {fileID: 0}
   enemy_ui: {fileID: 0}
   isNearPropMachine: 0
+  originalBody: {fileID: 0}
   mimicBody: {fileID: 1115306659}
 --- !u!114 &3990998246288271246
 MonoBehaviour:
