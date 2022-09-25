@@ -79,7 +79,7 @@ public class SH_PlayerHP : MonoBehaviourPun
         }
     }
 
-    const float DEADLINE = 20.0f;
+    const float DEADLINE = 10.0f;
     public float seatedTime = 0;
     public void Seated()
     {
