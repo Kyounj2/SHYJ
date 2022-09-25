@@ -22,6 +22,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     string role;
 
+    Color activeColor;
+    Color deactiveColor;
+
     // 방의 정보들
     Dictionary<string, RoomInfo> roomCache = new Dictionary<string, RoomInfo>();
 
@@ -38,19 +41,30 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // 다른 버튼 색 원래대로
         // 버튼 색 바꾸기
     }
-
+    Color btnColor;
     bool isClicked1 = false;
     public void OnClickBtnRolePlayer()
     {
         if (isClicked1)
+            isClicked1 = false;
+        else
+            isClicked1 = true;
+
+        //btnColor = btnRolePlayer.GetComponent<Image>().color;
+
+        if (isClicked1)
         {
             role = "Player";
-            btnRolePlayer.GetComponent<Image>().color = new Color(255, 255, 255);
+            btnRolePlayer.GetComponent<Image>().color = activeColor;
+
+            btnRoleEnemy.GetComponent<Image>().color = deactiveColor;
+            isClicked2 = false;
+            popUp.SetActive(false);
         }
         else
         {
             role = "";
-            btnRolePlayer.GetComponent<Image>().color = new Color(70, 70, 70);
+            btnRolePlayer.GetComponent<Image>().color = deactiveColor;
         }
         // 다른 버튼 색 원래대로
         // 버튼 색 바꾸기
@@ -59,16 +73,26 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     bool isClicked2 = false;
     public void OnClickBtnRoleEnemy()
     {
-        if (isClicked1)
+        if (isClicked2)
+            isClicked2 = false;
+        else
+            isClicked2 = true;
+
+        //btnColor = btnRoleEnemy.GetComponent<Image>().color;
+
+        if (isClicked2)
         {
             role = "Killer";
-            btnRoleEnemy.GetComponent<Image>().color = new Color(255, 255, 255);
+            btnRoleEnemy.GetComponent<Image>().color = activeColor;
             popUp.SetActive(true);
+
+            btnRolePlayer.GetComponent<Image>().color = deactiveColor;
+            isClicked1 = false;
         }
         else
         {
             role = "";
-            btnRoleEnemy.GetComponent<Image>().color = new Color(70, 70, 70);
+            btnRoleEnemy.GetComponent<Image>().color = deactiveColor;
             popUp.SetActive(false);
         }
         // 다른 버튼 색 원래대로
@@ -83,6 +107,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        activeColor = new Color(1f, 1f, 1f, 1f);
+        deactiveColor = new Color(0.3f, 0.3f, 0.3f);
+
         inputRoomName.onValueChanged.AddListener(OnValueChanged);
         inputRoomName.onSubmit.AddListener(OnSubmit);
     }
@@ -113,7 +140,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void OnClickCreate()
