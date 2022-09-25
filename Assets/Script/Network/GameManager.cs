@@ -52,13 +52,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
 
         // 시작할때 서버에 접속한 인원 넣어주기 ( 애너미 제외 )
-        liveCount = PhotonNetwork.CurrentCluster.Length -1;
+        liveCount = PhotonNetwork.CurrentCluster.Length - 1;
 
         // OnPhotonSerializeView 호출 빈도
         PhotonNetwork.SerializationRate = 60;
         // RPC 호출 빈도
         PhotonNetwork.SendRate = 60;
-        
+
         GameObject user = GameObject.Find("UserInfo");
         userInfo = user.GetComponent<UserInfo>();
 
@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             killerSpawnPosition.SetParent(playerSpawnPosition);
         }
     }
-    
+
     void CreateAllUser()
     {
         GameObject[] userOBJ = new GameObject[5];
@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     void RpcCreateCharacter(string character, GameObject player)
     {
         Transform body = player.transform.Find("Body");
-        GameObject model;        
+        GameObject model;
         switch (character)
         {
             case "character1":
