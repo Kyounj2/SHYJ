@@ -30,6 +30,9 @@ public class YJ_DieCam : MonoBehaviour
         {
             playerList = GameObject.FindGameObjectsWithTag("Player");
             transform.position = playerList[player].transform.position;
+
+            // 위치 다시 잡아주기
+            Camera.main.transform.localPosition = new Vector3(0, 1.75f, -4f);
             lookAtPlayer = playerList[player];
         }
         //transform.parent = playerList[player].transform;
