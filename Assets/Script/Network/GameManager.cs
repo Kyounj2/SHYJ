@@ -84,6 +84,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             killerSpawnPosition.SetParent(playerSpawnPosition);
         }
+
+        Debug();
     }
 
     void CreateAllUser()
@@ -99,14 +101,18 @@ public class GameManager : MonoBehaviourPunCallbacks
         // 2. 방장이 아니면 Player를 생성하고 싶다.
         else
         {
+            string prefabName = "Player" + userInfo.character.Substring(9);
+            userOBJ[userInfo.order] = PhotonNetwork.Instantiate(prefabName, playerSpawnPosition.position, Quaternion.identity);
             //userOBJ[1] = PhotonNetwork.Instantiate("Player", playerSpawnPosition.position, Quaternion.identity);
+            //SetUserInfo(userOBJ[userInfo.order], userInfo.order);
 
-            for (int i = 1; i < 2; i++)
-            {
-                string prefabName = "Player" + usersData.users[i].character.Substring(9);
-                userOBJ[i] = PhotonNetwork.Instantiate(prefabName, playerSpawnPosition.position, Quaternion.identity);
-                SetUserInfo(userOBJ[i], i);
-            }
+            //for (int i = 1; i < 2; i++)
+            //{
+            //    //print(usersData.users[i].character.Substring(9));
+            //    //string prefabName = "Player" + usersData.users[i].character.Substring(9);
+            //    userOBJ[i] = PhotonNetwork.Instantiate("Player1", playerSpawnPosition.position, Quaternion.identity);
+            //    SetUserInfo(userOBJ[i], i);
+            //}
         }
     }
 
@@ -151,63 +157,35 @@ public class GameManager : MonoBehaviourPunCallbacks
         liveCount--;
     }
 
-    //void CreatePlayer()
-    //{
-    //    // 플레이어를 생성하고싶다.
-    //    GameObject player = null;
-
-    //    // 0. 유저의 역할군이 Player라면
-    //    if (userInfo.role == "Player")
-    //    {
-    //        // 1. Player프리팹을 생성하고 싶다.
-    //        player = PhotonNetwork.Instantiate("Player", transform.position, Quaternion.identity);
-    //        // 2. 유저가 Character1을 선택했다면
-    //        if (userInfo.character == "Character1")
-    //        {
-    //            // 3. Player안에 body의 자식으로 Character1을 생성하고 싶다.
-    //            Transform body = player.transform.Find("Body");
-    //            GameObject character = Instantiate(character1Factory, body);
-    //            character.transform.localPosition = Vector3.zero;
-    //            character.transform.localEulerAngles = Vector3.zero;
-    //            character.transform.localScale = Vector3.one * 0.5f;
-    //            character.SetActive(true);
-    //        }
-    //        else if (userInfo.character == "Character2")
-    //        {
-    //            // 3. Player안에 body의 자식으로 Character1을 생성하고 싶다.
-    //            Transform body = player.transform.Find("Body");
-    //            GameObject character = Instantiate(character2Factory, body);
-    //            character.transform.localPosition = Vector3.up;
-    //            character.transform.localEulerAngles = Vector3.zero;
-    //            character.transform.localScale = Vector3.one;
-    //            character.SetActive(true);
-    //        }
-    //        else if (userInfo.character == "Character3")
-    //        {
-    //            // 3. Player안에 body의 자식으로 Character1을 생성하고 싶다.
-    //            Transform body = player.transform.Find("Body");
-    //            GameObject character = Instantiate(character3Factory, body);
-    //            character.transform.localPosition = Vector3.up;
-    //            character.transform.localEulerAngles = Vector3.zero;
-    //            character.transform.localScale = Vector3.one;
-    //            character.SetActive(true);
-    //        }
-    //        else if (userInfo.character == "Character4")
-    //        {
-    //            // 3. Player안에 body의 자식으로 Character1을 생성하고 싶다.
-    //            Transform body = player.transform.Find("Body");
-    //            GameObject character = Instantiate(character4Factory, body);
-    //            character.transform.localPosition = Vector3.up;
-    //            character.transform.localEulerAngles = Vector3.zero;
-    //            character.transform.localScale = Vector3.one;
-    //            character.SetActive(true);
-    //        }
-    //    }
-    //    else if (userInfo.role == "Killer")
-    //    {
-    //        player = PhotonNetwork.Instantiate("Killer", transform.position, Quaternion.identity);
-    //    }
-
-    //    SetUserInfo(player);
-    //}
+    void Debug()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            print(usersData.users[1].nick_name + "\n" +
+                usersData.users[1].role + "\n" +
+                usersData.users[1].character + "\n" +
+                usersData.users[1].order);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            print(usersData.users[2].nick_name + "\n" +
+                usersData.users[2].role + "\n" +
+                usersData.users[2].character + "\n" +
+                usersData.users[2].order);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            print(usersData.users[3].nick_name + "\n" +
+                usersData.users[3].role + "\n" +
+                usersData.users[3].character + "\n" +
+                usersData.users[3].order);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            print(usersData.users[4].nick_name + "\n" +
+                usersData.users[4].role + "\n" +
+                usersData.users[4].character + "\n" +
+                usersData.users[4].order);
+        }
+    }
 }

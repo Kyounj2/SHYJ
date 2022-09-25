@@ -2957,6 +2957,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3786852812468095851, guid: 9589dc124e4e16c44bf63845001fb95e, type: 3}
+      propertyPath: timer
+      value: 
+      objectReference: {fileID: 591235001}
+    - target: {fileID: 3786852812468095851, guid: 9589dc124e4e16c44bf63845001fb95e, type: 3}
       propertyPath: portal
       value: 
       objectReference: {fileID: 6040506}
@@ -5308,6 +5312,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 082b94d3a74c4804693768efe8a394f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mm: 3
+  ss: 59
+  enemyWin: 0
 --- !u!114 &591235004
 MonoBehaviour:
   m_ObjectHideFlags: 0
