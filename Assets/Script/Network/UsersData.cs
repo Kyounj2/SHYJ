@@ -13,6 +13,4 @@ public class UsersData : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
-    
-
 }

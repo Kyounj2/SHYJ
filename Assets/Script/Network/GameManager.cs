@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.SendRate = 60;
 
         GameObject user = GameObject.Find("UserInfo");
-        userInfo = user.GetComponent<UserInfo>();
+        userInfo = user.GetComponent<MyUser>().userInfo;
 
         GameObject users = GameObject.Find("UsersData");
         usersData = users.GetComponent<UsersData>();
@@ -117,27 +117,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             //}
         }
     }
-
-    //void CreateCharacter(string character, GameObject player) // 게임오브젝트 못넘긴다 다른방법 생각하기
-    //{
-    //    Transform body = player.transform.Find("Body");
-    //    GameObject model;
-    //    switch (character)
-    //    {
-    //        case "character1":
-                
-    //            break;
-    //        case "character2":
-                
-    //            break;
-    //        case "character3":
-                
-    //            break;
-    //        case "character4":
-
-    //            break;
-    //    }
-    //}
 
     void SetUserInfo(GameObject userOBJ, int order)
     {
