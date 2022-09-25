@@ -25,24 +25,55 @@ public class GameManager : MonoBehaviourPunCallbacks
     // 현재 살아있는 인원이 몇명인지 판단하기 (애너미 제외)
     public int liveCount = 0;
 
+    // 플레이어 접속 리스트
+    List<PhotonView> playerList = new List<PhotonView>();
+
     public Transform playerSpawnPosition;
     public Transform killerSpawnPosition;
 
+    public void AddPlayer(PhotonView pv)
+    {
+        playerList.Add(pv);
+    }
+
+    public PhotonView GetPlayerPv(int viewID)
+    {
+        for (int i = 0; i < playerList.Count; i++)
+        {
+            if (playerList[i].ViewID == viewID)
+                return playerList[i];
+        }
+        return null;
+    }
+
     void Start()
     {
+        // 게임씬에서 다음씬으로 넘어갈때 동기화해주기 ( 게임씬 등에서 한번 )
+        PhotonNetwork.AutomaticallySyncScene = true;
+
         // 시작할때 서버에 접속한 인원 넣어주기 ( 애너미 제외 )
-        liveCount = PhotonNetwork.CurrentCluster.Length -1;
+        liveCount = PhotonNetwork.CurrentCluster.Length - 1;
 
         // OnPhotonSerializeView 호출 빈도
         PhotonNetwork.SerializationRate = 60;
         // RPC 호출 빈도
         PhotonNetwork.SendRate = 60;
-        
+
         GameObject user = GameObject.Find("UserInfo");
         userInfo = user.GetComponent<UserInfo>();
 
         GameObject users = GameObject.Find("UsersData");
         usersData = users.GetComponent<UsersData>();
+
+        //// 플레이어를 생성한다.
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        //    PhotonNetwork.Instantiate("Killer", transform.position, Quaternion.identity);
+        //}
+        //else
+        //{
+        //    PhotonNetwork.Instantiate("Killer", transform.position, Quaternion.identity);
+        //}
 
         CreateAllUser();
     }
@@ -54,7 +85,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             killerSpawnPosition.SetParent(playerSpawnPosition);
         }
     }
-    
+
     void CreateAllUser()
     {
         GameObject[] userOBJ = new GameObject[5];
@@ -95,7 +126,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     void RpcCreateCharacter(string character, GameObject player)
     {
         Transform body = player.transform.Find("Body");
-        GameObject model;        
+        GameObject model;
         switch (character)
         {
             case "character1":
