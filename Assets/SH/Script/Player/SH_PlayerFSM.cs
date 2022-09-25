@@ -227,6 +227,9 @@ public class SH_PlayerFSM : MonoBehaviourPun
         if (transform.position.y < -2)
         {
             transform.position = new Vector3(0, -10, 0);
+            transform.GetComponent<SH_PlayerRot>().camPivot.parent = null;
+            transform.GetComponent<SH_PlayerRot>().camPivot.gameObject.AddComponent<YJ_DieCam>();
+            GameManager.instance.photonView.RPC("RpcliveCount",RpcTarget.All);
         }
     }
 
