@@ -74,17 +74,17 @@ public class YJ_EscapeManager : MonoBehaviourPun
         }
 
         //현재 살아있는 인원만큼 탈출하면
-        if (portal.GetComponent<YJ_Portal>().escapeCount >= GameManager.instance.liveCount)
+        if (portal.GetComponent<YJ_Portal>().escapeCount >= (PhotonNetwork.CurrentRoom.Players.Count - 1))
         {
             Ending("Player");
-            GameObject.Find("UserData").GetComponent<UsersData>().winner = 2;
+            GameObject.Find("UsersData").GetComponent<UsersData>().winner = 2;
         }
 
 
         if (timer.GetComponent<YJ_Timer>().enemyWin || GameManager.instance.liveCount <= 0)
         {
             Ending("Killer");
-            GameObject.Find("UserData").GetComponent<UsersData>().winner = 1;
+            GameObject.Find("UsersData").GetComponent<UsersData>().winner = 1;
         }
         //print( " 탈출인원 - 현재인원 : " + (portal.GetComponent<YJ_Portal>().escapeCount - GameManager.instance.liveCount));
     }
