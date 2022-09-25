@@ -13,7 +13,7 @@ using Photon.Pun;
 public class EndingManager : MonoBehaviourPun
 {
     // 승리여부 > 일단 어디서 받아올지 모르니까
-    int winner = 0; // 애너미 0, 플레이어 1
+    int winner = 0; // 애너미 1, 플레이어 2
     int playerNum = 0; // 플레이어 수
 
     // 생성위치
