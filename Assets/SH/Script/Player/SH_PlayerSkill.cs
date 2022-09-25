@@ -16,7 +16,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
     SH_PlayerFSM fsm;
     Transform cam;
 
-    public GameObject originalBody;
+    GameObject originalBody;
     public GameObject mimicBody;
     MeshFilter mybMeshFilter;
     MeshRenderer myMeshRenderer;
@@ -29,6 +29,9 @@ public class SH_PlayerSkill : MonoBehaviourPun
         //    enemy_ui = GameObject.Find("EnemyMachineGage");
         //    enemy_ui.SetActive(false);
         //}
+
+        originalBody = GetComponent<Transform>().Find("Body").GetChild(1).gameObject;
+        originalBody.SetActive(true);
 
         fsm = GetComponent<SH_PlayerFSM>();
         cam = Camera.main.transform;
