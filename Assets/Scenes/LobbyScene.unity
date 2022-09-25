@@ -2110,7 +2110,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1714758282}
-  - component: {fileID: 1714758281}
+  - component: {fileID: 1714758283}
   m_Layer: 0
   m_Name: UserInfo
   m_TagString: Untagged
@@ -2118,18 +2118,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1714758281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1714758280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85001f40762f64c44a2b6ccf97602e2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1714758282
 Transform:
   m_ObjectHideFlags: 0
@@ -2145,6 +2133,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1714758283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714758280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1fd50e9ae65593479fa0a85a30fced8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  userInfo:
+    nick_name: 
+    role: 
+    character: 
+    order: 0
+    playerOBJ: {fileID: 0}
+    is_alive: 0
+    is_escape: 0
 --- !u!1 &1791319732
 GameObject:
   m_ObjectHideFlags: 0

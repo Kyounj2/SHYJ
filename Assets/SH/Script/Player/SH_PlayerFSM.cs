@@ -26,6 +26,8 @@ public class SH_PlayerFSM : MonoBehaviourPun
     SH_PlayerHP ph;
     SH_PlayerSkill ps;
 
+    Transform chair;
+
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
