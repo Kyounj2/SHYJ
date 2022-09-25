@@ -5719,6 +5719,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1100131606412317258, guid: 5e83e228dc14e3c4eaef77f88847335c, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100131606412317258, guid: 5e83e228dc14e3c4eaef77f88847335c, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100131606412317258, guid: 5e83e228dc14e3c4eaef77f88847335c, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100131606412317258, guid: 5e83e228dc14e3c4eaef77f88847335c, type: 3}
+      propertyPath: m_Color.r
+      value: 0.6603774
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100131606532915245, guid: 5e83e228dc14e3c4eaef77f88847335c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1706143819388099983, guid: 5e83e228dc14e3c4eaef77f88847335c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -39
@@ -7927,6 +7947,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 082b94d3a74c4804693768efe8a394f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mm: 1
+  ss: 59
+  enemyWin: 0
 --- !u!1 &1054341775
 GameObject:
   m_ObjectHideFlags: 0
@@ -17297,12 +17320,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3786852812468095848, guid: 9589dc124e4e16c44bf63845001fb95e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3786852812468095850, guid: 9589dc124e4e16c44bf63845001fb95e, type: 3}
       propertyPath: sceneViewId
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 3786852812468095851, guid: 9589dc124e4e16c44bf63845001fb95e, type: 3}
+      propertyPath: timer
+      value: 
+      objectReference: {fileID: 1052402908}
     - target: {fileID: 3786852812468095851, guid: 9589dc124e4e16c44bf63845001fb95e, type: 3}
       propertyPath: portal
       value: 

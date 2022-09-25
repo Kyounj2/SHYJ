@@ -21,6 +21,9 @@ public class YJ_EscapeManager : MonoBehaviourPun
     Image blur;
     Text winner;
 
+    // 타이머 가져오기
+    public GameObject timer;
+
     void Start()
     {
         // 너는 언제 탈출할 수 있어?
@@ -68,16 +71,21 @@ public class YJ_EscapeManager : MonoBehaviourPun
         }
 
         // 현재 살아있는 인원만큼 탈출하면
-        if (portal.GetComponent<YJ_Portal>().escapeCount >= GameManager.instance.liveCount)
+        //if (portal.GetComponent<YJ_Portal>().escapeCount >= GameManager.instance.liveCount)
+        //{
+        //    Ending("Player");
+        //}
+
+        if (timer.GetComponent<YJ_Timer>().enemyWin)
         {
-            Ending();
+            Ending("Killer");
         }
     }
 
     float time;
 
     // Time.DeltaTime과 영향을 받지않는 Time.unscaledDeltaTime 사용할 것
-    void Ending()
+    void Ending(string s)
     {
         time += 0.1f * Time.unscaledDeltaTime;
         // 현재 살아있는 인원만큼 탈출하면
@@ -91,7 +99,7 @@ public class YJ_EscapeManager : MonoBehaviourPun
 
         // 플레이어가 이겼다는 UI를 띄우고싶다
         // Winner 텍스트안에 Player라고 써주고
-        winner.text = "Player";
+        winner.text = s;
 
         // Circle, Blur, Winner 의 Color.A 값을 0에서 서서히 올리고싶다
         Color cirColor;
@@ -108,6 +116,5 @@ public class YJ_EscapeManager : MonoBehaviourPun
         tColor = winner.color;
         tColor.a = time;
         winner.color = tColor;
-
     }
 }
