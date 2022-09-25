@@ -79,12 +79,12 @@ public class SH_PlayerHP : MonoBehaviourPun
         }
     }
 
-    const float DEADLINE = 10.0f;
+    const float DEADLINE = 1000.0f;
     public float seatedTime = 0;
     public void Seated()
     {
         seatedTime += Time.deltaTime;
-
+        print(seatedTime);
         if (seatedTime > DEADLINE)
         {
             fsm.ChangeState(SH_PlayerFSM.State.Die);

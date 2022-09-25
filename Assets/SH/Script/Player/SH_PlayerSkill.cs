@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using static UnityEngine.UI.Image;
+using static System.Net.WebRequestMethods;
+using Unity.Burst.CompilerServices;
 
 public class SH_PlayerSkill : MonoBehaviourPun
 {
@@ -43,7 +45,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
 
         player_ui = GameObject.Find("PlayerMachineGage");
 
-        player_ui.SetActive(false);
+        //player_ui.SetActive(false);
     }
 
     void Update()
@@ -79,74 +81,112 @@ public class SH_PlayerSkill : MonoBehaviourPun
         }
     }
 
-    public void SkillOnMimic(Vector3 origin, Vector3 dir)
+    public void SkillOnMimic()
     {
-        photonView.RPC("RpcSkillOnMimic", RpcTarget.All, origin, dir);
-    }
+        if (photonView.IsMine == false) return;
 
-    Ray cameraRay;
-    RaycastHit hit;
+        Ray camRay = new Ray(cam.position, cam.forward);
+        RaycastHit hit;
+        Debug.DrawLine(camRay.origin, camRay.direction * 50, Color.blue);
+
+        if (Physics.Raycast(camRay, out hit, 50))
+        {
+            if (hit.collider.CompareTag("Transformable"))
+            {
+                if (Input.GetMouseButtonDown(0))
+                    photonView.RPC("RpcSkillOnMimic", RpcTarget.All, camRay.origin, camRay.direction);
+            }
+        }
+    }
 
     [PunRPC]
     public void RpcSkillOnMimic(Vector3 origin, Vector3 dir)
     {
-        cameraRay = new Ray(origin, dir);
-        Debug.DrawLine(cameraRay.origin, cameraRay.direction * 50, Color.red);
+        Ray camRay = new Ray(origin, dir);
+        RaycastHit hit;
+        Debug.DrawLine(camRay.origin, camRay.direction * 50, Color.red);
 
-        if (Input.GetMouseButtonDown(0))
+        if (Physics.Raycast(camRay, out hit, 50))
         {
-            if (photonView.IsMine == false) return;
-
-            if (Physics.Raycast(cameraRay, out hit, 50))
+            if (hit.collider.CompareTag("Transformable"))
             {
-                if (hit.collider.CompareTag("Transformable"))
-                {
-                    originalBody.SetActive(false);
-                    mimicBody.SetActive(true);
+                originalBody.SetActive(false);
+                mimicBody.SetActive(true);
                     
-                    GameObject targetBody = hit.collider.gameObject;
+                GameObject targetBody = hit.collider.gameObject;
 
-                    mybMeshFilter.mesh = targetBody.GetComponent<MeshFilter>().mesh;
-                    myMeshRenderer.material = targetBody.GetComponent<MeshRenderer>().material;
-                    myMeshCollider.sharedMesh = targetBody.GetComponent<MeshCollider>().sharedMesh;
-                    mimicBody.transform.localScale = targetBody.transform.localScale;
+                mybMeshFilter.mesh = targetBody.GetComponent<MeshFilter>().mesh;
+                myMeshRenderer.material = targetBody.GetComponent<MeshRenderer>().material;
+                myMeshCollider.sharedMesh = targetBody.GetComponent<MeshCollider>().sharedMesh;
+                mimicBody.transform.localScale = targetBody.transform.localScale;
 
-                    //photonView.RPC("RpcOnChangeState", RpcTarget.All, SH_PlayerFSM.State.Transform);
-                    fsm.RpcOnChangeState(SH_PlayerFSM.State.Transform);
-                }
+                //photonView.RPC("RpcOnChangeState", RpcTarget.All, SH_PlayerFSM.State.Transform);
+                fsm.RpcOnChangeState(SH_PlayerFSM.State.Transform);
             }
         }
     }
 
     float rescueTime = 0;
     const float RESCUESUCCESSTIME = 2;
+    Collider[] colls;
     public void Rescue()
     {
-        if (Physics.Raycast(cameraRay, out hit))
+        // 1. 주변에 콜라이더 중에 Player태그를 가진 애중에 상태가 Seated인놈이 있을때
+        colls = Physics.OverlapSphere(transform.position, 2);
+        for (int i = 0; i < colls.Length; i++)
         {
-            if (hit.distance < 15)
+            if (colls[i].CompareTag("Player"))
             {
-                SH_PlayerFSM hitFSM = hit.transform.GetComponent<SH_PlayerFSM>();
-                SH_PlayerHP hitHP = hit.transform.GetComponent<SH_PlayerHP>();
-                if (hitFSM.state == SH_PlayerFSM.State.Seated)
+                SH_PlayerFSM otherFSM = colls[i].transform.GetComponent<SH_PlayerFSM>();
+                SH_PlayerHP otherHP = colls[i].transform.GetComponent<SH_PlayerHP>();
+                if (otherFSM.state == SH_PlayerFSM.State.Seated)
                 {
-                    //rescueUI.SetActive(true);
-                    if (Input.GetKeyDown(KeyCode.F))
+                    Vector3 dir = otherFSM.transform.position - transform.position;
+                    dir.y = 0;
+                    if (Vector3.Dot(dir, transform.forward) > 0.5)
                     {
-                        rescueTime += Time.deltaTime;
-                        // 슬라이더 UI 올라가고
-                        if (rescueTime > RESCUESUCCESSTIME)
+                        print("어디한번 F를 눌러서 동료를 구출해보셔~~^^");
+                        if (Input.GetKey(KeyCode.F))
                         {
-                            // 슬라이더 UI 없어지고
-                            hitFSM.ChangeState(SH_PlayerFSM.State.Normal);
-                            hitHP.OnHealed(20);
+                            rescueTime += Time.deltaTime;
+                            print(rescueTime);
+                            // 슬라이더 UI 올라가고
+                            if (rescueTime > RESCUESUCCESSTIME)
+                            {
+                                // 슬라이더 UI 없어지고
+                                otherFSM.ChangeState(SH_PlayerFSM.State.Normal);
+                                otherHP.OnHealed(20);
+                            }
                         }
                     }
-
                 }
             }
         }
+
+        //if (Physics.Raycast(cameraRay, out hit))
+        //{
+        //    if (hit.distance < 15)
+        //    {
+        //        SH_PlayerFSM hitFSM = hit.transform.GetComponent<SH_PlayerFSM>();
+        //        SH_PlayerHP hitHP = hit.transform.GetComponent<SH_PlayerHP>();
+        //        if (hitFSM.state == SH_PlayerFSM.State.Seated)
+        //        {
+        //            //rescueUI.SetActive(true);
+        //            if (Input.GetKeyDown(KeyCode.F))
+        //            {
+        //                rescueTime += Time.deltaTime;
+        //                print(rescueTime);
+        //                // 슬라이더 UI 올라가고
+        //                if (rescueTime > RESCUESUCCESSTIME)
+        //                {
+        //                    // 슬라이더 UI 없어지고
+        //                    hitFSM.ChangeState(SH_PlayerFSM.State.Normal);
+        //                    hitHP.OnHealed(20);
+        //                }
+        //            }
+
+        //        }
+        //    }
+        //}
     }
-
-
 }

@@ -39,13 +39,6 @@ public class SH_PlayerRot : MonoBehaviourPun
 
     public void PlayerRot(ViewState s, bool isLookAround)
     {
-        if (photonView.IsMine == false) return;
-
-        //if (Input.GetKeyDown(KeyCode.Tab))
-        //{
-        //    index = SwitchIndex(index);
-        //}
-
         if (s == ViewState.FIRST)
         {
             index = 0;
@@ -55,6 +48,14 @@ public class SH_PlayerRot : MonoBehaviourPun
             index = 1;
         }
         targetCamPos = camPos[index];
+
+        if (photonView.IsMine == false) return;
+
+        //if (Input.GetKeyDown(KeyCode.Tab))
+        //{
+        //    index = SwitchIndex(index);
+        //}
+
 
         cam.position = Vector3.Lerp(cam.position, targetCamPos.position, 20 * Time.deltaTime);
 

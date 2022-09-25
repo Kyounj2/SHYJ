@@ -39,16 +39,38 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // 버튼 색 바꾸기
     }
 
+    bool isClicked1 = false;
     public void OnClickBtnRolePlayer()
     {
-        role = "Player";
+        if (isClicked1)
+        {
+            role = "Player";
+            btnRolePlayer.GetComponent<Image>().color = new Color(255, 255, 255);
+        }
+        else
+        {
+            role = "";
+            btnRolePlayer.GetComponent<Image>().color = new Color(70, 70, 70);
+        }
         // 다른 버튼 색 원래대로
         // 버튼 색 바꾸기
     }
 
+    bool isClicked2 = false;
     public void OnClickBtnRoleEnemy()
     {
-        role = "Killer";
+        if (isClicked1)
+        {
+            role = "Killer";
+            btnRoleEnemy.GetComponent<Image>().color = new Color(255, 255, 255);
+            popUp.SetActive(true);
+        }
+        else
+        {
+            role = "";
+            btnRoleEnemy.GetComponent<Image>().color = new Color(70, 70, 70);
+            popUp.SetActive(false);
+        }
         // 다른 버튼 색 원래대로
         // 버튼 색 바꾸기
     }

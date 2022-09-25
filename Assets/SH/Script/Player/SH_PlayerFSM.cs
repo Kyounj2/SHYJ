@@ -116,6 +116,8 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 break;
 
             case State.Die:
+                player = body.GetComponentInParent<Transform>();
+                player.localEulerAngles = new Vector3(0, 270, 0);
                 //GameManager.instance.userInfo.is_alive = false;
                 //GameManager.instance.userInfo.is_escape = false;
                 break;
@@ -139,7 +141,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
             case State.Catched:
                 pm.cc.enabled = true;
                 body.localEulerAngles = new Vector3(0, 0, 0);
-                print("end");
+                //print("end");
                 break;
 
             case State.Seated:
@@ -150,6 +152,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 break;
 
             case State.Die:
+
                 break;
         }
     }
@@ -158,15 +161,15 @@ public class SH_PlayerFSM : MonoBehaviourPun
     {
         pm.PlayerMovement();
         pr.PlayerRot(SH_PlayerRot.ViewState.FIRST, false);
-        ps.SkillOnMimic(pr.targetCamPos.position, pr.targetCamPos.forward);
-        ps.Rescue();
+        ps.SkillOnMimic();
+        //ps.Rescue();
     }
 
     private void Transform()
     {
         pm.PlayerMovement();
         pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, false);
-        ps.SkillOnMimic(pr.targetCamPos.position, pr.targetCamPos.forward);
+        ps.SkillOnMimic();
         ps.SkillOffMimic();
     }
 
@@ -188,48 +191,31 @@ public class SH_PlayerFSM : MonoBehaviourPun
     }
 
     Collider[] colls;
-
+    bool liveCountFlag = true;
     private void Die()
     {
-        Ray ray = new Ray(transform.position + Vector3.up * 2, Vector3.down);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            if (hit.collider.CompareTag("Chair"))
-            {
-                Transform go = hit.transform;
-                go.position = Vector3.down * 0.2f * Time.deltaTime;
-                transform.position = Vector3.down * 0.2f * Time.deltaTime;
-
-                if (transform.position.y < -2)
-                {
-                    GameManager.instance.userInfo.is_alive = false;
-                    GameManager.instance.userInfo.is_escape = false;
-                    PhotonNetwork.Destroy(go.gameObject);
-                    PhotonNetwork.Destroy(gameObject);
-                }
-            }
-        }
-
         colls = Physics.OverlapSphere(transform.position, 2);
         for (int i = 0; i < colls.Length; i++)
         {
             if (colls[i].CompareTag("Chair"))
             {
-                colls[i].transform.SetParent(transform, false);
+                colls[i].transform.SetParent(transform, true);
                 break;
             }
         }
 
-        transform.position += Vector3.down * Time.deltaTime;
+        transform.position += Vector3.down * 0.2f * Time.deltaTime;
 
         if (transform.position.y < -5)
         {
             transform.position = new Vector3(0, -10, 0);
             transform.GetComponent<SH_PlayerRot>().camPivot.parent = null;
             transform.GetComponent<SH_PlayerRot>().camPivot.gameObject.AddComponent<YJ_DieCam>();
-            GameManager.instance.photonView.RPC("RpcliveCount", RpcTarget.All);
+            if (liveCountFlag)
+            {
+                GameManager.instance.photonView.RPC("RpcliveCount", RpcTarget.All);
+                liveCountFlag = false;
+            }
         }
     }
 

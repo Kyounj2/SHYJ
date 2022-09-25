@@ -541,6 +541,4 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     {
         anim.SetBool(s, b);
     }
-
-
 }

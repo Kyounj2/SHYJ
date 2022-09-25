@@ -125,7 +125,7 @@ public class ReadyManager : MonoBehaviourPun
                 sendInfo.role = usersData.users[i].role;
                 sendInfo.character = usersData.users[i].character;
                 sendInfo.order = usersData.users[i].order;
-                print(order + " 반복문 " + i);
+                //print(order + " 반복문 " + i);
                 SetUsersData(sendInfo);
                 UserSpawn(i);
             }

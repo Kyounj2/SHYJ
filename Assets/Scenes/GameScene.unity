@@ -136,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 80432988761428520, guid: d46b2be5eec676d4bbfe98974d19f8dd, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 80432988761428695, guid: d46b2be5eec676d4bbfe98974d19f8dd, type: 3}
       propertyPath: m_RootOrder
@@ -11072,7 +11072,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7279d2aa88ce3b142b239ed566ab93e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userInfo: {fileID: 0}
+  userInfo:
+    nick_name: 
+    role: 
+    character: 
+    order: 0
+    playerOBJ: {fileID: 0}
+    is_alive: 0
+    is_escape: 0
   character1Factory: {fileID: 919132149155446097, guid: 711c081956976c249bc2dec297ca79a8, type: 3}
   character2Factory: {fileID: 4028146556725751955, guid: 8ea00a0147845174eb6de9c43507e474, type: 3}
   character3Factory: {fileID: 4864792422591254583, guid: 87adca227c3ca5445acfaf67b7cdf265, type: 3}
