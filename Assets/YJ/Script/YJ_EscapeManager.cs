@@ -74,12 +74,14 @@ public class YJ_EscapeManager : MonoBehaviourPun
         if (portal.GetComponent<YJ_Portal>().escapeCount >= GameManager.instance.liveCount)
         {
             Ending("Player");
+            GameObject.Find("UserData").GetComponent<UsersData>().winner = 2;
         }
 
 
         if (timer.GetComponent<YJ_Timer>().enemyWin)
         {
             Ending("Killer");
+            GameObject.Find("UserData").GetComponent<UsersData>().winner = 1;
         }
         //print( " 탈출인원 - 현재인원 : " + (portal.GetComponent<YJ_Portal>().escapeCount - GameManager.instance.liveCount));
     }

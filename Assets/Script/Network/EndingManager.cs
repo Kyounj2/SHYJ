@@ -16,71 +16,103 @@ public class EndingManager : MonoBehaviourPun
     int winner = 0; // 애너미 0, 플레이어 1
     int playerNum = 0; // 플레이어 수
 
-    [SerializeField]
     // 생성위치
-    public GameObject enemyPos, pos_1, pos_2, pos_3, pos_4;
+    [Header("ObjectPos")]
+    public GameObject enemyPos;
+    public GameObject pos_1, pos_2, pos_3, pos_4;
     GameObject[] playerPos;
 
-    [SerializeField]
     // 닉네임
-    public Text enemyName, name_1, name_2, name_3, name_4;
-    Text[] playerName;
-    Text enemyRealName;
-    Text[] realName = new Text[4]; // 실제 플레이어 닉네임
+    [Header("NicName")]
+    public Text enemyName;
+    public Text name_1, name_2, name_3, name_4;
+    Text[] NameList;
+    string enemyRealName;
+    string[] realName = new string[4]; // 실제 플레이어 닉네임
 
     // 캐릭터 받아오기
-    GameObject enemy, player1, player2, player3, player4;
+    [Header("ObjectList")]
+    public GameObject enemy;
+    public GameObject player1, player2, player3, player4;
     GameObject[] playerObject;
+    int[] realObject = new int[4]; // 실제 캐릭터 이름
+
+    // 정보를 가져올 곳
+    UsersData data;
 
     void Start()
     {
         // 게임씬에서 다음씬으로 넘어갈때 동기화해주기 ( 게임씬 등에서 한번 )
         PhotonNetwork.AutomaticallySyncScene = true;
 
-        // 배열 생성
+        // 이긴팀 받아오기
+        winner = data.winner;
+
+        // 데이터 받아오기
+        data = GameObject.Find("UserData").GetComponent<UsersData>();
+
+        // 플레이어 생성할 자리
         playerPos = new GameObject[4] { pos_1, pos_2, pos_3, pos_4 };
-        playerName = new Text[4] { name_1, name_2, name_3, name_4 };
+        // 플레이어 이름 생성 자리
+        NameList = new Text[4] { name_1, name_2, name_3, name_4 };
+        // 플레이어 캐릭터 생성 오브젝트정보
         playerObject = new GameObject[4] { player1, player2, player3, player4 };
 
-        // 처음시작할때 다 꺼두기
-        enemyPos.SetActive(false);
-        pos_1.SetActive(false);
-        pos_2.SetActive(false);
-        pos_3.SetActive(false);
-        pos_4.SetActive(false);
+        // 플레이어 real닉네임 받아오기
+        enemyRealName = data.users[0].nick_name;
+        realName = new string[4] { data.users[1].nick_name, data.users[2].nick_name, data.users[3].nick_name, data.users[4].nick_name };
+        // 플레이어 캐릭터 받아오기
+        realObject = new int[4] { (int.Parse(data.users[1].character.Substring(9))), (int.Parse(data.users[2].character.Substring(9))), (int.Parse(data.users[3].character.Substring(9))), (int.Parse(data.users[4].character.Substring(9))) };
 
-        enemyName.enabled = false;
-        name_1.enabled = false;
-        name_2.enabled = false;
-        name_3.enabled = false;
-        name_4.enabled = false;
+        //// 처음시작할때 다 꺼두기
+        //enemyPos.SetActive(false);
+        //pos_1.SetActive(false);
+        //pos_2.SetActive(false);
+        //pos_3.SetActive(false);
+        //pos_4.SetActive(false);
+
+        //enemyName.enabled = false;
+        //name_1.enabled = false;
+        //name_2.enabled = false;
+        //name_3.enabled = false;
+        //name_4.enabled = false;
         
     }
 
     void Update()
     {
         // 애너미가 이겼을때
-        if (winner == 0)
+        if (winner == 1)
         {
-            enemyPos.SetActive(true);
-            enemyName.enabled = true;
+            //enemyPos.SetActive(true);
+            //enemyName.enabled = true;
+
+            // 플레이어 닉네임 모두 끄기? 아니지 안쓰면되잖아
+
+            // 애너미 가운데 자리로 생성
             GameObject winner = Instantiate(enemy);
             winner.transform.position = enemyPos.transform.position;
 
+            // 닉네임 배치
+            enemyName.text = enemyRealName;
+
+            return;
         }
 
         // 플레이어가 이겼을때
-        if (winner == 1)
+        if (winner == 2)
         {
             for (int i = 0; i < playerNum; i++)
             {
                 // 캐릭터 배치
-                GameObject p = Instantiate(playerObject[i]);
+                GameObject p = Instantiate(playerObject[realObject[i]]);
                 p.transform.position = playerPos[i].transform.position;
 
                 // 이름 배치
-                playerName[i].text = realName[i].text;
+                NameList[i].text = realName[i];
             }
+
+            return;
         }
     }
 }

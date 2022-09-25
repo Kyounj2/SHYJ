@@ -9,6 +9,8 @@ public class UsersData : MonoBehaviour
     public UserInfo[] users = new UserInfo[5];
     public UsersData dontDestroyUserData;
 
+    public int winner = 0;
+
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
