@@ -103,8 +103,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             for (int i = 1; i < 2; i++)
             {
-                string prefabName = "Player" + usersData.users[i].character.Substring(9);
-                userOBJ[i] = PhotonNetwork.Instantiate(prefabName, playerSpawnPosition.position, Quaternion.identity);
+                //string prefabName = "Player" + usersData.users[i].character.Substring(9);
+                userOBJ[i] = PhotonNetwork.Instantiate("Player1", playerSpawnPosition.position, Quaternion.identity);
                 SetUserInfo(userOBJ[i], i);
             }
         }

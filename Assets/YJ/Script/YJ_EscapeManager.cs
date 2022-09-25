@@ -76,6 +76,7 @@ public class YJ_EscapeManager : MonoBehaviourPun
         //    Ending("Player");
         //}
 
+
         if (timer.GetComponent<YJ_Timer>().enemyWin)
         {
             Ending("Killer");

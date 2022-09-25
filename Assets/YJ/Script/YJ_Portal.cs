@@ -47,17 +47,17 @@ public class YJ_Portal : MonoBehaviourPun
             if (other.gameObject.GetComponent<PhotonView>().IsMine)
             {
                 escapeCount++;
-                other.GetComponent<YJ_KillerMove>().Campos.parent = null;
+                other.GetComponent<SH_PlayerRot>().camPivot.parent = null;
                 //GameManager.instance.userInfo.is_escape = true;
                 //GameObject cam = Instantiate(dathCam);
                 //cam.transform.position = Vector3.zero;
                 //cam.tag = "MainCamera";
-                other.GetComponent<YJ_KillerMove>().Campos.gameObject.AddComponent<YJ_DieCam>();
+                other.GetComponent<SH_PlayerRot>().camPivot.gameObject.AddComponent<YJ_DieCam>();
+                //photonView.RPC("RpcActiveFalse", RpcTarget.All, other.GetComponent<PhotonView>().ViewID);
                 
             }
             other.gameObject.SetActive(false);
 
-            //photonView.RPC("RpcActiveFlase", RpcTarget.All, other.GetComponent<PhotonView>().ViewID);
         }
 
         // DathCam을 생성하기? 켜기?
@@ -66,7 +66,7 @@ public class YJ_Portal : MonoBehaviourPun
     }
 
     [PunRPC]
-    void RpcActiveFlase(int viewID)
+    void RpcActiveFalse(int viewID)
     {
         PhotonView pv = GameManager.instance.GetPlayerPv(viewID);
         pv.gameObject.SetActive(false);
