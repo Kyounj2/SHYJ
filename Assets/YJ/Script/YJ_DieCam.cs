@@ -35,7 +35,12 @@ public class YJ_DieCam : MonoBehaviour
             Camera.main.transform.localPosition = new Vector3(0, 1.75f, -4f);
             lookAtPlayer = playerList[player];
         }
-        //transform.parent = playerList[player].transform;
+        else
+        {
+            transform.position = GameObject.FindGameObjectWithTag("Enemy").gameObject.transform.position;
+            Camera.main.transform.localPosition = new Vector3(0, 1.75f, -4f);
+            lookAtPlayer = playerList[player];
+        }
     }
 
 
