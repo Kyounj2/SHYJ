@@ -59,6 +59,14 @@ MonoBehaviour:
   - RpcliveCount
   - RpcDestroy
   - RpcActiveFlase
+  - RpcUserSpawn
+  - RandomNum
+  - RpcSetUsersData
+  - RpcPostUserInfo2Master
+  - RpcCharacterChange
+  - RpcScreenUpdate
+  - RpcGameStart
+  - RpcCreateCharacter
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

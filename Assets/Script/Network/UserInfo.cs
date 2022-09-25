@@ -2,18 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class UserInfo : MonoBehaviour
+public class UserInfo : MonoBehaviourPun
 {
-    // �г���, ���ұ�
     public string nick_name;
     public string role;
 
-    // ������ ĳ����, �ڸ���ȣ(������ ����)
     public string character;
     public int order;
 
-    // ���ӿ�����Ʈ, ���翩��
     public GameObject playerOBJ;
 
     public bool is_alive;
@@ -23,4 +21,15 @@ public class UserInfo : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
+
+    //private void Start()
+    //{
+    //    nick_name = photonView.Owner.NickName;
+    //    if (PhotonNetwork.IsMasterClient)
+    //    {
+    //        role = "Killer";
+    //    }
+    //    else
+    //        role = "Player";
+    //}
 }

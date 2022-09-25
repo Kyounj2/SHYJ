@@ -142,7 +142,6 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 player.localEulerAngles = new Vector3(0, 0, 0);
                 pm.cc.enabled = true;
                 ph.seatedTime = 0;
-                ph.OnHealed(20);
                 break;
 
             case State.Die:
@@ -155,6 +154,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
         pm.PlayerMovement();
         pr.PlayerRot(SH_PlayerRot.ViewState.FIRST, false);
         ps.SkillOnMimic(pr.targetCamPos.position, pr.targetCamPos.forward);
+        ps.Rescue();
     }
 
     private void Transform()
