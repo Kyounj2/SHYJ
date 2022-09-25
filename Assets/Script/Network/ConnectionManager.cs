@@ -16,6 +16,21 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
         inputNickname.onSubmit.AddListener(OnSubmit);
     }
 
+    // 글자색상 변경
+    public Text enter;
+
+    private void Update()
+    {
+        if(btnConnect.interactable)
+        {
+            enter.color = Color.white;
+        }
+        else
+        {
+            enter.color = Color.gray;
+        }
+    }
+
     public void OnValueChanged(string s)
     {
         // inputNickname이 입력이 되면 버튼을 활성화 하고 싶다.
