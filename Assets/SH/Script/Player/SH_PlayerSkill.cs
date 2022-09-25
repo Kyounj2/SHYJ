@@ -128,40 +128,66 @@ public class SH_PlayerSkill : MonoBehaviourPun
 
     float rescueTime = 0;
     const float RESCUESUCCESSTIME = 2;
-    Collider[] colls;
+
     public void Rescue()
     {
-        // 1. 주변에 콜라이더 중에 Player태그를 가진 애중에 상태가 Seated인놈이 있을때
-        colls = Physics.OverlapSphere(transform.position, 2);
-        for (int i = 0; i < colls.Length; i++)
+        if (photonView.IsMine == false) return;
+
+        Ray camRay = new Ray(cam.position, cam.forward);
+        RaycastHit hit;
+        Debug.DrawLine(camRay.origin, camRay.direction * 50, Color.green);
+
+        if (Physics.Raycast(camRay, out hit, 3))
         {
-            if (colls[i].CompareTag("Player"))
+            print(hit.collider.tag);
+            if (hit.collider.CompareTag("Player"))
             {
-                SH_PlayerFSM otherFSM = colls[i].transform.GetComponent<SH_PlayerFSM>();
-                SH_PlayerHP otherHP = colls[i].transform.GetComponent<SH_PlayerHP>();
-                if (otherFSM.state == SH_PlayerFSM.State.Seated)
+                SH_PlayerFSM hitFSM = hit.transform.GetComponent<SH_PlayerFSM>();
+                SH_PlayerHP hitHP = hit.transform.GetComponent<SH_PlayerHP>();
+                if (hitFSM.state == SH_PlayerFSM.State.Seated)
                 {
-                    Vector3 dir = otherFSM.transform.position - transform.position;
-                    dir.y = 0;
-                    if (Vector3.Dot(dir, transform.forward) > 0.5)
+                    print("어디한번 F를 눌러서 동료를 구출해보셔~~^^");
+                    if (Input.GetKey(KeyCode.F))
                     {
-                        print("어디한번 F를 눌러서 동료를 구출해보셔~~^^");
-                        if (Input.GetKey(KeyCode.F))
-                        {
-                            rescueTime += Time.deltaTime;
-                            print(rescueTime);
-                            // 슬라이더 UI 올라가고
-                            if (rescueTime > RESCUESUCCESSTIME)
-                            {
-                                // 슬라이더 UI 없어지고
-                                otherFSM.ChangeState(SH_PlayerFSM.State.Normal);
-                                otherHP.OnHealed(20);
-                            }
-                        }
+                        print("눌렀네!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                        //photonView.RPC("RpcSkillOnMimic", RpcTarget.All, camRay.origin, camRay.direction);
                     }
                 }
             }
         }
+
+        //// 1. 주변에 콜라이더 중에 Player태그를 가진 애중에 상태가 Seated인놈이 있을때
+        //colls = Physics.OverlapSphere(transform.position, 2);
+        //for (int i = 0; i < colls.Length; i++)
+        //{
+        //    if (colls[i].CompareTag("Player"))
+        //    {
+        //        SH_PlayerFSM otherFSM = colls[i].transform.GetComponent<SH_PlayerFSM>();
+        //        SH_PlayerHP otherHP = colls[i].transform.GetComponent<SH_PlayerHP>();
+        //        if (otherFSM.state == SH_PlayerFSM.State.Seated)
+        //        {
+        //            Vector3 dir = otherFSM.transform.position - transform.position;
+        //            dir.y = 0;
+        //            if (Vector3.Dot(dir, transform.forward) > 0.5)
+        //            {
+        //                print("어디한번 F를 눌러서 동료를 구출해보셔~~^^");
+        //                if (Input.GetKey(KeyCode.F))
+        //                {
+        //                    rescueTime += Time.deltaTime;
+        //                    print(rescueTime);
+        //                    // 슬라이더 UI 올라가고
+        //                    if (rescueTime > RESCUESUCCESSTIME)
+        //                    {
+        //                        // 슬라이더 UI 없어지고
+        //                        otherFSM.ChangeState(SH_PlayerFSM.State.Normal);
+        //                        otherHP.OnHealed(20);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+
 
         //if (Physics.Raycast(cameraRay, out hit))
         //{

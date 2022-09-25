@@ -162,7 +162,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
         pm.PlayerMovement();
         pr.PlayerRot(SH_PlayerRot.ViewState.FIRST, false);
         ps.SkillOnMimic();
-        //ps.Rescue();
+        ps.Rescue();
     }
 
     private void Transform()

@@ -218,7 +218,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7638943796465514201}
-  - {fileID: 7638943795968508332}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -282,11 +281,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 7638943795464201119}
   cc: {fileID: 0}
-  walkSpeed: 8
-  runSpeed: 15
-  groggySpeed: 5
+  walkSpeed: 6
+  runSpeed: 8
+  groggySpeed: 2
   transformSpeed: 10
-  jumpPower: 3
+  jumpPower: 2
   jumpRayLen: 1.2
   rayBase:
   - {fileID: 0}
@@ -423,8 +422,8 @@ Transform:
   - {fileID: 7638943794836771651}
   - {fileID: 7638943795748116689}
   - {fileID: 7638943796217042068}
-  m_Father: {fileID: 7638943795464201119}
-  m_RootOrder: 1
+  m_Father: {fileID: 7638943796465514201}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7638943796217042069
 GameObject:
@@ -487,6 +486,7 @@ Transform:
   m_Children:
   - {fileID: 3562785397638703645}
   - {fileID: 1115306660}
+  - {fileID: 7638943795968508332}
   m_Father: {fileID: 7638943795464201119}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -504,6 +504,10 @@ PrefabInstance:
     - target: {fileID: 4028146556725751955, guid: 8ea00a0147845174eb6de9c43507e474, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4028146556725751955, guid: 8ea00a0147845174eb6de9c43507e474, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4028146556725751959, guid: 8ea00a0147845174eb6de9c43507e474, type: 3}
       propertyPath: m_RootOrder

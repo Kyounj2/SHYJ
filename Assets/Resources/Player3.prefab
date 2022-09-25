@@ -282,11 +282,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 7638943795464201119}
   cc: {fileID: 0}
-  walkSpeed: 8
-  runSpeed: 15
-  groggySpeed: 5
+  walkSpeed: 6
+  runSpeed: 8
+  groggySpeed: 2
   transformSpeed: 10
-  jumpPower: 3
+  jumpPower: 2
   jumpRayLen: 1.2
   rayBase:
   - {fileID: 0}

@@ -281,11 +281,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 7638943795464201119}
   cc: {fileID: 0}
-  walkSpeed: 8
-  runSpeed: 15
-  groggySpeed: 5
+  walkSpeed: 6
+  runSpeed: 8
+  groggySpeed: 2
   transformSpeed: 10
-  jumpPower: 3
+  jumpPower: 2
   jumpRayLen: 1.2
   rayBase:
   - {fileID: 2860419866149883121}
@@ -467,7 +467,7 @@ GameObject:
   - component: {fileID: 7638943796465514201}
   m_Layer: 29
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -497,6 +497,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7638943796465514201}
     m_Modifications:
+    - target: {fileID: 2599269940481253938, guid: 876084885b95d0c40bceec91e2776584, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032221419940579271, guid: 876084885b95d0c40bceec91e2776584, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3110795744599088273, guid: 876084885b95d0c40bceec91e2776584, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765745672847243705, guid: 876084885b95d0c40bceec91e2776584, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6143416265151395575, guid: 876084885b95d0c40bceec91e2776584, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8212951105590498234, guid: 876084885b95d0c40bceec91e2776584, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -541,9 +561,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8512563693113225775, guid: 876084885b95d0c40bceec91e2776584, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8752176766598916699, guid: 876084885b95d0c40bceec91e2776584, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8841009346414364928, guid: 876084885b95d0c40bceec91e2776584, type: 3}
       propertyPath: m_Name
       value: Remy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841009346414364928, guid: 876084885b95d0c40bceec91e2776584, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 9124593853237137465, guid: 876084885b95d0c40bceec91e2776584, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 876084885b95d0c40bceec91e2776584, type: 3}

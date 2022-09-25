@@ -84,7 +84,7 @@ public class SH_PlayerHP : MonoBehaviourPun
     public void Seated()
     {
         seatedTime += Time.deltaTime;
-        print(seatedTime);
+        //print(seatedTime);
         if (seatedTime > DEADLINE)
         {
             fsm.ChangeState(SH_PlayerFSM.State.Die);
