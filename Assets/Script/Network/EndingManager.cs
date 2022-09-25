@@ -45,11 +45,11 @@ public class EndingManager : MonoBehaviourPun
         // 게임씬에서 다음씬으로 넘어갈때 동기화해주기 ( 게임씬 등에서 한번 )
         PhotonNetwork.AutomaticallySyncScene = true;
 
+        // 데이터 받아오기
+        data = GameObject.Find("UsersData").GetComponent<UsersData>();
+
         // 이긴팀 받아오기
         winner = data.winner;
-
-        // 데이터 받아오기
-        data = GameObject.Find("UserData").GetComponent<UsersData>();
 
         // 플레이어 생성할 자리
         playerPos = new GameObject[4] { pos_1, pos_2, pos_3, pos_4 };

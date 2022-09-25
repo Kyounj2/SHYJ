@@ -116,8 +116,8 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 break;
 
             case State.Die:
-                GameManager.instance.userInfo.is_alive = false;
-                GameManager.instance.userInfo.is_escape = false;
+                //GameManager.instance.userInfo.is_alive = false;
+                //GameManager.instance.userInfo.is_escape = false;
                 break;
         }
     }
@@ -224,12 +224,12 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
         transform.position += Vector3.down * Time.deltaTime;
 
-        if (transform.position.y < -2)
+        if (transform.position.y < -5)
         {
             transform.position = new Vector3(0, -10, 0);
             transform.GetComponent<SH_PlayerRot>().camPivot.parent = null;
             transform.GetComponent<SH_PlayerRot>().camPivot.gameObject.AddComponent<YJ_DieCam>();
-            GameManager.instance.photonView.RPC("RpcliveCount",RpcTarget.All);
+            GameManager.instance.photonView.RPC("RpcliveCount", RpcTarget.All);
         }
     }
 
