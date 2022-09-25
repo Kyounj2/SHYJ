@@ -95,7 +95,8 @@ public class YJ_EscapeManager : MonoBehaviourPun
         if (time >= 1)
         {
             Time.timeScale = 1;
-            PhotonNetwork.LoadLevel("EndingScene");
+            time = 0;
+            photonView.RPC("RpcEnding", RpcTarget.All);
         }
 
         // 시간을멈추고
@@ -120,5 +121,11 @@ public class YJ_EscapeManager : MonoBehaviourPun
         tColor = winner.color;
         tColor.a = time;
         winner.color = tColor;
+    }
+
+    [PunRPC]
+    void RpcEnding()
+    {
+        PhotonNetwork.LoadLevel("EndingScene");
     }
 }
