@@ -46,7 +46,6 @@ public class YJ_Portal : MonoBehaviourPun
         {
             if (other.gameObject.GetComponent<PhotonView>().IsMine)
             {
-                escapeCount++;
                 other.GetComponent<SH_PlayerRot>().camPivot.parent = null;
                 //GameManager.instance.userInfo.is_escape = true;
                 //GameObject cam = Instantiate(dathCam);
@@ -54,6 +53,7 @@ public class YJ_Portal : MonoBehaviourPun
                 //cam.tag = "MainCamera";
                 other.GetComponent<SH_PlayerRot>().camPivot.gameObject.AddComponent<YJ_DieCam>();
                 //photonView.RPC("RpcActiveFalse", RpcTarget.All, other.GetComponent<PhotonView>().ViewID);
+                photonView.RPC("RpcEscapeCount", RpcTarget.All);
                 
             }
             other.gameObject.SetActive(false);
@@ -66,9 +66,8 @@ public class YJ_Portal : MonoBehaviourPun
     }
 
     [PunRPC]
-    void RpcActiveFalse(int viewID)
+    void RpcEscapeCount()
     {
-        PhotonView pv = GameManager.instance.GetPlayerPv(viewID);
-        pv.gameObject.SetActive(false);
+        escapeCount++;
     }
 }

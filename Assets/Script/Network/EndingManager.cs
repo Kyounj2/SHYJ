@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 // 엔딩씬에서 하고싶은 것
 // 플레이어와 애너미의 승리여부 받아오기
 // 승리여부를 토대로 캐릭터 생성하기
 // 골랐던 캐릭터 정보 받아오기
 
-public class EndingManager : MonoBehaviour
+public class EndingManager : MonoBehaviourPun
 {
     // 승리여부 > 일단 어디서 받아올지 모르니까
     int winner = 0; // 애너미 0, 플레이어 1
@@ -33,6 +34,9 @@ public class EndingManager : MonoBehaviour
 
     void Start()
     {
+        // 게임씬에서 다음씬으로 넘어갈때 동기화해주기 ( 게임씬 등에서 한번 )
+        PhotonNetwork.AutomaticallySyncScene = true;
+
         // 배열 생성
         playerPos = new GameObject[4] { pos_1, pos_2, pos_3, pos_4 };
         playerName = new Text[4] { name_1, name_2, name_3, name_4 };

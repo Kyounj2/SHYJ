@@ -52,7 +52,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
 
         // 시작할때 서버에 접속한 인원 넣어주기 ( 애너미 제외 )
-        liveCount = PhotonNetwork.CurrentCluster.Length - 1;
+        //liveCount = PhotonNetwork.CurrentCluster.Length - 1;
+        liveCount = (int)PhotonNetwork.CurrentRoom.PlayerCount - 1;
 
         // OnPhotonSerializeView 호출 빈도
         PhotonNetwork.SerializationRate = 60;
@@ -80,6 +81,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
+        print(liveCount);
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             killerSpawnPosition.SetParent(playerSpawnPosition);
