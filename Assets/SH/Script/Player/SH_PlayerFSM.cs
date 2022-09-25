@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Unity.VisualScripting;
 
 public class SH_PlayerFSM : MonoBehaviourPun
 {
@@ -115,6 +116,8 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 break;
 
             case State.Die:
+                GameManager.instance.userInfo.is_alive = false;
+                GameManager.instance.userInfo.is_escape = false;
                 break;
         }
     }
@@ -183,7 +186,9 @@ public class SH_PlayerFSM : MonoBehaviourPun
         pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, true);
         ph.Seated();
     }
-    
+
+    Collider[] colls;
+
     private void Die()
     {
         Ray ray = new Ray(transform.position + Vector3.up * 2, Vector3.down);
@@ -205,6 +210,23 @@ public class SH_PlayerFSM : MonoBehaviourPun
                     PhotonNetwork.Destroy(gameObject);
                 }
             }
+        }
+
+        colls = Physics.OverlapSphere(transform.position, 2);
+        for (int i = 0; i < colls.Length; i++)
+        {
+            if (colls[i].CompareTag("Chair"))
+            {
+                colls[i].transform.SetParent(transform, false);
+                break;
+            }
+        }
+
+        transform.position += Vector3.down * Time.deltaTime;
+
+        if (transform.position.y < -2)
+        {
+            transform.position = new Vector3(0, -10, 0);
         }
     }
 
