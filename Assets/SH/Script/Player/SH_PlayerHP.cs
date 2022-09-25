@@ -88,6 +88,7 @@ public class SH_PlayerHP : MonoBehaviourPun
         if (seatedTime > DEADLINE)
         {
             fsm.ChangeState(SH_PlayerFSM.State.Die);
+            seatedTime = 0;
         }
     }
 }

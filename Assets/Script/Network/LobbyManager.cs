@@ -133,12 +133,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
 
         GameObject user = GameObject.Find("UserInfo");
-        UserInfo userInfo = user.GetComponent<UserInfo>();
+        MyUser userInfo = user.GetComponent<MyUser>();
 
         if (userInfo != null)
         {
-            userInfo.nick_name = PhotonNetwork.NickName;
-            userInfo.role = role;
+            userInfo.userInfo. nick_name = PhotonNetwork.NickName;
+            userInfo.userInfo.role = role;
         }
 
         PhotonNetwork.LoadLevel("ReadyScene");

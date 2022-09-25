@@ -38,7 +38,7 @@ public class ReadyManager : MonoBehaviourPun
         btnCharacter4.onClick.AddListener(OnClickCharacter4);
 
         GameObject user = GameObject.Find("UserInfo");
-        userInfo = user.GetComponent<UserInfo>();
+        userInfo = user.GetComponent<MyUser>().userInfo;
 
         GameObject users = GameObject.Find("UsersData");
         usersData = users.GetComponent<UsersData>();
@@ -179,6 +179,7 @@ public class ReadyManager : MonoBehaviourPun
     [PunRPC]
     public void RpcGameStart()
     {
+        usersData.dontDestroyUserData = usersData;
         PhotonNetwork.LoadLevel("GameScene");
     }
 
@@ -265,10 +266,13 @@ public class ReadyManager : MonoBehaviourPun
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            print(usersData.users[1].nick_name + "\n" +
-                usersData.users[1].role + "\n" +
-                usersData.users[1].character + "\n" +
-                usersData.users[1].order);
+            UserInfo info = new UserInfo();
+            info.nick_name = "d1818181818";
+            usersData.users[0] = info;
+            //print(usersData.users[1].nick_name + "\n" +
+            //    usersData.users[1].role + "\n" +
+            //    usersData.users[1].character + "\n" +
+            //    usersData.users[1].order);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
