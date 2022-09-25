@@ -147,7 +147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 270512687}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1000, y: 489, z: 125}
+  m_LocalPosition: {x: 1000, y: 168, z: 125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -790,11 +790,11 @@ MonoBehaviour:
   name_2: {fileID: 309001820}
   name_3: {fileID: 2008760299}
   name_4: {fileID: 984401407}
-  enemy: {fileID: 9076181716208236355, guid: f3d24a9f566fa444d8d04d37e558d949, type: 3}
-  player1: {fileID: 2194791856838813243, guid: 00739115aee8fba4886525fd7163d734, type: 3}
+  enemy: {fileID: 4577533357760014289, guid: b3df3f59780face499dd60de9a4f3d18, type: 3}
+  player1: {fileID: 8841009346414364928, guid: 876084885b95d0c40bceec91e2776584, type: 3}
   player2: {fileID: 4028146556725751955, guid: 8ea00a0147845174eb6de9c43507e474, type: 3}
-  player3: {fileID: 8841009346414364928, guid: 876084885b95d0c40bceec91e2776584, type: 3}
-  player4: {fileID: 4864792422591254583, guid: 87adca227c3ca5445acfaf67b7cdf265, type: 3}
+  player3: {fileID: 4864792422591254583, guid: 87adca227c3ca5445acfaf67b7cdf265, type: 3}
+  player4: {fileID: 2194791856838813243, guid: 00739115aee8fba4886525fd7163d734, type: 3}
 --- !u!4 &1503306995
 Transform:
   m_ObjectHideFlags: 0

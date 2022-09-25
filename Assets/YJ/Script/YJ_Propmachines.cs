@@ -30,7 +30,7 @@ public class YJ_Propmachines : MonoBehaviourPun
     // gage 다 찼을때 더이상 가동되지 않게할 bool값
     bool end = false;
 
-    public Animation anim;
+    Animation anim;
 
     void Start()
     {
@@ -56,8 +56,10 @@ public class YJ_Propmachines : MonoBehaviourPun
         
 
         // 슬라이드 꽉차면 작동못하게하기
-        if (originGageSlider.value >= 1)
+        if (originGageSlider.value >= 1 && !end)
         {
+            maghineGage.SetActive(false);
+            anim.Play();
             end = true;
         }
 
@@ -77,7 +79,7 @@ public class YJ_Propmachines : MonoBehaviourPun
                 playerSlider.value += 0.1f * Time.deltaTime;
                 // Rpc로 메인값변경 또보내기
                 originGage.transform.GetComponent<PhotonView>().RPC("SliderValue", RpcTarget.All, 0.1f * Time.deltaTime);
-                if (Input.GetKeyUp(KeyCode.F))
+                if (Input.GetKeyUp(KeyCode.F) && !end)
                     anim.Stop();
             }
         }
@@ -136,14 +138,15 @@ public class YJ_Propmachines : MonoBehaviourPun
 
 
         // 플레이어라면
-        if (other.gameObject.layer == 29)
+        if (other.gameObject.layer == 29 && other.GetComponent<PhotonView>().IsMine)
         {
-            if (end) return;
+            //if (end) return;
 
             playerObject = other.gameObject;
             other.gameObject.GetComponent<SH_PlayerSkill>().isNearPropMachine = true;
             player = other.gameObject.GetComponent<SH_PlayerSkill>().isNearPropMachine;
             maghineGage.GetComponent<Slider>().value = originGageSlider.GetComponent<Slider>().value;
+            maghineGage.SetActive(true);
         }
 
         // 애너미라면
@@ -160,16 +163,17 @@ public class YJ_Propmachines : MonoBehaviourPun
     private void OnTriggerExit(Collider other)
     {
 
-        //// 플레이어라면
-        if (other.gameObject.layer == 29)
+        // 플레이어라면
+        if (other.gameObject.layer == 29 && other.GetComponent<PhotonView>().IsMine)
         {
-            playerSlider.value = 0;
             //if (end) return;
+            playerSlider.value = 0;
 
             other.gameObject.GetComponent<SH_PlayerSkill>().isNearPropMachine = false;
             //macineOn_p = other.gameObject.GetComponent<SH_PlayerSkill>().isNearPropMachine;
             player = false;
             macineOn_p = false;
+            maghineGage.SetActive(false);
 
         }
 
