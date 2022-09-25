@@ -2365,7 +2365,7 @@ GameObject:
   - component: {fileID: 308632889}
   m_Layer: 0
   m_Name: Sit
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10979,7 +10979,7 @@ GameObject:
   - component: {fileID: 1296377457}
   m_Layer: 0
   m_Name: Chair
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18602,7 +18602,7 @@ GameObject:
   - component: {fileID: 7754709855523991729}
   m_Layer: 0
   m_Name: pCylinder12
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18620,7 +18620,7 @@ GameObject:
   - component: {fileID: 8327331572612826803}
   m_Layer: 0
   m_Name: pCube91
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18680,7 +18680,7 @@ GameObject:
   - component: {fileID: 430729886866245867}
   m_Layer: 0
   m_Name: pCube94
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18753,7 +18753,7 @@ GameObject:
   - component: {fileID: 3319239555672818467}
   m_Layer: 0
   m_Name: pPlane6
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18787,7 +18787,7 @@ GameObject:
   - component: {fileID: 139304743}
   m_Layer: 0
   m_Name: electric chair
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19086,7 +19086,7 @@ GameObject:
   - component: {fileID: 5649517221887811727}
   m_Layer: 0
   m_Name: pCube39
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19212,7 +19212,7 @@ GameObject:
   - component: {fileID: 3563039888841927002}
   m_Layer: 0
   m_Name: pCube65
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19338,7 +19338,7 @@ GameObject:
   - component: {fileID: 2336718676832238255}
   m_Layer: 0
   m_Name: pCube90
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19414,7 +19414,7 @@ GameObject:
   - component: {fileID: 5919478448862384381}
   m_Layer: 0
   m_Name: pCube87
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19517,7 +19517,7 @@ GameObject:
   - component: {fileID: 4713548894373511168}
   m_Layer: 0
   m_Name: polySurface4
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19559,7 +19559,7 @@ GameObject:
   - component: {fileID: 5321379472291577804}
   m_Layer: 0
   m_Name: pPlane1
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19635,7 +19635,7 @@ GameObject:
   - component: {fileID: 3373003731438714513}
   m_Layer: 0
   m_Name: pCube88
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50121,7 +50121,7 @@ GameObject:
   - component: {fileID: 2781073661298364956}
   m_Layer: 0
   m_Name: polySurface5
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50197,7 +50197,7 @@ GameObject:
   - component: {fileID: 2740107317081537545}
   m_Layer: 0
   m_Name: pCylinder9
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50299,7 +50299,7 @@ GameObject:
   - component: {fileID: 149283566662275970}
   m_Layer: 0
   m_Name: pCube92
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50317,7 +50317,7 @@ GameObject:
   - component: {fileID: 2624139459543285867}
   m_Layer: 0
   m_Name: pCube89
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50514,7 +50514,7 @@ GameObject:
   - component: {fileID: 1220083355729858257}
   m_Layer: 0
   m_Name: pCube95
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50538,7 +50538,7 @@ GameObject:
   - component: {fileID: 8041509163472132842}
   m_Layer: 0
   m_Name: curve1
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50571,7 +50571,7 @@ GameObject:
   - component: {fileID: 1790868807077940171}
   m_Layer: 0
   m_Name: pCylinder13
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50589,7 +50589,7 @@ GameObject:
   - component: {fileID: 2679351551194457231}
   m_Layer: 0
   m_Name: pPlane5
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50645,7 +50645,7 @@ GameObject:
   - component: {fileID: 5092506250441853415}
   m_Layer: 0
   m_Name: pCube66
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50671,7 +50671,7 @@ GameObject:
   - component: {fileID: 2534469709783970489}
   m_Layer: 0
   m_Name: pCube71
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50770,7 +50770,7 @@ GameObject:
   - component: {fileID: 115144375789834003}
   m_Layer: 0
   m_Name: pPlane7
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50788,7 +50788,7 @@ GameObject:
   - component: {fileID: 4051027109034864661}
   m_Layer: 0
   m_Name: pCube96
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50886,7 +50886,7 @@ GameObject:
   - component: {fileID: 4495414802209116450}
   m_Layer: 0
   m_Name: pPlane2
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50912,7 +50912,7 @@ GameObject:
   - component: {fileID: 1980283793747701048}
   m_Layer: 0
   m_Name: pCube93
-  m_TagString: Untagged
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
