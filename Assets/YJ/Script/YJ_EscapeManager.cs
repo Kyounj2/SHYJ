@@ -16,6 +16,9 @@ public class YJ_EscapeManager : MonoBehaviourPun
     // 머신이 다 돌아갔을때 켜질 포탈
     public GameObject portal;
 
+    // 죽은 인원
+    public int dieCount = 0;
+
     // 승리 UI
     Image circle;
     Image blur;
@@ -78,7 +81,7 @@ public class YJ_EscapeManager : MonoBehaviourPun
         }
 
 
-        if (timer.GetComponent<YJ_Timer>().enemyWin)
+        if (timer.GetComponent<YJ_Timer>().enemyWin || GameManager.instance.liveCount <= 0)
         {
             Ending("Killer");
             GameObject.Find("UserData").GetComponent<UsersData>().winner = 1;

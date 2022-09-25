@@ -14,7 +14,7 @@ public class YJ_Timer : MonoBehaviour
 
     // 제한시간
     [SerializeField]
-    float mm = 3f;
+    float mm = 2f;
     [SerializeField]
     float ss = 59f;
 
