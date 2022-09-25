@@ -104,6 +104,7 @@ public class EndingManager : MonoBehaviourPun
             // 애너미 가운데 자리로 생성
             GameObject winnerGO = Instantiate(enemy);
             winnerGO.transform.position = enemyPos.transform.position;
+            winnerGO.transform.localScale = Vector3.one * 200;
 
             // 닉네임 배치
             enemyName.text = enemyRealName;
@@ -116,13 +117,14 @@ public class EndingManager : MonoBehaviourPun
         // 플레이어가 이겼을때
         if (winner == 2)
         {
-            for (int i = 0; i < playerNum; i++)
+            for (int i = 0; i < PhotonNetwork.CurrentRoom.Players.Count-1; i++)
             {
+
                 // 캐릭터 배치
-                GameObject p = Instantiate(playerObject[(int.Parse(realObject[i]))]);
+                GameObject p = Instantiate(playerObject[int.Parse(realObject[i])-1]);
                 p.SetActive(true);
                 p.transform.position = playerPos[i].transform.position;
-                p.transform.localScale = Vector3.one * 250;
+                p.transform.localScale = Vector3.one * 200;
 
                 // 이름 배치
                 NameList[i].text = realName[i];

@@ -50,17 +50,17 @@ public class SH_PlayerSkill : MonoBehaviourPun
 
     void Update()
     {
-        if(photonView.IsMine)
-        {
-            if (isNearPropMachine)
-            {
-                player_ui.SetActive(true);
-            }
-            else
-            {
-                player_ui.SetActive(false);
-            }
-        }
+        //if(photonView.IsMine)
+        //{
+        //    if (isNearPropMachine)
+        //    {
+        //        player_ui.SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        player_ui.SetActive(false);
+        //    }
+        //}
     }
 
     public void SkillOffMimic()
