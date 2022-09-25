@@ -65,20 +65,20 @@ public class SH_PlayerSkill : MonoBehaviourPun
 
     public void SkillOffMimic()
     {
-        photonView.RPC("RpcSkillOffMimic", RpcTarget.All);
+        if (Input.GetMouseButton(1))
+        {
+            photonView.RPC("RpcSkillOffMimic", RpcTarget.All);
+        }
     }
 
     [PunRPC]
     public void RpcSkillOffMimic()
     {
-        if (Input.GetMouseButton(1))
-        {
-            if (photonView.IsMine == false) return;
+        if (photonView.IsMine == false) return;
 
-            originalBody.SetActive(true);
-            mimicBody.SetActive(false);
-            fsm.RpcOnChangeState(SH_PlayerFSM.State.Normal);
-        }
+        originalBody.SetActive(true);
+        mimicBody.SetActive(false);
+        fsm.RpcOnChangeState(SH_PlayerFSM.State.Normal);
     }
 
     public void SkillOnMimic()
