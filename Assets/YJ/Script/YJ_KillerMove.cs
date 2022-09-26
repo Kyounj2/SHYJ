@@ -432,7 +432,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
             // 플레이어가 있다면
             if (colls[i].gameObject.layer == 29)
             {
-                OnAttackUI();
+                //OnAttackUI();
                 // colls의 게임오브젝트에서 데미지 함수 실행
                 hp = colls[i].gameObject.GetComponent<SH_PlayerHP>();
                 if(hp != null) hp.OnDamaged(10);
