@@ -227,4 +227,10 @@ public class SH_PlayerFSM : MonoBehaviourPun
         transform.position = pos;
         //transform.localEulerAngles = transform.localEulerAngles + new Vector3(100, 0, 180);
     }
+
+    [PunRPC]
+    public void RpcPlayerRot(Vector3 v)
+    {
+        gameObject.transform.forward = v;
+    }
 }

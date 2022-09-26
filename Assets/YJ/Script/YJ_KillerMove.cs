@@ -154,6 +154,9 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     {
                         // 내손에 놓고 움직이기
                         playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, shoulderPos.transform.position);//, new Vector3(100, 0, 180));
+                        //playerTr.gameObject.transform.forward = transform.forward;
+                        playerTr.GetComponent<PhotonView>().RPC("RpcPlayerRot", RpcTarget.All, transform.forward);
+
                     }
                     break;
                 case State.Attack:
@@ -433,7 +436,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                 // colls의 게임오브젝트에서 데미지 함수 실행
                 hp = colls[i].gameObject.GetComponent<SH_PlayerHP>();
                 if(hp != null) hp.OnDamaged(10);
-                break;
+                return;
             }
         }
 

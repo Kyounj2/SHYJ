@@ -74,7 +74,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
     [PunRPC]
     public void RpcSkillOffMimic()
     {
-        if (photonView.IsMine == false) return;
+        //if (photonView.IsMine == false) return;
 
         originalBody.SetActive(true);
         mimicBody.SetActive(false);

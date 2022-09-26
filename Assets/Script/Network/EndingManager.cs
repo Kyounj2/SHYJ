@@ -45,6 +45,8 @@ public class EndingManager : MonoBehaviourPun
         // 게임씬에서 다음씬으로 넘어갈때 동기화해주기 ( 게임씬 등에서 한번 )
         PhotonNetwork.AutomaticallySyncScene = true;
 
+        Time.timeScale = 1;
+
         // 데이터 받아오기
         data = GameObject.Find("UsersData").GetComponent<UsersData>();
 
@@ -124,7 +126,7 @@ public class EndingManager : MonoBehaviourPun
                 GameObject p = Instantiate(playerObject[int.Parse(realObject[i])-1]);
                 p.SetActive(true);
                 p.transform.position = playerPos[i].transform.position;
-                p.transform.localScale = Vector3.one * 200;
+                p.transform.localScale = Vector3.one * 140;
 
                 // 이름 배치
                 NameList[i].text = realName[i];
