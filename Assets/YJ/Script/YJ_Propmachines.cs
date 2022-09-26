@@ -61,8 +61,12 @@ public class YJ_Propmachines : MonoBehaviourPun
         if (originGageSlider.value >= 1 && !end)
         {
             maghineGage.SetActive(false);
-            anim.Play();
             end = true;
+        }
+        
+        if (end)
+        {
+            photonView.RPC("RpcAnim", RpcTarget.All, true);
         }
 
 
@@ -77,12 +81,12 @@ public class YJ_Propmachines : MonoBehaviourPun
 
             if (Input.GetKey(KeyCode.F))
             {
-                anim.Play();
+                photonView.RPC("RpcAnim", RpcTarget.All, true);
                 playerSlider.value += 0.1f * Time.deltaTime;
                 // Rpc로 메인값변경 또보내기
                 originGage.transform.GetComponent<PhotonView>().RPC("SliderValue", RpcTarget.All, 0.1f * Time.deltaTime);
                 if (Input.GetKeyUp(KeyCode.F) && !end)
-                    anim.Stop();
+                    photonView.RPC("RpcAnim", RpcTarget.All, false);
             }
         }
 
@@ -190,5 +194,12 @@ public class YJ_Propmachines : MonoBehaviourPun
             macineOn_e = false;
         }
 
+    }
+
+    [PunRPC]
+    void RpcAnim(bool b)
+    {
+        if(b) anim.Play();
+        else anim.Stop();
     }
 }
