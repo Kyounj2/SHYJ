@@ -17,7 +17,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
     public bool isNearPropMachine = false;
 
     SH_PlayerFSM fsm;
-    Transform cam;
+    GameObject cam;
 
     public GameObject originalBody;
     public GameObject mimicBody;
@@ -41,7 +41,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
         originalBody.SetActive(true);
 
         fsm = GetComponent<SH_PlayerFSM>();
-        cam = Camera.main.transform;
+        cam = Camera.main.gameObject;
 
         mybMeshFilter = mimicBody.GetComponent<MeshFilter>();
         myMeshRenderer = mimicBody.GetComponent<MeshRenderer>();
@@ -87,9 +87,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
 
     public void SkillOnMimic()
     {
-        if (photonView.IsMine == false) return;
 
-        Ray camRay = new Ray(cam.position, cam.forward);
+        Ray camRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit hit;
         Debug.DrawLine(camRay.origin, camRay.direction * 50, Color.blue);
 
@@ -98,7 +97,11 @@ public class SH_PlayerSkill : MonoBehaviourPun
             if (hit.collider.CompareTag("Transformable"))
             {
                 if (Input.GetMouseButtonDown(0))
+                {
+                    if (photonView.IsMine == false) return;
                     photonView.RPC("RpcSkillOnMimic", RpcTarget.All, camRay.origin, camRay.direction);
+
+                }
             }
         }
     }
@@ -137,7 +140,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
     {
         if (photonView.IsMine == false) return;
 
-        Ray camRay = new Ray(cam.position, cam.forward);
+        Ray camRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit hit;
         Debug.DrawLine(camRay.origin, camRay.direction * 50, Color.green);
 

@@ -82,7 +82,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        print(liveCount);
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             killerSpawnPosition.SetParent(playerSpawnPosition);

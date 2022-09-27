@@ -59,7 +59,6 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         Skill_3,
         Carry,
         Down,
-        Die
     }
 
     State state;
@@ -125,7 +124,6 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
             //Cursor.visible = false;
             //Cursor.lockState = CursorLockMode.Locked;
 
-            print("현재상태 : " + state);
             KillerRot();
 
             switch (state)
@@ -161,6 +159,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     break;
                 case State.Attack:
                     //anim.SetBool("Attack", true);
+                    photonView.RPC("RpcSetBool", RpcTarget.All, "Skill_1", false);
                     photonView.RPC("RpcSetBool", RpcTarget.All, "Attack", true);
                     Attack();
                     break;
@@ -181,12 +180,9 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     Carry();
                     break;
                 case State.Down:
-                    print("다운상태로 변경하자");
                     Down();
                     photonView.RPC("RpcSetBool", RpcTarget.All, "Carry", false);
                     photonView.RPC("RpcSetBool", RpcTarget.All, "Down", true);
-                    break;
-                case State.Die:
                     break;
 
             }
@@ -213,10 +209,10 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         downTime += Time.deltaTime;
 
         playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, chairPos.transform.position);
+        playerTr.gameObject.transform.forward = chairPos.forward;
 
-        if(downTime > 1.5f)
+        if (downTime > 1.5f)
         {
-            print("드디어 다운하고 넘어가죠");
             photonView.RPC("RpcSetBool", RpcTarget.All, "Down", false);
             playerFSM.ChangeState(SH_PlayerFSM.State.Seated);
             state = State.Move;
@@ -408,6 +404,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         if (Input.GetButtonDown("Fire1"))
         {
             state = State.Attack;
+            skill_1Time = 0;
         }
 
         if (skill_1Time > 1f)
@@ -420,6 +417,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
     float skill_2Time = 0;
     public Collider[] colls;
+    int dontAgain = 0;
     void Skill_Scream()
     {
         skill_2Time += Time.deltaTime;
@@ -427,25 +425,30 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         // 반경 5미터 내의 콜라이더들을 수집
         colls = Physics.OverlapSphere(transform.position, 5f);
 
-        for (int i = 0; i < colls.Length; i++)
-        {
-            // 플레이어가 있다면
-            if (colls[i].gameObject.layer == 29)
-            {
-                //OnAttackUI();
-                // colls의 게임오브젝트에서 데미지 함수 실행
-                hp = colls[i].gameObject.GetComponent<SH_PlayerHP>();
-                if(hp != null) hp.OnDamaged(10);
-                return;
-            }
-        }
-
-        if (skill_2Time > 1.5f)
+        if (skill_2Time > 1)
         {
             Array.Clear(colls, 0, colls.Length); // 배열 안의 목록 전부 삭제
             state = State.Move; // 무브로 다시 변경
+            dontAgain = 0;
             skill_2Time = 0;
         }
+        else if(dontAgain < 1)
+        {
+            dontAgain++;
+            for (int i = 0; i < colls.Length; i++)
+            {
+                // 플레이어가 있다면
+                if (colls[i].gameObject.layer == 29)
+                {
+                    //OnAttackUI();
+                    // colls의 게임오브젝트에서 데미지 함수 실행
+                    hp = colls[i].gameObject.GetComponent<SH_PlayerHP>();
+                    if(hp != null) hp.OnDamaged(10);
+                    hp = null;
+                }
+            }
+        }
+
     }
 
     Image blood_1;
