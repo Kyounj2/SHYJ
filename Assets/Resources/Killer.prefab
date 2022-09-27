@@ -74,7 +74,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3534371343269448099}
   - component: {fileID: 3044071750556392965}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: MAW
   m_TagString: Untagged
   m_Icon: {fileID: 0}

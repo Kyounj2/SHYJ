@@ -26,6 +26,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
     MeshCollider myMeshCollider;
 
     public PhotonView view;
+    Outline outline;
 
     void Start()
     {
@@ -93,13 +94,25 @@ public class SH_PlayerSkill : MonoBehaviourPun
         RaycastHit hit;
 
         Debug.DrawLine(camRay.origin, camRay.direction * 50, Color.blue);
+        
+        if (outline != null && outline.enabled)
+            outline.enabled = false;
 
         if (Physics.Raycast(camRay, out hit, 50))
         {
             if (hit.collider.CompareTag("Transformable"))
             {
+                outline = hit.transform.GetComponent<Outline>();
+                outline.enabled = true;
+
+                //outline.OutlineColor = new Color(1f, 0.317f, 0f, 1f);
+
                 if (Input.GetMouseButtonDown(0))
                     photonView.RPC("RpcSkillOnMimic", RpcTarget.All, camRay.origin, camRay.direction);
+            }
+            else if (outline != null && outline.enabled)
+            {
+                outline.enabled = false;
             }
         }
     }
