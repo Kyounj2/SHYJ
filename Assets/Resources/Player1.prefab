@@ -412,6 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 969691d2765ba2243a124c42390571b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
   player: {fileID: 7638943795464201119}
   camPivot: {fileID: 7638943795968508332}
   camPos:
