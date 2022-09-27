@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     [HideInInspector]
     public UserInfo userInfo;
-    public UsersData usersData;
+    UsersData usersData;
 
     public GameObject character1Factory;
     public GameObject character2Factory;
