@@ -17,7 +17,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
     public bool isNearPropMachine = false;
 
     SH_PlayerFSM fsm;
-    GameObject cam;
+    SH_PlayerRot pr;
 
     public GameObject originalBody;
     public GameObject mimicBody;
@@ -41,7 +41,6 @@ public class SH_PlayerSkill : MonoBehaviourPun
         originalBody.SetActive(true);
 
         fsm = GetComponent<SH_PlayerFSM>();
-        cam = Camera.main.gameObject;
 
         mybMeshFilter = mimicBody.GetComponent<MeshFilter>();
         myMeshRenderer = mimicBody.GetComponent<MeshRenderer>();
@@ -73,7 +72,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
         if (Input.GetMouseButton(1))
         {
             if (photonView.IsMine == false) return;
-                photonView.RPC("RpcSkillOffMimic", RpcTarget.All);
+
+            photonView.RPC("RpcSkillOffMimic", RpcTarget.All);
         }
     }
 
@@ -87,9 +87,11 @@ public class SH_PlayerSkill : MonoBehaviourPun
 
     public void SkillOnMimic()
     {
+        if (photonView.IsMine == false) return;
 
         Ray camRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit hit;
+
         Debug.DrawLine(camRay.origin, camRay.direction * 50, Color.blue);
 
         if (Physics.Raycast(camRay, out hit, 50))
@@ -97,11 +99,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
             if (hit.collider.CompareTag("Transformable"))
             {
                 if (Input.GetMouseButtonDown(0))
-                {
-                    if (photonView.IsMine == false) return;
                     photonView.RPC("RpcSkillOnMimic", RpcTarget.All, camRay.origin, camRay.direction);
-
-                }
             }
         }
     }
@@ -111,6 +109,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
     {
         Ray camRay = new Ray(origin, dir);
         RaycastHit hit;
+
         Debug.DrawLine(camRay.origin, camRay.direction * 50, Color.red);
 
         if (Physics.Raycast(camRay, out hit, 50))
@@ -162,64 +161,5 @@ public class SH_PlayerSkill : MonoBehaviourPun
                 }
             }
         }
-
-        //// 1. 주변에 콜라이더 중에 Player태그를 가진 애중에 상태가 Seated인놈이 있을때
-        //colls = Physics.OverlapSphere(transform.position, 2);
-        //for (int i = 0; i < colls.Length; i++)
-        //{
-        //    if (colls[i].CompareTag("Player"))
-        //    {
-        //        SH_PlayerFSM otherFSM = colls[i].transform.GetComponent<SH_PlayerFSM>();
-        //        SH_PlayerHP otherHP = colls[i].transform.GetComponent<SH_PlayerHP>();
-        //        if (otherFSM.state == SH_PlayerFSM.State.Seated)
-        //        {
-        //            Vector3 dir = otherFSM.transform.position - transform.position;
-        //            dir.y = 0;
-        //            if (Vector3.Dot(dir, transform.forward) > 0.5)
-        //            {
-        //                print("어디한번 F를 눌러서 동료를 구출해보셔~~^^");
-        //                if (Input.GetKey(KeyCode.F))
-        //                {
-        //                    rescueTime += Time.deltaTime;
-        //                    print(rescueTime);
-        //                    // 슬라이더 UI 올라가고
-        //                    if (rescueTime > RESCUESUCCESSTIME)
-        //                    {
-        //                        // 슬라이더 UI 없어지고
-        //                        otherFSM.ChangeState(SH_PlayerFSM.State.Normal);
-        //                        otherHP.OnHealed(20);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-
-
-        //if (Physics.Raycast(cameraRay, out hit))
-        //{
-        //    if (hit.distance < 15)
-        //    {
-        //        SH_PlayerFSM hitFSM = hit.transform.GetComponent<SH_PlayerFSM>();
-        //        SH_PlayerHP hitHP = hit.transform.GetComponent<SH_PlayerHP>();
-        //        if (hitFSM.state == SH_PlayerFSM.State.Seated)
-        //        {
-        //            //rescueUI.SetActive(true);
-        //            if (Input.GetKeyDown(KeyCode.F))
-        //            {
-        //                rescueTime += Time.deltaTime;
-        //                print(rescueTime);
-        //                // 슬라이더 UI 올라가고
-        //                if (rescueTime > RESCUESUCCESSTIME)
-        //                {
-        //                    // 슬라이더 UI 없어지고
-        //                    hitFSM.ChangeState(SH_PlayerFSM.State.Normal);
-        //                    hitHP.OnHealed(20);
-        //                }
-        //            }
-
-        //        }
-        //    }
-        //}
     }
 }

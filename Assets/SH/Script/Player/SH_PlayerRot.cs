@@ -6,7 +6,7 @@ using Photon.Pun;
 
 public class SH_PlayerRot : MonoBehaviourPun
 {
-    Transform cam;
+    public Transform cam;
     public Transform player;
     public Transform camPivot;
     public Transform[] camPos = new Transform[2];
