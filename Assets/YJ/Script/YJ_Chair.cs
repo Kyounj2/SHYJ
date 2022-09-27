@@ -26,13 +26,4 @@ public class YJ_Chair : MonoBehaviour
             other.gameObject.GetComponent<YJ_KillerMove>().chairPos = transform.Find("Sit");
         }
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.layer == 30)
-        {
-            other.gameObject.GetComponent<YJ_KillerMove>().triggerChair = false;
-            other.gameObject.GetComponent<YJ_KillerMove>().chairPos = null;
-        }
-    }
 }

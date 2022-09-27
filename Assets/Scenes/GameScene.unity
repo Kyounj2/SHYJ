@@ -5128,11 +5128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 082b94d3a74c4804693768efe8a394f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
   mm: 100
-=======
-  mm: 90
->>>>>>> 6329bcd4788a4fb29f1030a448a4dbc3ccd77888
   ss: 59
   enemyWin: 0
 --- !u!114 &591235004
