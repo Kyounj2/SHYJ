@@ -7,6 +7,7 @@ using Photon.Realtime;
 using static UnityEngine.UI.Image;
 using static System.Net.WebRequestMethods;
 using Unity.Burst.CompilerServices;
+using UnityEditor.EventSystems;
 
 public class SH_PlayerSkill : MonoBehaviourPun
 {
@@ -24,6 +25,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
     MeshRenderer myMeshRenderer;
     MeshCollider myMeshCollider;
 
+    public PhotonView view;
+
     void Start()
     {
         //if(photonView.IsMine)
@@ -31,6 +34,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
         //    enemy_ui = GameObject.Find("EnemyMachineGage");
         //    enemy_ui.SetActive(false);
         //}
+
+        view = GetComponent<PhotonView>();
 
         originalBody = GetComponent<Transform>().Find("Body").GetChild(0).gameObject;
         originalBody.SetActive(true);
@@ -67,7 +72,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
     {
         if (Input.GetMouseButton(1))
         {
-            photonView.RPC("RpcSkillOffMimic", RpcTarget.All);
+            if (photonView.IsMine == false) return;
+                photonView.RPC("RpcSkillOffMimic", RpcTarget.All);
         }
     }
 
