@@ -72,11 +72,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
     {
         if (Input.GetMouseButton(1))
         {
-<<<<<<< HEAD
-            if (photonView.IsMine == false) return;
-=======
             if (!photonView.IsMine) return;
->>>>>>> 6329bcd4788a4fb29f1030a448a4dbc3ccd77888
             photonView.RPC("RpcSkillOffMimic", RpcTarget.All);
         }
     }
