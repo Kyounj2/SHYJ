@@ -7200,7 +7200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 082b94d3a74c4804693768efe8a394f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mm: 2
+  mm: 100
   ss: 59
   enemyWin: 0
 --- !u!114 &591235004
@@ -14909,6 +14909,7 @@ MonoBehaviour:
     playerOBJ: {fileID: 0}
     is_alive: 0
     is_escape: 0
+  usersData: {fileID: 0}
   character1Factory: {fileID: 919132149155446097, guid: 711c081956976c249bc2dec297ca79a8, type: 3}
   character2Factory: {fileID: 4028146556725751955, guid: 8ea00a0147845174eb6de9c43507e474, type: 3}
   character3Factory: {fileID: 4864792422591254583, guid: 87adca227c3ca5445acfaf67b7cdf265, type: 3}
