@@ -214,11 +214,13 @@ public class SH_PlayerFSM : MonoBehaviourPun
             transform.GetComponent<SH_PlayerRot>().camPivot.parent = null;
             transform.GetComponent<SH_PlayerRot>().camPivot.gameObject.AddComponent<YJ_DieCam>();
 
-            if (liveCountFlag)
-            {
-                GameManager.instance.photonView.RPC("RpcliveCount", RpcTarget.All);
-                liveCountFlag = false;
-            }
+        }
+
+        if (liveCountFlag)
+        {
+            if (photonView.IsMine == false) return;
+            GameManager.instance.photonView.RPC("RpcliveCount", RpcTarget.All);
+            liveCountFlag = false;
         }
     }
 

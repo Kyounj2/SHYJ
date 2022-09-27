@@ -73,7 +73,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
         if (Input.GetMouseButton(1))
         {
             if (photonView.IsMine == false) return;
-            photonView.RPC("RpcSkillOffMimic", RpcTarget.All);
+                photonView.RPC("RpcSkillOffMimic", RpcTarget.All);
         }
     }
 
