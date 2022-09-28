@@ -6317,6 +6317,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2417967455659930514, guid: 009fd376c62c4804799feda200a1c428, type: 3}
+      propertyPath: m_Size.y
+      value: 0.1512398
+      objectReference: {fileID: 0}
+    - target: {fileID: 2417967455659930514, guid: 009fd376c62c4804799feda200a1c428, type: 3}
+      propertyPath: m_Center.y
+      value: -0.4243801
+      objectReference: {fileID: 0}
     - target: {fileID: 2417967455659930515, guid: 009fd376c62c4804799feda200a1c428, type: 3}
       propertyPath: m_Name
       value: DathChair (2)
@@ -11765,6 +11773,14 @@ PrefabInstance:
     - target: {fileID: 2417967455659930513, guid: 009fd376c62c4804799feda200a1c428, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2417967455659930514, guid: 009fd376c62c4804799feda200a1c428, type: 3}
+      propertyPath: m_Size.y
+      value: 0.1512398
+      objectReference: {fileID: 0}
+    - target: {fileID: 2417967455659930514, guid: 009fd376c62c4804799feda200a1c428, type: 3}
+      propertyPath: m_Center.y
+      value: -0.4243801
       objectReference: {fileID: 0}
     - target: {fileID: 2417967455659930515, guid: 009fd376c62c4804799feda200a1c428, type: 3}
       propertyPath: m_Name

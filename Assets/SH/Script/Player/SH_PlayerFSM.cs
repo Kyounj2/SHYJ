@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Unity.VisualScripting;
+using UnityEngine.Experimental.XR.Interaction;
 
 public class SH_PlayerFSM : MonoBehaviourPun
 {
@@ -158,11 +159,15 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 break;
         }
     }
-
+    
     private void Normal()
     {
         pm.PlayerMovement();
-        pr.PlayerRot(SH_PlayerRot.ViewState.FIRST, false);
+        if (ps.isRescue)
+            pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, true);
+        else
+            pr.PlayerRot(SH_PlayerRot.ViewState.FIRST, false);
+
         ps.SkillOnMimic();
         ps.Rescue();
     }
@@ -213,7 +218,6 @@ public class SH_PlayerFSM : MonoBehaviourPun
             transform.position = new Vector3(0, -10, 0);
             transform.GetComponent<SH_PlayerRot>().camPivot.parent = null;
             transform.GetComponent<SH_PlayerRot>().camPivot.gameObject.AddComponent<YJ_DieCam>();
-
         }
 
         if (liveCountFlag)

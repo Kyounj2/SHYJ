@@ -86,6 +86,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
         fsm.RpcOnChangeState(SH_PlayerFSM.State.Normal);
     }
 
+    RaycastHit preHit;
+    Outline preOutline;
     public void SkillOnMimic()
     {
         if (photonView.IsMine == false) return;
@@ -95,9 +97,6 @@ public class SH_PlayerSkill : MonoBehaviourPun
 
         Debug.DrawLine(camRay.origin, camRay.direction * 50, Color.blue);
         
-        if (outline != null && outline.enabled)
-            outline.enabled = false;
-
         if (Physics.Raycast(camRay, out hit, 50))
         {
             if (hit.collider.CompareTag("Transformable"))
@@ -110,10 +109,14 @@ public class SH_PlayerSkill : MonoBehaviourPun
                 if (Input.GetMouseButtonDown(0))
                     photonView.RPC("RpcSkillOnMimic", RpcTarget.All, camRay.origin, camRay.direction);
             }
-            else if (outline != null && outline.enabled)
+
+            if (preOutline != null && preHit.transform.gameObject != hit.transform.gameObject)
             {
-                outline.enabled = false;
+               preOutline.enabled = false;
             }
+
+            preHit = hit;
+            preOutline = outline;
         }
     }
 
@@ -146,7 +149,10 @@ public class SH_PlayerSkill : MonoBehaviourPun
     }
 
     float rescueTime = 0;
-    const float RESCUESUCCESSTIME = 2;
+    const float RESCUESUCCESSTIME = 5.0f;
+    SH_PlayerFSM hitFSM = new SH_PlayerFSM();
+    SH_PlayerHP hitHP = new SH_PlayerHP();
+    public bool isRescue = false;
 
     public void Rescue()
     {
@@ -156,20 +162,38 @@ public class SH_PlayerSkill : MonoBehaviourPun
         RaycastHit hit;
         Debug.DrawLine(camRay.origin, camRay.direction * 50, Color.green);
 
-        if (Physics.Raycast(camRay, out hit, 3))
+        if (isRescue)
+        {
+            rescueTime += Time.deltaTime;
+            // rescueTime이랑 slider랑 연동하기
+            print(rescueTime);
+            if (Input.GetKeyUp(KeyCode.F))
+            {
+                isRescue = false;
+                rescueTime = 0;
+            }
+            
+            if (rescueTime > RESCUESUCCESSTIME)
+            {
+                hitFSM.ChangeState(SH_PlayerFSM.State.Normal);
+                hitHP.OnHealed(20);
+                isRescue = false;
+            }
+        }
+        else if (Physics.Raycast(camRay, out hit, 3))
         {
             print(hit.collider.tag);
             if (hit.collider.CompareTag("Player"))
             {
-                SH_PlayerFSM hitFSM = hit.transform.GetComponent<SH_PlayerFSM>();
-                SH_PlayerHP hitHP = hit.transform.GetComponent<SH_PlayerHP>();
+                hitFSM = hit.transform.GetComponent<SH_PlayerFSM>();
+                hitHP = hit.transform.GetComponent<SH_PlayerHP>();
                 if (hitFSM.state == SH_PlayerFSM.State.Seated)
                 {
                     print("어디한번 F를 눌러서 동료를 구출해보셔~~^^");
-                    if (Input.GetKey(KeyCode.F))
+                    if (Input.GetKeyDown(KeyCode.F))
                     {
                         print("눌렀네!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                        //photonView.RPC("RpcSkillOnMimic", RpcTarget.All, camRay.origin, camRay.direction);
+                        isRescue = true;
                     }
                 }
             }
