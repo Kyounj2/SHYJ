@@ -1,0 +1,113 @@
+fileFormatVersion: 2
+guid: cf710c687ed0ce04bbbff55b5de71fcc
+timeCreated: 1466099086
+licenseType: Store
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: board_2
+    100002: boards_2
+    100004: cap
+    100006: //RootNode
+    100008: coffin
+    100010: skeleton
+    400000: board_2
+    400002: boards_2
+    400004: cap
+    400006: //RootNode
+    400008: coffin
+    400010: skeleton
+    2300000: board_2
+    2300002: boards_2
+    2300004: cap
+    2300006: coffin
+    2300008: skeleton
+    3300000: board_2
+    3300002: boards_2
+    3300004: cap
+    3300006: coffin
+    3300008: skeleton
+    4300000: boards_2
+    4300002: cap
+    4300004: board_2
+    4300006: skeleton
+    4300008: coffin
+    7400000: skeleton|Camera|Camera|Armature.001|Take 001|Take 001:BaseAnimation|Came
+    7400002: skeleton|Camera|Camera|kay|Camera|kay
+    7400004: skeleton|coffin.001|coffin|Armature.001|Take 001|Take 001:BaseAnimation|
+    7400006: skeleton|coffin.001|coffin|kay|coffin|kay
+    7400008: skeleton|coffin_open|coffin_open|Armature.001|Take 001|Take 001:BaseAnim
+    7400010: skeleton|coffin_open|coffin_open|kay|coffin_open|kay
+    7400012: skeleton|ground|ground|Armature.001|Take 001|Take 001:BaseAnimation|grou
+    7400014: skeleton|ground|ground|kay|ground|kay
+    7400016: skeleton|Key.001|Key.001|Armature.001|Take 001|Take 001:BaseAnimation|Ke
+    7400018: skeleton|Key.001|Key.001|kay|Key.001|kay
+    7400020: skeleton|maps|maps|Armature.001|Take 001|Take 001:BaseAnimation|maps|Arm
+    7400022: skeleton|maps|maps|kay|maps|kay
+    7400024: skeleton|map|map|Armature.001|Take 001|Take 001:BaseAnimation|map|Armatu
+    7400026: skeleton|map|map|kay|map|kay
+    7400028: skeleton|skeleton|skeleton|Armature.001|Take 001|Take 001:BaseAnimation|
+    7400030: skeleton|skeleton|skeleton|kay|skeleton|kay
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 1
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
