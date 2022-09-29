@@ -15,6 +15,7 @@ public class UserInfo
 
     public GameObject playerOBJ;
 
+    public bool is_ready;
     public bool is_alive;
     public bool is_escape;
 }

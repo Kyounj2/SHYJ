@@ -15,6 +15,7 @@ public class ReadyManager : MonoBehaviourPun
     public Button btnCharacter2;
     public Button btnCharacter3;
     public Button btnCharacter4;
+    public Button btnReady;
 
     string character;
 
@@ -36,6 +37,7 @@ public class ReadyManager : MonoBehaviourPun
         btnCharacter2.onClick.AddListener(OnClickCharacter2);
         btnCharacter3.onClick.AddListener(OnClickCharacter3);
         btnCharacter4.onClick.AddListener(OnClickCharacter4);
+        btnReady.onClick.AddListener(OnClickReady);
 
         GameObject user = GameObject.Find("UserInfo");
         userInfo = user.GetComponent<MyUser>().userInfo;
@@ -162,8 +164,6 @@ public class ReadyManager : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        Debug();
-
         if (PhotonNetwork.IsMasterClient)
         {
             if (Input.GetKeyUp(KeyCode.Alpha0))
@@ -262,39 +262,30 @@ public class ReadyManager : MonoBehaviourPun
         }
     }
 
-    void Debug()
+    public void OnClickReady()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        photonView.RPC("RpcOnClickReady", RpcTarget.All, userInfo.order);
+    }
+
+    int readyCount = 0;
+    [PunRPC]
+    public void RpcOnClickReady(int order)
+    {
+        curPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
+        usersData.users[order].is_ready = true;
+
+        for (int i = 0; i < curPlayer; i++)
         {
-            UserInfo info = new UserInfo();
-            info.nick_name = "d1818181818";
-            usersData.users[0] = info;
-            //print(usersData.users[1].nick_name + "\n" +
-            //    usersData.users[1].role + "\n" +
-            //    usersData.users[1].character + "\n" +
-            //    usersData.users[1].order);
+            if (usersData.users[i].is_ready)
+            {
+                readyCount++;
+            }
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            print(usersData.users[2].nick_name + "\n" +
-                usersData.users[2].role + "\n" +
-                usersData.users[2].character + "\n" +
-                usersData.users[2].order);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            print(usersData.users[3].nick_name + "\n" +
-                usersData.users[3].role + "\n" +
-                usersData.users[3].character + "\n" +
-                usersData.users[3].order);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            print(usersData.users[4].nick_name + "\n" +
-                usersData.users[4].role + "\n" +
-                usersData.users[4].character + "\n" +
-                usersData.users[4].order);
-        }
+
+        if (readyCount == curPlayer)
+            RpcGameStart();
+        else
+            readyCount = 0;
     }
 }
  
