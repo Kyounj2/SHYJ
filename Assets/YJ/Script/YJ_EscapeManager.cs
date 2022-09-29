@@ -9,6 +9,7 @@ public class YJ_EscapeManager : MonoBehaviourPun
     // 머신이 다 돌아갔을때 켤 UI
     public GameObject machineCheck_1;
     public GameObject machineCheck_2;
+    public GameObject machineCheck_3;
 
     // 머신이 다 돌아간걸 체크할 Count
     int machineCount = 0;
@@ -29,18 +30,6 @@ public class YJ_EscapeManager : MonoBehaviourPun
 
     void Start()
     {
-        // 너는 언제 탈출할 수 있어?
-        // 머신을 전부 다 돌렸을때
-
-        // 마지막씬에 필요한게 뭐야?
-        // 탈출한 사람이 누군지 판단해야해
-        // 엔딩씬에서 그 사람의 상태를 변경해야지 춤추는걸로
-
-        // 탈출한 사람이 누군지 어떻게 파악하지
-        // 플레이어안에 본인인지 구분할 수 있는 데이터를 가져오자
-        // 그 플레이어가 몇번째 플레이어인지 가져올까?
-        // UserData가 몇번째 플레이어냐에 따라 순서가 다르게 들어갈거아니야 맞지
-
         // UI 게임오브젝트 각각 받아오기
         circle = GameObject.Find("Circle").GetComponent<Image>();
         blur = GameObject.Find("Blur").GetComponent<Image>();
@@ -68,6 +57,13 @@ public class YJ_EscapeManager : MonoBehaviourPun
         else if (machineCount == 2)
         {
             machineCheck_2.SetActive(true);
+        }
+
+        // 3번째 머신이 다 돌아가면
+        // 3번 UI를 켜고싶다
+        else if (machineCount == 3)
+        {
+            machineCheck_3.SetActive(true);
 
             // 포탈을 켜고싶다
             portal.SetActive(true);
