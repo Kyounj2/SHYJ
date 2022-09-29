@@ -270,7 +270,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         yvel += gravity * Time.deltaTime;
 
         // ray쏘고다니기
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 2.5f, Color.red * 1f);
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 4f, Color.red * 1f);
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         if (Physics.Raycast(ray, out player, 2.5f))
         {
@@ -435,7 +435,11 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     //OnAttackUI();
                     // colls의 게임오브젝트에서 데미지 함수 실행
                     hp = colls[i].gameObject.GetComponent<SH_PlayerHP>();
-                    if(hp != null) hp.OnDamaged(10);
+                    if (hp != null)
+                    {
+                        StartCoroutine(OnAttackUI());
+                        hp.OnDamaged(10);
+                    }
                     hp = null;
                 }
             }
