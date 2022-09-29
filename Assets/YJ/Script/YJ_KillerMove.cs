@@ -105,8 +105,8 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J))
-            OnAttackUI();
+        //if (Input.GetKeyDown(KeyCode.J))
+            //OnAttackUI();
 
         if (photonView.IsMine)
         {
@@ -129,11 +129,6 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
             switch (state)
             {
                 case State.Move:                    
-                    blood1_C.a = 0;
-                    blood_1.color = blood1_C;
-                    blood2_C.a = 0;
-                    blood_2.color = blood2_C;
-                    bloodUITime = 0;
                     KillerMove();
                     photonView.RPC("RpcSetBool", RpcTarget.All, "Skill_1", false);
                     photonView.RPC("RpcSetBool", RpcTarget.All, "Skill_2", false);
@@ -151,14 +146,12 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     if (carryTime > 0.3)
                     {
                         // 내손에 놓고 움직이기
-                        playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, shoulderPos.transform.position);//, new Vector3(100, 0, 180));
-                        //playerTr.gameObject.transform.forward = transform.forward;
+                        playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, shoulderPos.transform.position);
                         playerTr.GetComponent<PhotonView>().RPC("RpcPlayerRot", RpcTarget.All, transform.forward);
 
                     }
                     break;
                 case State.Attack:
-                    //anim.SetBool("Attack", true);
                     photonView.RPC("RpcSetBool", RpcTarget.All, "Skill_1", false);
                     photonView.RPC("RpcSetBool", RpcTarget.All, "Attack", true);
                     Attack();
@@ -176,7 +169,6 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     break;
                 case State.Carry:
                     photonView.RPC("RpcSetBool", RpcTarget.All, "Carry", true);
-                    //anim.SetBool("Carry", true);
                     Carry();
                     break;
                 case State.Down:
@@ -381,7 +373,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         {
             if (hp != null)
             {
-                OnAttackUI();
+                StartCoroutine(OnAttackUI());
                 hp.OnDamaged(30); // 혁신이꺼 Rpc로 바꾸기
                 hp = null;
             }
@@ -457,21 +449,24 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     Image blood_2;
     Color blood2_C;
 
-    float bloodUITime = 0;
-
-    void OnAttackUI()
+    IEnumerator OnAttackUI()
     {
-        bloodUITime += Time.deltaTime;
-
-        // 플레이어를 피격했을때 blood의 알파값으 80으로 올렸다가 다시 내려줄것
         blood1_C = blood_1.color;
-        blood1_C.a = 80;
+        blood1_C.a = 0.3f;
         blood_1.color = blood1_C;
 
         blood2_C = blood_2.color;
-        blood2_C.a = 80;
+        blood2_C.a = 0.3f;
         blood_2.color = blood2_C;
 
+        yield return new WaitForSeconds(0.5f);
+
+        blood1_C.a = 0;
+        blood2_C.a = 0;
+        blood_1.color = blood1_C;
+        blood_2.color = blood2_C;
+
+        //yield break;
     }
 
 
