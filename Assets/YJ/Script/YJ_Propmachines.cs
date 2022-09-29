@@ -66,6 +66,7 @@ public class YJ_Propmachines : MonoBehaviourPun
         
         if (end)
         {
+            // 슬라이드 꽉차면 애니메이션 지속 재생
             photonView.RPC("RpcAnim", RpcTarget.All, true);
         }
 
@@ -101,7 +102,7 @@ public class YJ_Propmachines : MonoBehaviourPun
 
             if (Input.GetKey(KeyCode.F))
             {
-                enemySlider.value += 0.2f * Time.deltaTime;
+                enemySlider.value += 0.4f * Time.deltaTime;
                 //photonView.RPC("RpcEnemyInputF", RpcTarget.All);
             }
 
