@@ -152,6 +152,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     }
                     break;
                 case State.Attack:
+                    photonView.RPC("RpcSetInteger", RpcTarget.All, "vv", 0);
                     photonView.RPC("RpcSetBool", RpcTarget.All, "Skill_1", false);
                     photonView.RPC("RpcSetBool", RpcTarget.All, "Attack", true);
                     Attack();
@@ -264,8 +265,8 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     // 이동구현
     void KillerMove()
     {
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
 
         yvel += gravity * Time.deltaTime;
 
@@ -352,11 +353,11 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
     void Attack()
     {
-        Debug.DrawRay(hand.transform.position, Camera.main.transform.forward * 1.5f, Color.red * 1f);
+        Debug.DrawRay(hand.transform.position, Camera.main.transform.forward * 2.5f, Color.red * 1f);
 
         Ray ray = new Ray(hand.transform.position, Camera.main.transform.forward);
 
-        if (Physics.Raycast(ray, out hit, 1.5f))
+        if (Physics.Raycast(ray, out hit, 2.5f))
         {
             if (hit.transform.gameObject.layer == 29)
             {
