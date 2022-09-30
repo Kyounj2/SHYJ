@@ -20,6 +20,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public GameObject popUp;
 
+    public GameObject roomList;
+
     string role;
 
     Color activeColor;
@@ -54,15 +56,20 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         if (isClicked1)
         {
-            role = "Player";
-            btnRolePlayer.GetComponent<Image>().color = activeColor;
+            roomList.SetActive(true);
 
+            role = "Player";
+
+            btnRolePlayer.GetComponent<Image>().color = activeColor;
             btnRoleEnemy.GetComponent<Image>().color = deactiveColor;
+
             isClicked2 = false;
             popUp.SetActive(false);
         }
         else
         {
+            roomList.SetActive(false);
+
             role = "";
             btnRolePlayer.GetComponent<Image>().color = deactiveColor;
         }
@@ -82,17 +89,22 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         if (isClicked2)
         {
-            role = "Killer";
-            btnRoleEnemy.GetComponent<Image>().color = activeColor;
-            popUp.SetActive(true);
+            roomList.SetActive(false);
 
+            role = "Killer";
+
+            btnRoleEnemy.GetComponent<Image>().color = activeColor;
             btnRolePlayer.GetComponent<Image>().color = deactiveColor;
+
             isClicked1 = false;
+            popUp.SetActive(true);
         }
         else
         {
             role = "";
             btnRoleEnemy.GetComponent<Image>().color = deactiveColor;
+
+            
             popUp.SetActive(false);
         }
         // 다른 버튼 색 원래대로
