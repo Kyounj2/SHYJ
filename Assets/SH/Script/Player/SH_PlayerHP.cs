@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-
+using System;
 
 public class SH_PlayerHP : MonoBehaviourPun
 {
@@ -14,6 +14,20 @@ public class SH_PlayerHP : MonoBehaviourPun
     SH_PlayerFSM fsm;
 
     public GameObject normalUI;
+    Slider myHPSlider;
+    Text txtCurHP;
+    Text txtMaxHP;
+
+    Image icon0;
+    Image icon1;
+    Image icon2;
+    Image icon3;
+    Image[] iconArray = new Image[4];
+
+    public Sprite character1;
+    public Sprite character2;
+    public Sprite character3;
+    public Sprite character4;
 
     public float HP
     {
@@ -26,9 +40,25 @@ public class SH_PlayerHP : MonoBehaviourPun
         hp = defaultHp;
         fsm = GetComponent<SH_PlayerFSM>();
 
+        Transform myThumb = normalUI.transform.Find("MyTumbnail");
+        myHPSlider = myThumb.Find("SliderHP").gameObject.GetComponent<Slider>();
+        txtCurHP = myThumb.Find("currentHP").gameObject.GetComponent<Text>();
+        txtMaxHP = myThumb.Find("maxHP").gameObject.GetComponent<Text>();
+
+        icon0 = myThumb.gameObject.GetComponent<Image>();
+        icon1 = normalUI.transform.Find("OtherTumbnail1").GetComponent<Image>();
+        icon2 = normalUI.transform.Find("OtherTumbnail2").GetComponent<Image>();
+        icon3 = normalUI.transform.Find("OtherTumbnail3").GetComponent<Image>();
+
+        //iconArray = { icon0, icon1, icon2, icon3 };
+
+        SetUI(100);
+        SetIconUI();
+
         if (photonView.IsMine)
             normalUI.SetActive(true);
     }
+
 
     private void Update()
     {
@@ -41,14 +71,18 @@ public class SH_PlayerHP : MonoBehaviourPun
         }
     }
 
-    void Mapping()
+    private void SetIconUI()
     {
+        for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount - 1; i++)
+        {
 
+        }
     }
 
     public void SetMaxHP(int value)
     {
         maxHP = value;
+        txtMaxHP.text = maxHP.ToString();
     }
 
     public void OnHealed(int amount)
@@ -60,9 +94,10 @@ public class SH_PlayerHP : MonoBehaviourPun
     public void RpcOnHealed(int amount)
     {
         hp += amount;
-        print(hp);
+        print("OnHealed : " + hp);
 
         hp = Mathf.Clamp(hp, 0, 100);
+        SetUI(hp);
     }
 
     public void OnDamaged(int amount)
@@ -73,15 +108,23 @@ public class SH_PlayerHP : MonoBehaviourPun
     [PunRPC]
     public void RpcOnDamaged(int amount)
     {
+        amount = 1;
         hp -= amount;
 
         hp = Mathf.Clamp(hp, 0, 100);
-        print(hp);
+        print("OnDamaged : " + hp);
 
         if (hp <= 0)
         {
             fsm.RpcOnChangeState(SH_PlayerFSM.State.Groggy);
         }
+        SetUI(hp);
+    }
+
+    void SetUI(float hp)
+    {
+        txtCurHP.text = hp.ToString();
+        myHPSlider.value = hp;
     }
 
     const float DEADLINE = 100.0f;
