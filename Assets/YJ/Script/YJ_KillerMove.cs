@@ -68,13 +68,8 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            // 플레이어한테 붙일 것
-            //GameManager.instance.AddPlayer(photonView);
-
             Campos.gameObject.SetActive(true);
             cameraOriginPos = Campos.transform;
-            //player_ui = GameObject.Find("PlayerMachineGage");
-            //player_ui.SetActive(false);
         }
 
         cc = GetComponent<CharacterController>();

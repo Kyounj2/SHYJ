@@ -9,11 +9,16 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
 {
     public InputField inputNickname;
     public Button btnConnect;
+    public GameObject monster;
+    public Animator anim;
+    float posY = 837;
 
     void Start()
     {
         inputNickname.onValueChanged.AddListener(OnValueChanged);
         inputNickname.onSubmit.AddListener(OnSubmit);
+
+        monster.SetActive(false);
     }
 
     // 글자색상 변경
@@ -28,6 +33,19 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
         else
         {
             enter.color = Color.gray;
+        }
+
+        if (click)
+        {
+            posY -= 20f;
+            posY = Mathf.Clamp(posY, -64, 837);
+            monster.gameObject.transform.position = new Vector3(941, posY, -425);
+            animTime += Time.deltaTime;
+            if (animTime > 1.3f)
+            {
+                PhotonNetwork.ConnectUsingSettings();
+                animTime = 0;
+            }
         }
     }
 
@@ -54,10 +72,15 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public float animTime = 0;
+    bool click = false;
+    bool connectionGo = false;
     // 버튼에 연결
     public void OnClickConnection()
     {
-        PhotonNetwork.ConnectUsingSettings();
+        monster.SetActive(true);
+        click = true;
+        anim.SetTrigger("Hand");
     }
 
     // 마스터 서버 접속성공시 자동 호출, 로비 생성 및 진입 불가능
