@@ -30,6 +30,9 @@ public class ReadyManager : MonoBehaviourPun
 
     int startNum;
 
+    public GameObject playerView;
+    public GameObject killerView;
+
     // Start is called befor the first frame update
     void Start()
     {
@@ -48,6 +51,36 @@ public class ReadyManager : MonoBehaviourPun
         startNum = Random.Range(0, 4);
         character = "Character" + (startNum + 1);   
         curPlayer = PhotonNetwork.CurrentRoom.PlayerCount - 1;
+
+        if (curPlayer == 0)
+        {
+            startNum = -1;
+            killerView.SetActive(true);
+        }
+        else
+        {
+            playerView.SetActive(true);
+        }
+
+        switch (startNum)
+        {
+            case 0:
+                preButton = btnCharacter1.gameObject;
+                EventChooseCharacter(btnCharacter1);
+                break;
+            case 1:
+                preButton = btnCharacter2.gameObject;
+                EventChooseCharacter(btnCharacter2);
+                break;
+            case 2:
+                preButton = btnCharacter3.gameObject;
+                EventChooseCharacter(btnCharacter3);
+                break;
+            case 3:
+                preButton = btnCharacter4.gameObject;
+                EventChooseCharacter(btnCharacter4);
+                break;
+        }            
 
         // 자기 정보를 저장하고 싶다.
         SetUserInfo();
@@ -189,37 +222,58 @@ public class ReadyManager : MonoBehaviourPun
         userInfo.order = curPlayer;
     }
 
-    public void OnClickCharacter(string changeCharacter)
+    public void CharacterChange(string changeCharacter)
     {
-        CharacterChange(changeCharacter, userInfo.order);
+        //CharacterChange(changeCharacter, userInfo.order);
+        userInfo.character = changeCharacter;
+        photonView.RPC("RpcCharacterChange", RpcTarget.All, changeCharacter, userInfo.order);
         ScreenUpdate(userInfo.order);
     }
 
+    GameObject preButton;
+    Vector2 orginSize = new Vector2(350, 350);
+    Vector2 clickSize = new Vector2(400, 400);
+    Color orginColor = new Color(1f, 1f, 1f, 1f);
+    Color clickColor = new Color(0.5f, 0.5f, 0.5f, 1);
+    public GameObject outline;
+
     public void OnClickCharacter1()
     {
-        OnClickCharacter("Character1");
+        EventChooseCharacter(btnCharacter1);
+        CharacterChange("Character1");
     }
 
     public void OnClickCharacter2()
     {
-        OnClickCharacter("Character2");
+        EventChooseCharacter(btnCharacter2);
+        CharacterChange("Character2");
     }
 
     public void OnClickCharacter3()
     {
-        OnClickCharacter("Character3");
+        EventChooseCharacter(btnCharacter3);
+        CharacterChange("Character3");
     }
 
     public void OnClickCharacter4()
     {
-        OnClickCharacter("Character4");
+        EventChooseCharacter(btnCharacter4);
+        CharacterChange("Character4");
     }
 
-    public void CharacterChange(string character, int order)
+    void EventChooseCharacter(Button btn)
     {
-        userInfo.character = character;
-        photonView.RPC("RpcCharacterChange", RpcTarget.All, character, order);
+        preButton.GetComponent<RectTransform>().sizeDelta = orginSize;
+        preButton = btn.gameObject;
+        preButton.GetComponent<RectTransform>().sizeDelta = clickSize;
+        outline.transform.position = preButton.transform.position;
     }
+
+    //public void CharacterChange(string character, int order)
+    //{
+    //    userInfo.character = character;
+    //    photonView.RPC("RpcCharacterChange", RpcTarget.All, character, order);
+    //}
 
     [PunRPC]
     public void RpcCharacterChange(string character, int order)

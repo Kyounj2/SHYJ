@@ -58,8 +58,8 @@ public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            float v = Input.GetAxisRaw("Vertical");
-            float h = Input.GetAxisRaw("Horizontal");
+            float v = Input.GetAxis("Vertical");
+            float h = Input.GetAxis("Horizontal");
 
             dir = player.forward * v + player.right * h;
             dir.Normalize();
@@ -80,7 +80,7 @@ public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
 
             dir.y = yVelocity;
 
-            photonView.RPC("RpcSetFloat", RpcTarget.All, v);
+            photonView.RPC("RpcSetWalkFloat", RpcTarget.All, v, h);
 
             speed = ChangeSpeed(fsm.state);
 
@@ -116,9 +116,10 @@ public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
     }
 
     [PunRPC]
-    public void RpcSetFloat(float v)
+    public void RpcSetWalkFloat(float v, float h)
     {
         anim.SetFloat("Speed", v);
+        anim.SetFloat("Direction", h);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

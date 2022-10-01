@@ -73,6 +73,7 @@ MonoBehaviour:
   - RpcPlayerRot
   - RpcAnim
   - RpcOnClickReady
+  - RpcSetWalkFloat
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
