@@ -18,6 +18,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
 
     SH_PlayerFSM fsm;
     SH_PlayerRot pr;
+    public GameObject rescueUI;
 
     public GameObject originalBody;
     public GameObject mimicBody;
@@ -51,6 +52,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
         player_ui = GameObject.Find("PlayerMachineGage");
 
         //player_ui.SetActive(false);
+        if (photonView.IsMine)
+            rescueUI.SetActive(false);
     }
 
     void Update()
@@ -190,6 +193,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
                 if (hitFSM.state == SH_PlayerFSM.State.Seated)
                 {
                     print("어디한번 F를 눌러서 동료를 구출해보셔~~^^");
+                    rescueUI.SetActive(true);
                     if (Input.GetKeyDown(KeyCode.F))
                     {
                         print("눌렀네!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -197,6 +201,10 @@ public class SH_PlayerSkill : MonoBehaviourPun
                     }
                 }
             }
+        }
+        else
+        {
+            rescueUI.SetActive(false);
         }
     }
 }

@@ -58,8 +58,8 @@ public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            float v = Input.GetAxis("Vertical");
-            float h = Input.GetAxis("Horizontal");
+            float v = Input.GetAxisRaw("Vertical");
+            float h = Input.GetAxisRaw("Horizontal");
 
             dir = player.forward * v + player.right * h;
             dir.Normalize();
