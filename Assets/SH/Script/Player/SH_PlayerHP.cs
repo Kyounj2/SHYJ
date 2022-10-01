@@ -13,6 +13,8 @@ public class SH_PlayerHP : MonoBehaviourPun
 
     SH_PlayerFSM fsm;
 
+    public GameObject normalUI;
+
     public float HP
     {
         get { return hp; }
@@ -23,6 +25,9 @@ public class SH_PlayerHP : MonoBehaviourPun
     {
         hp = defaultHp;
         fsm = GetComponent<SH_PlayerFSM>();
+
+        if (photonView.IsMine)
+            normalUI.SetActive(true);
     }
 
     private void Update()

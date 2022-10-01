@@ -139,6 +139,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 break;
 
             case State.Groggy:
+                curGroggTime = 0;
                 break;
 
             case State.Catched:
@@ -180,10 +181,15 @@ public class SH_PlayerFSM : MonoBehaviourPun
         ps.SkillOffMimic();
     }
 
+    float curGroggTime = 0;
     private void Groggy()
     {
-        pm.PlayerMovement();
-        pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, false);
+        curGroggTime += Time.deltaTime;
+        if (curGroggTime > 0.5f)
+        {
+            pm.PlayerMovement();
+            pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, false);
+        }
     }
 
     private void Catched()
