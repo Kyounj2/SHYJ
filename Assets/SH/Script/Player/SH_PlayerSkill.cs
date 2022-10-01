@@ -53,7 +53,11 @@ public class SH_PlayerSkill : MonoBehaviourPun
 
         //player_ui.SetActive(false);
         if (photonView.IsMine)
+        {
             rescueUI.SetActive(false);
+            rescueUI.GetComponent<Slider>().maxValue = RESCUESUCCESSTIME;
+        }
+
     }
 
     void Update()
@@ -168,6 +172,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
         if (isRescue)
         {
             rescueTime += Time.deltaTime;
+            rescueUI.GetComponent<Slider>().value = rescueTime;
             // rescueTimeÀÌ¶û slider¶û ¿¬µ¿ÇÏ±â
             print(rescueTime);
             if (Input.GetKeyUp(KeyCode.F))
