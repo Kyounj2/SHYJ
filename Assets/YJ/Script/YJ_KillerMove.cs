@@ -59,6 +59,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         Skill_3,
         Carry,
         Down,
+        MachineAttack
     }
 
     State state;
@@ -97,16 +98,12 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     // 현재상태
     public State currState;
 
-    // 상태 변경
-    //public void ChangeState(State s)
-    //{
-    //    photonView.RPC("RPCChangeState", RpcTarget.All, s);
-    //}
+    // 애너미 상태를 머신어텍으로 바꿔줄 bool값
+    public bool machineAttack = false;
+
 
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.J))
-            //OnAttackUI();
 
         if (photonView.IsMine)
         {
@@ -177,6 +174,9 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     photonView.RPC("RpcSetBool", RpcTarget.All, "Carry", false);
                     photonView.RPC("RpcSetBool", RpcTarget.All, "Down", true);
                     break;
+                case State.MachineAttack:
+                    MachineAttack();
+                    break;
 
             }
 
@@ -216,6 +216,11 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     public Transform camPosOrigin;
     public Transform Campos;
     public Transform Campos2;
+    public Transform Campos3;
+    public bool propmachineFOn = false;
+    bool stop = false;
+    float stopTime = 0;
+    float sinTime = 0;
 
     // 카메라 rot구현
     void KillerRot()
@@ -230,13 +235,15 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
         rotY = Mathf.Clamp(rotY, 1050, 1120); // 위아래 고정
 
+        print(Vector3.Distance(Campos.transform.position, Campos3.transform.position) < 1);
+
         // 1인칭 카메라
-        if (carryTime <= 0)
+        if (carryTime <= 0 && !propmachineFOn && !stop)
         {
-            if(state == State.Skill_1)
+
+            if (state == State.Skill_1)
             {
                 float rotZ = Mathf.Sin(120 * skill_1Time) * 50f * Time.deltaTime;
-                Debug.Log(rotZ);
                 transform.eulerAngles = new Vector3(0, rotX, 0); // 일단좌우만
                 Camera.main.transform.eulerAngles = new Vector3(-rotY, rotX, rotZ);
             }
@@ -246,7 +253,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                 Camera.main.transform.eulerAngles = new Vector3(-rotY, rotX, 0);
             }
         }
-        else if (carryTime > 0.1)
+        else if (carryTime > 0.1 && !propmachineFOn)
         {
             if (carryTime < 0.2)
             {
@@ -256,6 +263,36 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
             Campos.transform.position = Campos2.transform.position;
             transform.eulerAngles = new Vector3(0, rotX, 0);
             Campos.transform.forward = transform.forward;
+        }
+        else if (propmachineFOn && !stop && Input.GetKey(KeyCode.F))
+        {
+            Campos.transform.position = Vector3.Lerp(Campos.transform.position, Campos3.transform.position, Time.deltaTime * 0.5f);
+            if (Vector3.Distance(Campos.transform.position, Campos3.transform.position) < 4)
+            {
+                //Campos.transform.position = Campos3.transform.position;
+                // 잠깐멈춰볼까..? 0.5초정도..?
+                stopTime += Time.deltaTime;
+                if (stopTime > 0.5)
+                {
+                    stop = true;
+                    stopTime = 0;
+                }
+            }
+        }
+        else if ( stop )
+        {
+            sinTime += Time.deltaTime;
+            sinTime = Math.Clamp(sinTime, 0, 1);
+            Campos.transform.position = Vector3.Lerp(Campos.transform.position, camPosOrigin.transform.position, Time.deltaTime * 2);
+            float rotY = Mathf.Sin((3.14f/0.5f) * sinTime) * 20;
+            //transform.eulerAngles = new Vector3(0, rotX, 0); // 일단좌우만
+            Camera.main.transform.eulerAngles = new Vector3(-rotY, rotX, 0);
+            if (Vector3.Distance(Campos.transform.position, camPosOrigin.transform.position) < 0.2)
+            {
+                Campos.transform.position = camPosOrigin.transform.position;
+                sinTime = 0;
+                stop = false;
+            }
         }
     }
 
@@ -341,6 +378,12 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     state = State.Down;
                 }
             }
+        }
+
+        // 머신 부셨을때 상태전환
+        if (machineAttack)
+        {
+            state = State.MachineAttack;
         }
 
         cc.Move(dir * speed * Time.deltaTime);
@@ -504,7 +547,23 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         {
             state = State.Move;
         }
+    }
 
+    float machineAttackTime = 0;
+    void MachineAttack()
+    {
+        machineAttackTime += Time.deltaTime;
+        photonView.RPC("RpcSetBool", RpcTarget.All, "MachineAttack", true);
+
+        // machineAttackTime이 애니메이션 플레이 시간보다 커지면 무브로 되돌리기
+        if (machineAttackTime > (float)anim.GetCurrentAnimatorStateInfo(2).length)
+        {
+            photonView.RPC("RpcSetBool", RpcTarget.All, "MachineAttack", false);
+            state = State.Move;
+            propmachineFOn = false;
+            machineAttack = false;
+            machineAttackTime = 0;
+        }
 
     }
 

@@ -102,8 +102,9 @@ public class YJ_Propmachines : MonoBehaviourPun
 
             if (Input.GetKey(KeyCode.F))
             {
-                enemySlider.value += 0.4f * Time.deltaTime;
-                //photonView.RPC("RpcEnemyInputF", RpcTarget.All);
+                enemySlider.value += 0.6f * Time.deltaTime;
+                // 3인칭으로 돌리기
+                enemyObject.gameObject.GetComponent<YJ_KillerMove>().propmachineFOn = true;
             }
 
             if (enemySlider.value > 0.99)
@@ -113,6 +114,9 @@ public class YJ_Propmachines : MonoBehaviourPun
                 enemySlider.value = 1f;
                 if (enemySlider.value >= 1f)
                 {
+                    // 상태전환
+                    enemyObject.gameObject.GetComponent<YJ_KillerMove>().machineAttack = true;
+                    // UI끄기
                     enemyObject.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine = false;
                     enemy = false;
                     macineOn_e = false;

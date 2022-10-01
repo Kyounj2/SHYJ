@@ -693,6 +693,37 @@ Transform:
   m_Father: {fileID: 2232342028599851323}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2066562881983970862
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5321774067848729931}
+  m_Layer: 30
+  m_Name: Campos3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5321774067848729931
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2066562881983970862}
+  m_LocalRotation: {x: 0.12709361, y: -0.033105426, z: -0.01340252, w: 0.9912476}
+  m_LocalPosition: {x: 0, y: 1.928, z: -1.77}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9076181716208236348}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 14.541, y: -4.09, z: -2.071}
 --- !u!1 &2185079597016048982
 GameObject:
   m_ObjectHideFlags: 0
@@ -2359,6 +2390,7 @@ Transform:
   - {fileID: 9076181716054744036}
   - {fileID: 7782307285253140885}
   - {fileID: 9076181715040959990}
+  - {fileID: 5321774067848729931}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2400,11 +2432,14 @@ MonoBehaviour:
   nicName: {fileID: 0}
   lerpSpeed: 100
   currState: 0
+  machineAttack: 0
   triggerChair: 0
   chairPos: {fileID: 0}
   camPosOrigin: {fileID: 7782307285253140885}
   Campos: {fileID: 9076181715040959990}
   Campos2: {fileID: 9076181716054744036}
+  Campos3: {fileID: 5321774067848729931}
+  propmachineFOn: 0
   hand: {fileID: 1526934644331179641}
   colls: []
   shoulderPos: {fileID: 4695912969008215400}
@@ -2481,8 +2516,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9076181716293098253}
-  m_LocalRotation: {x: 0.1270936, y: -0.033105426, z: -0.013402518, w: 0.9912476}
-  m_LocalPosition: {x: 0, y: 1.76, z: -4.7799997}
+  m_LocalRotation: {x: 0.12709358, y: -0.033105426, z: -0.013402516, w: 0.9912476}
+  m_LocalPosition: {x: 0, y: 1.76, z: -4.7800007}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

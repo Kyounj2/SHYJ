@@ -91,7 +91,6 @@ public class YJ_EscapeManager : MonoBehaviourPun
     void Ending(string s)
     {
         time += 0.1f * Time.unscaledDeltaTime;
-        print(time);
         // 현재 살아있는 인원만큼 탈출하면
         if (time >= 1)
         {
