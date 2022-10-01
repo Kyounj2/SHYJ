@@ -18,16 +18,8 @@ public class SH_PlayerHP : MonoBehaviourPun
     Text txtCurHP;
     Text txtMaxHP;
 
-    Image icon0;
-    Image icon1;
-    Image icon2;
-    Image icon3;
     Image[] iconArray = new Image[4];
-
-    public Sprite character1;
-    public Sprite character2;
-    public Sprite character3;
-    public Sprite character4;
+    public Sprite[] CharacterImg = new Sprite[4];
 
     public float HP
     {
@@ -45,12 +37,10 @@ public class SH_PlayerHP : MonoBehaviourPun
         txtCurHP = myThumb.Find("currentHP").gameObject.GetComponent<Text>();
         txtMaxHP = myThumb.Find("maxHP").gameObject.GetComponent<Text>();
 
-        icon0 = myThumb.gameObject.GetComponent<Image>();
-        icon1 = normalUI.transform.Find("OtherTumbnail1").GetComponent<Image>();
-        icon2 = normalUI.transform.Find("OtherTumbnail2").GetComponent<Image>();
-        icon3 = normalUI.transform.Find("OtherTumbnail3").GetComponent<Image>();
-
-        //iconArray = { icon0, icon1, icon2, icon3 };
+        iconArray[0] = myThumb.gameObject.GetComponent<Image>();
+        iconArray[1] = normalUI.transform.Find("OtherTumbnail1").GetComponent<Image>();
+        iconArray[2] = normalUI.transform.Find("OtherTumbnail2").GetComponent<Image>();
+        iconArray[3] = normalUI.transform.Find("OtherTumbnail3").GetComponent<Image>();
 
         SetUI(100);
         SetIconUI();
@@ -73,9 +63,23 @@ public class SH_PlayerHP : MonoBehaviourPun
 
     private void SetIconUI()
     {
-        for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount - 1; i++)
+        int idx = 1;
+        for (int i = 1; i <= PhotonNetwork.CurrentRoom.PlayerCount - 1; i++)
         {
+            string num = GameManager.instance.usersData.users[i].character.Substring(9);
+            int characterNum = int.Parse(num) - 1;
 
+            if (GameManager.instance.userInfo.order == i)
+            {
+                iconArray[0].sprite = CharacterImg[characterNum];
+            }
+            else
+            {
+                iconArray[idx].sprite = CharacterImg[characterNum];
+                string playerNickName = GameManager.instance.usersData.users[i].nick_name;
+                iconArray[idx].transform.GetChild(0).GetComponent<Text>().text = playerNickName;
+                idx++;
+            }
         }
     }
 
