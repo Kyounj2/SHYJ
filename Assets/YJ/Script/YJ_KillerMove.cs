@@ -52,6 +52,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     // 스킬 쿨타임 알려줄 UI
     public GameObject canvas;
 
+
     public enum State
     {
         //Idle,
@@ -452,11 +453,16 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     float skill_2Time = 0;
     public Collider[] colls;
     int dontAgain = 0;
+
+    // 스킬 2 쓸때 사용할 것
+    public ParticleSystem wave;
+
     void Skill_Scream()
     {
         canvas.GetComponent<YJ_Skill>().skill_2On = true;
         skill_2Time += Time.deltaTime;
 
+        wave.Play();
         // 반경 5미터 내의 콜라이더들을 수집
         colls = Physics.OverlapSphere(transform.position, 5f);
 
