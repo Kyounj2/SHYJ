@@ -49,6 +49,9 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     // 1인칭 카메라시점 저장
     Transform cameraOriginPos;
 
+    // 스킬 쿨타임 알려줄 UI
+    public GameObject canvas;
+
     public enum State
     {
         //Idle,
@@ -70,6 +73,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         {
             Campos.gameObject.SetActive(true);
             cameraOriginPos = Campos.transform;
+            canvas.SetActive(true);
         }
 
         cc = GetComponent<CharacterController>();
@@ -151,7 +155,6 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     break;
                 case State.Skill_1: // 스피드업
                     photonView.RPC("RpcSetBool", RpcTarget.All, "Skill_1", true);
-                    
                     Skill_SpeedUp();
                     break;
                 case State.Skill_2: // 비명지르기
@@ -235,7 +238,6 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         // 1인칭 카메라
         if (carryTime <= 0 && !propmachineFOn && !stop)
         {
-
             if (state == State.Skill_1)
             {
                 float rotZ = Mathf.Sin(120 * skill_1Time) * 50f * Time.deltaTime;
@@ -349,7 +351,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         }
 
         // 1번키 누르면 스피드업 스킬 가동
-        if (Input.GetKeyDown(KeyCode.Alpha1) && carryTime <= 0)
+        if (Input.GetKeyDown(KeyCode.Alpha1) && carryTime <= 0 && !canvas.GetComponent<YJ_Skill>().skill_1On)
         {
             camPosSave = Camera.main.transform.localPosition;
             goDir = Camera.main.transform.forward;
@@ -358,7 +360,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         }
 
         // 2번키 누르면 비명 스킬 가동
-        if (Input.GetKeyDown(KeyCode.Alpha2) && carryTime <= 0)
+        if (Input.GetKeyDown(KeyCode.Alpha2) && carryTime <= 0 && !canvas.GetComponent<YJ_Skill>().skill_2On)
         {
             state = State.Skill_2;
         }
@@ -429,6 +431,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     // 스킬1번
     void Skill_SpeedUp()
     {
+        canvas.GetComponent<YJ_Skill>().skill_1On = true;
         skill_1Time += Time.deltaTime;
         cc.Move(goDir.normalized * (speed * 5) * Time.deltaTime);
 
@@ -451,6 +454,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     int dontAgain = 0;
     void Skill_Scream()
     {
+        canvas.GetComponent<YJ_Skill>().skill_2On = true;
         skill_2Time += Time.deltaTime;
 
         // 반경 5미터 내의 콜라이더들을 수집

@@ -42,7 +42,7 @@ public class YJ_Timer : MonoBehaviour
         // 시간 카운트다운 만들기
         m = ((int)mm) - ((int)currentTime / 60 % 60);
         s = ((int)ss % 60) - ((int)currentTime % 60);
-        
+
 
         //}
 
