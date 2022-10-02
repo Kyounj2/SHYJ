@@ -52,6 +52,20 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     // 스킬 쿨타임 알려줄 UI
     public GameObject canvas;
 
+    // 오디오
+    AudioSource audio;
+
+    // 브금목록
+    [SerializeField]
+    [Header("BGM")]
+    public AudioClip Move_Step_Sound;
+    public AudioClip Attack_Sound;
+    public AudioClip Attack_Hit_Sound;
+    public AudioClip Skill_1_Sound;
+    public AudioClip Skill_2_Sound;
+    public AudioClip Break_propmaghine_Sound;
+    public AudioClip Chair_Sound;
+
     public enum State
     {
         //Idle,
@@ -362,6 +376,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         // 2번키 누르면 비명 스킬 가동
         if (Input.GetKeyDown(KeyCode.Alpha2) && carryTime <= 0 && !canvas.GetComponent<YJ_Skill>().skill_2On)
         {
+            wave.Play();
             state = State.Skill_2;
         }
 
@@ -452,6 +467,10 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     float skill_2Time = 0;
     public Collider[] colls;
     int dontAgain = 0;
+
+    // 스킬 2 쓸때 사용할 것
+    public ParticleSystem wave;
+
     void Skill_Scream()
     {
         canvas.GetComponent<YJ_Skill>().skill_2On = true;
