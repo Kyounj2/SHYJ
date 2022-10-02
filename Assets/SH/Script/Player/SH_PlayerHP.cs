@@ -52,7 +52,6 @@ public class SH_PlayerHP : MonoBehaviourPun
             normalUI.SetActive(true);
     }
 
-
     private void Update()
     {
         if (photonView.IsMine)
@@ -63,8 +62,8 @@ public class SH_PlayerHP : MonoBehaviourPun
             }
         }
 
-        //if (photonView.IsMine)
-        //    SetStateIconUI();
+        if (photonView.IsMine)
+            SetStateIconUI();
     }
 
     private void SetIconUI()

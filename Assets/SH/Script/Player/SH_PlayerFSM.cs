@@ -161,8 +161,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 break;
         }
 
-        //if (photonView.IsMine)
-            SetMyFuckingStateData(myInfo.order, state, true);
+        SetMyFuckingStateData(myInfo.order, state, true);
     }
 
     public void EndState(State s)
@@ -202,8 +201,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 return;
         }
 
-        //if (photonView.IsMine)
-            SetMyFuckingStateData(myInfo.order, state, false);
+        SetMyFuckingStateData(myInfo.order, state, false);
     }
 
     private void Normal()
