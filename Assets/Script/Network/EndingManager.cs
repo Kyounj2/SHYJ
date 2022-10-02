@@ -98,15 +98,13 @@ public class EndingManager : MonoBehaviourPun
         // 애너미가 이겼을때
         if (winner == 1)
         {
-            //enemyPos.SetActive(true);
-            //enemyName.enabled = true;
-
-            // 플레이어 닉네임 모두 끄기? 아니지 안쓰면되잖아
 
             // 애너미 가운데 자리로 생성
             GameObject winnerGO = Instantiate(enemy);
             winnerGO.transform.position = enemyPos.transform.position;
-            winnerGO.transform.localScale = Vector3.one * 200;
+            winnerGO.transform.localScale = Vector3.one * 4;
+            // 180도 뒤돌리기
+            winnerGO.transform.rotation = Quaternion.Euler(0, 180, 0);
 
             // 닉네임 배치
             enemyName.text = enemyRealName;
@@ -126,7 +124,8 @@ public class EndingManager : MonoBehaviourPun
                 GameObject p = Instantiate(playerObject[int.Parse(realObject[i])-1]);
                 p.SetActive(true);
                 p.transform.position = playerPos[i].transform.position;
-                p.transform.localScale = Vector3.one * 140;
+                p.transform.localScale = Vector3.one * 4;
+                p.transform.rotation = Quaternion.Euler(0, 180, 0);
 
                 // 이름 배치
                 NameList[i].text = realName[i];

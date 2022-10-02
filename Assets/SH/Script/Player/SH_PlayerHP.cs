@@ -131,7 +131,7 @@ public class SH_PlayerHP : MonoBehaviourPun
         myHPSlider.value = hp;
     }
 
-    const float DEADLINE = 100.0f;
+    const float DEADLINE = 3f;
     public float seatedTime = 0;
     public void Seated()
     {
