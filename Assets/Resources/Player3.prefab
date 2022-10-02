@@ -371,6 +371,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 442af917cfeb85747a99e84e7ab3026f, type: 3}
   - {fileID: 21300000, guid: 5c4e4b1da329b134e8387dc28ad25735, type: 3}
   - {fileID: 21300000, guid: 3aa1fed06912b3a4888b9402326606fd, type: 3}
+  crossIcon: {fileID: 21300000, guid: 8d695bd40017e594f84c74419c0642c6, type: 3}
+  chairIcon: {fileID: 21300000, guid: 00fd421e3137fc444b6e9dc0a9879e0b, type: 3}
+  skeletonIcon: {fileID: 21300000, guid: ffb779928e1fdf44c878a1e1050cadc2, type: 3}
   seatedTime: 0
 --- !u!114 &7638943795464201104
 MonoBehaviour:
