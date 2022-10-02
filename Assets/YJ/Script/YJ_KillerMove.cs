@@ -57,7 +57,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
     // 브금목록
     [SerializeField]
-    [Header("BGM")]
+    [Header("Sound")]
     public AudioClip Move_Step_Sound;
     public AudioClip Attack_Sound;
     public AudioClip Attack_Hit_Sound;
@@ -104,7 +104,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         blood_1 = GameObject.Find("blood").GetComponent<Image>();
         blood_2 = GameObject.Find("blood (1)").GetComponent<Image>();
 
-        //GameManager.instance.AddPlayer(photonView);
+        audio = GetComponent<AudioSource>();
 
     }
 
@@ -361,12 +361,17 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         // 마우스 왼쪽버튼 누르면 Attack으로 바꾸기
         if (Input.GetButtonDown("Fire1") && carryTime <= 0)
         {
+            audio.clip = Attack_Sound;
+            audio.Play();
             state = State.Attack;
         }
 
         // 1번키 누르면 스피드업 스킬 가동
         if (Input.GetKeyDown(KeyCode.Alpha1) && carryTime <= 0 && !canvas.GetComponent<YJ_Skill>().skill_1On)
         {
+            audio.clip = Skill_1_Sound;
+            audio.Play();
+
             camPosSave = Camera.main.transform.localPosition;
             goDir = Camera.main.transform.forward;
 
@@ -376,7 +381,9 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         // 2번키 누르면 비명 스킬 가동
         if (Input.GetKeyDown(KeyCode.Alpha2) && carryTime <= 0 && !canvas.GetComponent<YJ_Skill>().skill_2On)
         {
-            wave.Play();
+            audio.clip = Skill_2_Sound;
+            audio.Play(); // 사운드           
+            wave.Play(); // 파티클
             state = State.Skill_2;
         }
 
@@ -387,6 +394,8 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
             {
                 if (Input.GetKeyDown(KeyCode.F))
                 {
+                    audio.clip = Chair_Sound;
+                    audio.Play();
                     state = State.Down;
                 }
             }
@@ -429,6 +438,8 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         {
             if (hp != null)
             {
+                audio.clip = Attack_Hit_Sound;
+                audio.Play();
                 StartCoroutine(OnAttackUI());
                 hp.OnDamaged(30); // 혁신이꺼 Rpc로 바꾸기
                 hp = null;
@@ -500,6 +511,8 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
                     if (hp != null)
                     {
                         StartCoroutine(OnAttackUI());
+                        audio.clip = Attack_Hit_Sound;
+                        audio.Play();
                         hp.OnDamaged(10);
                     }
                     hp = null;

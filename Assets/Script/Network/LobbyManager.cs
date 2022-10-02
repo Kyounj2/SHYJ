@@ -33,6 +33,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // ¸®½ºÆ® Content
     public Transform roomListContent;
 
+    AudioSource buttonSound;
+
     public void OnClickBtnRoleRandom()
     {
         int num = Random.Range(0, 10);
@@ -47,6 +49,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     bool isClicked1 = false;
     public void OnClickBtnRolePlayer()
     {
+        buttonSound.Play();
+
         if (isClicked1)
             isClicked1 = false;
         else
@@ -80,6 +84,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     bool isClicked2 = false;
     public void OnClickBtnRoleEnemy()
     {
+        buttonSound.Play();
+
         if (isClicked2)
             isClicked2 = false;
         else
@@ -113,6 +119,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void OnClickBtnCreateRoom()
     {
+        buttonSound.Play();
         popUp.SetActive(true);
     }
 
@@ -124,6 +131,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         inputRoomName.onValueChanged.AddListener(OnValueChanged);
         inputRoomName.onSubmit.AddListener(OnSubmit);
+
+        buttonSound = GetComponent<AudioSource>();
     }
 
     public void OnValueChanged(string s)

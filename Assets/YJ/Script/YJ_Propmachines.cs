@@ -32,6 +32,8 @@ public class YJ_Propmachines : MonoBehaviourPun
 
     Animation anim;
 
+    AudioSource machineSound;
+
     void Start()
     {
         // 플레이거 가동용 게이지
@@ -44,6 +46,8 @@ public class YJ_Propmachines : MonoBehaviourPun
         anim = GetComponent<Animation>();
 
         maghineGage.SetActive(false);
+
+        machineSound = GetComponent<AudioSource>();
     }
 
     //[PunRPC]
@@ -52,6 +56,8 @@ public class YJ_Propmachines : MonoBehaviourPun
     //    YJ_MachineTopGage m = originGage.transform.GetComponent<YJ_MachineTopGage>();
     //    m.SliderValue2(i);
     //}
+
+    bool soundOn = false;
 
     void Update()
     {
@@ -75,6 +81,10 @@ public class YJ_Propmachines : MonoBehaviourPun
         if (player)
         {
             macineOn_p = true;
+
+            // 머신 게이지 소리 조정
+            if(soundOn && !machineSound.isPlaying) machineSound.Play();
+            else if(!soundOn) machineSound.Stop();
         }
         if (macineOn_p)
         {
@@ -82,12 +92,16 @@ public class YJ_Propmachines : MonoBehaviourPun
 
             if (Input.GetKey(KeyCode.F))
             {
+                soundOn = true;
                 photonView.RPC("RpcAnim", RpcTarget.All, true);
-                playerSlider.value += 0.1f * Time.deltaTime;
+                playerSlider.value += 0.05f * Time.deltaTime;
                 // Rpc로 메인값변경 또보내기
-                originGage.transform.GetComponent<PhotonView>().RPC("SliderValue", RpcTarget.All, 0.1f * Time.deltaTime);
+                originGage.transform.GetComponent<PhotonView>().RPC("SliderValue", RpcTarget.All, 0.05f * Time.deltaTime);
                 if (Input.GetKeyUp(KeyCode.F) && !end)
+                {
+                    soundOn = false;
                     photonView.RPC("RpcAnim", RpcTarget.All, false);
+                }
             }
         }
 

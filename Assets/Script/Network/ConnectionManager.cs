@@ -19,6 +19,8 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
         inputNickname.onSubmit.AddListener(OnSubmit);
 
         monster.SetActive(false);
+
+        buttonSound = GetComponent<AudioSource>();
     }
 
     // 글자색상 변경
@@ -75,10 +77,12 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     public float animTime = 0;
     bool click = false;
     bool connectionGo = false;
+    AudioSource buttonSound;
     // 버튼에 연결
     public void OnClickConnection()
     {
         monster.SetActive(true);
+        buttonSound.Play();
         click = true;
         anim.SetTrigger("Hand");
     }

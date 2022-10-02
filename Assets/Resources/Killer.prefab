@@ -998,7 +998,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6975303326178405938
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2565,6 +2565,7 @@ MonoBehaviour:
   Skill_1_Sound: {fileID: 8300000, guid: 2341f161dd545b94b90d10c96ddb1360, type: 3}
   Skill_2_Sound: {fileID: 8300000, guid: 3f0df98e2ede35e4eb097b0cbdb69c14, type: 3}
   Break_propmaghine_Sound: {fileID: 0}
+  Chair_Sound: {fileID: 8300000, guid: 343fa9903a80a48418821a5fb7f99476, type: 3}
   currState: 0
   machineAttack: 0
   triggerChair: 0
@@ -2818,9 +2819,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
