@@ -52,6 +52,19 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     // 스킬 쿨타임 알려줄 UI
     public GameObject canvas;
 
+    // 오디오
+    AudioSource audio;
+
+    // 브금목록
+    [SerializeField]
+    [Header("BGM")]
+    public AudioClip Move_Step_Sound;
+    public AudioClip Attack_Sound;
+    public AudioClip Attack_Hit_Sound;
+    public AudioClip Skill_1_Sound;
+    public AudioClip Skill_2_Sound;
+    public AudioClip Break_propmaghine_Sound;
+    public AudioClip Chair_Sound;
 
     public enum State
     {
