@@ -363,6 +363,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         // 2번키 누르면 비명 스킬 가동
         if (Input.GetKeyDown(KeyCode.Alpha2) && carryTime <= 0 && !canvas.GetComponent<YJ_Skill>().skill_2On)
         {
+            wave.Play();
             state = State.Skill_2;
         }
 
@@ -462,7 +463,6 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         canvas.GetComponent<YJ_Skill>().skill_2On = true;
         skill_2Time += Time.deltaTime;
 
-        wave.Play();
         // 반경 5미터 내의 콜라이더들을 수집
         colls = Physics.OverlapSphere(transform.position, 5f);
 

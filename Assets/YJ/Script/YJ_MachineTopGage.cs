@@ -21,7 +21,10 @@ public class YJ_MachineTopGage : MonoBehaviourPun
     void Update()
     {
         // 카메라 계속 바라보기
-        transform.LookAt(Camera.main.transform.position);
+        if(Camera.main != null)
+        {
+            transform.LookAt(Camera.main.transform.position);
+        }
         
         if(transform.GetComponent<Slider>().value >= 1)
         {
