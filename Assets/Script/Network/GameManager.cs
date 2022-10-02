@@ -121,6 +121,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             userInfo.is_alive = true;
             userInfo.is_escape = false;
         }
+        
+        for (int i = 1; i <= PhotonNetwork.CurrentRoom.PlayerCount - 1; i++)
+        {
+            usersData.users[i].is_alive = true;
+        }
     }
 
     [PunRPC]

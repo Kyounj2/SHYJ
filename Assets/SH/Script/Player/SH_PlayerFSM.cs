@@ -30,6 +30,9 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
     Transform chair;
 
+    UserInfo myInfo = GameManager.instance.userInfo;
+    UsersData usersData = GameManager.instance.usersData;
+
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
@@ -70,6 +73,38 @@ public class SH_PlayerFSM : MonoBehaviourPun
         }
     }
 
+    void SetMyFuckingStateData(int order, State state, bool value)
+    {
+        if(photonView.IsMine)
+            photonView.RPC("RpcSetMyFuckingStateData", RpcTarget.All, order, state, value);
+    }
+
+    [PunRPC]
+    void RpcSetMyFuckingStateData(int order, State state, bool value)
+    {
+        switch (state)
+        {
+            case State.Groggy:
+                usersData.users[order].is_groggy = value;
+                break;
+
+            case State.Catched:
+                usersData.users[order].is_seated = value;
+                break;
+
+            case State.Seated:
+                usersData.users[order].is_seated = value;
+                break;
+
+            case State.Die:
+                usersData.users[order].is_alive = !value;
+                break;
+
+            default:
+                return;
+        }
+    }
+
     public void ChangeState(State s)
     {
         photonView.RPC("RpcOnChangeState", RpcTarget.All, s);
@@ -101,12 +136,14 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
             case State.Groggy:
                 anim.SetTrigger("Groggy");
+                //GameManager.instance.userInfo.is_groggy = true;
                 break;
 
             case State.Catched:
                 body.localEulerAngles = new Vector3(100, 0, 180);
                 pm.cc.enabled = false;
                 anim.SetTrigger("Catched");
+                //GameManager.instance.userInfo.is_seated = true;
                 break;
 
             case State.Seated:
@@ -114,15 +151,17 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 //player.localEulerAngles = new Vector3(0, 270, 0);
                 pm.cc.enabled = true;
                 anim.SetTrigger("Seated");
+                //GameManager.instance.userInfo.is_seated = true;
                 break;
 
             case State.Die:
                 player = body.GetComponentInParent<Transform>();
                 player.localEulerAngles = new Vector3(0, 270, 0);
                 //GameManager.instance.userInfo.is_alive = false;
-                //GameManager.instance.userInfo.is_escape = false;
                 break;
         }
+
+        SetMyFuckingStateData(myInfo.order, state, true);
     }
 
     public void EndState(State s)
@@ -140,12 +179,14 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
             case State.Groggy:
                 curGroggTime = 0;
+                //GameManager.instance.userInfo.is_groggy = false;
                 break;
 
             case State.Catched:
                 pm.cc.enabled = true;
                 body.localEulerAngles = new Vector3(0, 0, 0);
                 //print("end");
+                //GameManager.instance.userInfo.is_seated = false;
                 break;
 
             case State.Seated:
@@ -153,14 +194,16 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 player.localEulerAngles = new Vector3(0, 0, 0);
                 pm.cc.enabled = true;
                 ph.seatedTime = 0;
+                //GameManager.instance.userInfo.is_seated = false;
                 break;
 
             case State.Die:
-
-                break;
+                return;
         }
+
+        SetMyFuckingStateData(myInfo.order, state, false);
     }
-    
+
     private void Normal()
     {
         pm.PlayerMovement();

@@ -20,6 +20,9 @@ public class SH_PlayerHP : MonoBehaviourPun
 
     Image[] iconArray = new Image[4];
     public Sprite[] CharacterImg = new Sprite[4];
+    public Sprite crossIcon;
+    public Sprite chairIcon;
+    public Sprite skeletonIcon;
 
     public float HP
     {
@@ -49,7 +52,6 @@ public class SH_PlayerHP : MonoBehaviourPun
             normalUI.SetActive(true);
     }
 
-
     private void Update()
     {
         if (photonView.IsMine)
@@ -59,6 +61,9 @@ public class SH_PlayerHP : MonoBehaviourPun
                 OnDamaged(1000);
             }
         }
+
+        if (photonView.IsMine)
+            SetStateIconUI();
     }
 
     private void SetIconUI()
@@ -77,7 +82,66 @@ public class SH_PlayerHP : MonoBehaviourPun
             {
                 iconArray[idx].sprite = CharacterImg[characterNum];
                 string playerNickName = GameManager.instance.usersData.users[i].nick_name;
-                iconArray[idx].transform.GetChild(0).GetComponent<Text>().text = playerNickName;
+                iconArray[idx].transform.GetChild(1).GetComponent<Text>().text = playerNickName;
+                idx++;
+            }
+        }
+    }
+
+    public void SetStateIconUI()
+    {
+        int idx = 1;
+        for (int i = 1; i <= PhotonNetwork.CurrentRoom.PlayerCount - 1; i++)
+        {
+            bool isGroggy = GameManager.instance.usersData.users[i].is_groggy;
+            bool isSeated = GameManager.instance.usersData.users[i].is_seated;
+            bool isDead = !GameManager.instance.usersData.users[i].is_alive;
+
+            if (GameManager.instance.userInfo.order == i)
+            {
+                Image stateIcon = iconArray[0].transform.GetChild(0).GetComponent<Image>();
+                if (isGroggy)
+                {
+                    stateIcon.gameObject.SetActive(true);
+                    stateIcon.sprite = crossIcon;
+                }
+                else if (isSeated)
+                {
+                    stateIcon.gameObject.SetActive(true);
+                    stateIcon.sprite = chairIcon;
+                }
+                else if (isDead)
+                {
+                    stateIcon.gameObject.SetActive(true);
+                    stateIcon.sprite = skeletonIcon;
+                }
+                else
+                {
+                    stateIcon.gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                Image stateIcon = iconArray[idx].transform.GetChild(0).GetComponent<Image>();
+                if (isGroggy)
+                {
+                    stateIcon.gameObject.SetActive(true);
+                    stateIcon.sprite = crossIcon;
+                }
+                else if (isSeated)
+                {
+                    stateIcon.gameObject.SetActive(true);
+                    stateIcon.sprite = chairIcon;
+                }
+                else if (isDead)
+                {
+                    stateIcon.gameObject.SetActive(true);
+                    stateIcon.sprite = skeletonIcon;
+                }
+                else
+                {
+                    stateIcon.gameObject.SetActive(false);
+                }
                 idx++;
             }
         }
@@ -112,7 +176,6 @@ public class SH_PlayerHP : MonoBehaviourPun
     [PunRPC]
     public void RpcOnDamaged(int amount)
     {
-        amount = 1;
         hp -= amount;
 
         hp = Mathf.Clamp(hp, 0, 100);
@@ -131,7 +194,7 @@ public class SH_PlayerHP : MonoBehaviourPun
         myHPSlider.value = hp;
     }
 
-    const float DEADLINE = 3f;
+    const float DEADLINE = 30.0f;
     public float seatedTime = 0;
     public void Seated()
     {
