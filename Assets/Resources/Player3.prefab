@@ -746,6 +746,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7638943796465514201}
     m_Modifications:
+    - target: {fileID: 1125699827701901473, guid: 9ebb1b4d1bc7add4180c514575ab4fb9, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a2e53989bdeb4204abb4b4f097fc9348, type: 2}
     - target: {fileID: 5923560068324681825, guid: 9ebb1b4d1bc7add4180c514575ab4fb9, type: 3}
       propertyPath: m_Name
       value: Megan

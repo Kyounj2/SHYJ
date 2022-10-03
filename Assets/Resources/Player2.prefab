@@ -658,6 +658,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sophie
       objectReference: {fileID: 0}
+    - target: {fileID: 4723940964337784743, guid: 6804b9d7d11b687469b70e66bdc15591, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a2e53989bdeb4204abb4b4f097fc9348, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6804b9d7d11b687469b70e66bdc15591, type: 3}
 --- !u!4 &3072696487955040113 stripped
