@@ -25,6 +25,14 @@ public class YJ_Timer : MonoBehaviour
     // 현재 흐르는 시간
     float currentTime;
 
+    // Timer reset function (wirtten by Tangka)
+    public void TimerReset(float m, float s)
+    {
+        currentTime = 0;
+        mm = m;
+        ss = s;
+    }
+
     // 시간 초과 시 애너미 승리
     public bool enemyWin = false;
 

@@ -51,12 +51,6 @@ public class SH_PlayerRot : MonoBehaviourPun
 
         if (photonView.IsMine == false) return;
 
-        //if (Input.GetKeyDown(KeyCode.Tab))
-        //{
-        //    index = SwitchIndex(index);
-        //}
-
-
         cam.position = Vector3.Lerp(cam.position, targetCamPos.position, 20 * Time.deltaTime);
 
         if (Vector3.Distance(cam.position, camPos[index].position) < 0.05f)
@@ -81,6 +75,42 @@ public class SH_PlayerRot : MonoBehaviourPun
         {
             camPivot.transform.localEulerAngles = new Vector3(rotY, rotX, 0);
         }
+    }
+
+    public void TransformedRot()
+    {
+        targetCamPos = camPos[1];
+
+        if (photonView.IsMine == false) return;
+
+        cam.position = Vector3.Lerp(cam.position, targetCamPos.position, 20 * Time.deltaTime);
+
+        if (Vector3.Distance(cam.position, camPos[index].position) < 0.05f)
+        {
+            cam.position = camPos[index].position;
+        }
+
+        float mx = Input.GetAxisRaw("Mouse X");
+        float my = Input.GetAxisRaw("Mouse Y");
+
+        rotX += mx * rotSpeed * Time.deltaTime;
+        rotY -= my * rotSpeed * Time.deltaTime;
+
+        rotY = Mathf.Clamp(rotY, -70.0f, 85.0f);
+
+        camPivot.transform.localEulerAngles = new Vector3(rotY, rotX, 0);
+
+        Vector3 camDir = camPivot.transform.forward;
+        camDir = new Vector3(camDir.x, 0, camDir.z);
+        if (Vector3.Angle(player.transform.forward, camDir) > 40)
+        {
+            player.transform.forward = Vector3.Lerp(player.transform.forward, camDir, Time.deltaTime * 10);
+
+            Vector3 plyDir = camPivot.transform.forward;
+            plyDir = new Vector3(plyDir.x, 0, plyDir.z);
+            camPivot.transform.forward = Vector3.Lerp(camPivot.transform.forward, plyDir, Time.deltaTime * 10);
+        }
+
     }
 
     int SwitchIndex(int index)

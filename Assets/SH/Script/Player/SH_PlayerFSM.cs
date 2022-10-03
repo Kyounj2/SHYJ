@@ -11,6 +11,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
     public enum State
     {
         Normal,
+        Repairing,
         Transform,
         Groggy,
         Catched,
@@ -49,6 +50,10 @@ public class SH_PlayerFSM : MonoBehaviourPun
         {
             case State.Normal:
                 Normal();
+                break;
+
+            case State.Repairing:
+                Repairing();
                 break;
 
             case State.Transform:
@@ -131,19 +136,21 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 anim.SetTrigger("Idle");
                 break;
 
+            case State.Repairing:
+                anim.SetBool("isRepair", true);
+                break;
+
             case State.Transform:
                 break;
 
             case State.Groggy:
                 anim.SetTrigger("Groggy");
-                //GameManager.instance.userInfo.is_groggy = true;
                 break;
 
             case State.Catched:
                 body.localEulerAngles = new Vector3(100, 0, 180);
                 pm.cc.enabled = false;
                 anim.SetTrigger("Catched");
-                //GameManager.instance.userInfo.is_seated = true;
                 break;
 
             case State.Seated:
@@ -151,13 +158,11 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 //player.localEulerAngles = new Vector3(0, 270, 0);
                 pm.cc.enabled = true;
                 anim.SetTrigger("Seated");
-                //GameManager.instance.userInfo.is_seated = true;
                 break;
 
             case State.Die:
                 player = body.GetComponentInParent<Transform>();
                 player.localEulerAngles = new Vector3(0, 270, 0);
-                //GameManager.instance.userInfo.is_alive = false;
                 break;
         }
 
@@ -172,6 +177,10 @@ public class SH_PlayerFSM : MonoBehaviourPun
             case State.Normal:
                 break;
 
+            case State.Repairing:
+                anim.SetBool("isRepair", false);
+                break;
+
             case State.Transform:
                 ps.originalBody.SetActive(true);
                 ps.mimicBody.SetActive(false);
@@ -179,14 +188,12 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
             case State.Groggy:
                 curGroggTime = 0;
-                //GameManager.instance.userInfo.is_groggy = false;
                 break;
 
             case State.Catched:
                 pm.cc.enabled = true;
                 body.localEulerAngles = new Vector3(0, 0, 0);
                 //print("end");
-                //GameManager.instance.userInfo.is_seated = false;
                 break;
 
             case State.Seated:
@@ -194,7 +201,6 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 player.localEulerAngles = new Vector3(0, 0, 0);
                 pm.cc.enabled = true;
                 ph.seatedTime = 0;
-                //GameManager.instance.userInfo.is_seated = false;
                 break;
 
             case State.Die:
@@ -216,10 +222,17 @@ public class SH_PlayerFSM : MonoBehaviourPun
         ps.Rescue();
     }
 
+    private void Repairing()
+    {
+        pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, true);
+    }
+
     private void Transform()
     {
         pm.PlayerMovement();
         pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, false);
+        //pm.TransformedMovement();
+        //pr.TransformedRot();
         ps.SkillOnMimic();
         ps.SkillOffMimic();
     }
@@ -288,5 +301,11 @@ public class SH_PlayerFSM : MonoBehaviourPun
     public void RpcPlayerRot(Vector3 v)
     {
         gameObject.transform.forward = v;
+    }
+
+    [PunRPC]
+    public void RpcRepairAnimation(bool isRepair)
+    {
+        anim.SetBool("isRepair", isRepair);
     }
 }

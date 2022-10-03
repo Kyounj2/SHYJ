@@ -4,37 +4,37 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 
-// FÅ°¸¦ ´©¸£¸é °ÔÀÌÁö¸¦ Ã¤¿ì°í½Í´Ù
+// FÅ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½ï¿½ï¿½ï¿½Í´ï¿½
 public class YJ_Propmachines : MonoBehaviourPun
 {
-    // ÀüÃ¼ ¸Ó½Å °ÔÀÌÁö
+    // ï¿½ï¿½Ã¼ ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public GameObject originGage;
     Slider originGageSlider;
 
-    // ÇÃ·¹ÀÌ¾î ¸Ó½Å °ÔÀÌÁö
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public GameObject maghineGage;
 
-    // ÇÃ·¹ÀÌ¾î¿ë ¸Ó½ÅÀÛµ¿
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½Ó½ï¿½ï¿½Ûµï¿½
     Slider playerSlider;
     bool macineOn_e = false;
     bool macineOn_p = false;
     bool enemy = false;
     bool player = false;
 
-    // ¾Ö³Ê¹ÌÀü¿ë °ÔÀÌÁö
+    // ï¿½Ö³Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public GameObject hitGage;
 
-    // ¾Ö³Ê¹Ì¿ë ¸Ó½ÅÀÛµ¿
+    // ï¿½Ö³Ê¹Ì¿ï¿½ ï¿½Ó½ï¿½ï¿½Ûµï¿½
     Slider enemySlider;
 
-    // gage ´Ù Ã¡À»¶§ ´õÀÌ»ó °¡µ¿µÇÁö ¾Ê°ÔÇÒ bool°ª
+    // gage ï¿½ï¿½ Ã¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì»ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ï¿½ï¿½ boolï¿½ï¿½
     bool end = false;
 
     Animation anim;
 
     AudioSource machineSound;
 
-    // ºê±Ý¸ñ·Ï
+    // ï¿½ï¿½ï¿½Ý¸ï¿½ï¿½ï¿½
     [SerializeField]
     [Header("Sound")]
     public AudioClip player_Sound;
@@ -42,13 +42,13 @@ public class YJ_Propmachines : MonoBehaviourPun
 
     void Start()
     {
-        // ÇÃ·¹ÀÌ°Å °¡µ¿¿ë °ÔÀÌÁö
+        // ï¿½Ã·ï¿½ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         //maghineGage.SetActive(false);
         playerSlider = maghineGage.GetComponent<Slider>();
         enemySlider = hitGage.GetComponent<Slider>();
         originGageSlider = originGage.GetComponent<Slider>();
 
-        // ¾Ö´Ï¸ÞÀÌ¼Ç
+        // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
         anim = GetComponent<Animation>();
 
         maghineGage.SetActive(false);
@@ -67,28 +67,28 @@ public class YJ_Propmachines : MonoBehaviourPun
 
     void Update()
     {
-        
 
-        // ½½¶óÀÌµå ²ËÂ÷¸é ÀÛµ¿¸øÇÏ°ÔÇÏ±â
+
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ûµï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½Ï±ï¿½
         if (originGageSlider.value >= 1 && !end)
         {
             maghineGage.SetActive(false);
             end = true;
         }
-        
+
         if (end)
         {
-            // ½½¶óÀÌµå ²ËÂ÷¸é ¾Ö´Ï¸ÞÀÌ¼Ç Áö¼Ó Àç»ý
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             photonView.RPC("RpcAnim", RpcTarget.All, true);
         }
 
 
-        // ¸Ó½Å°ÔÀÌÁö°¡ ÄÑÁ®ÀÖ°í ÇÃ·¹ÀÌ¾î°¡ F¸¦ ´­·¶À»¶§
+        // ï¿½Ó½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ Fï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (player)
         {
             macineOn_p = true;
 
-            // ¸Ó½Å °ÔÀÌÁö ¼Ò¸® Á¶Á¤
+            // ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (soundOn && !machineSound.isPlaying)
             {
                 machineSound.clip = player_Sound;
@@ -104,18 +104,22 @@ public class YJ_Propmachines : MonoBehaviourPun
             {
                 soundOn = true;
                 photonView.RPC("RpcAnim", RpcTarget.All, true);
+
+                fsm.ChangeState(SH_PlayerFSM.State.Repairing); // ï¿½ï¿½Ä«
+
                 playerSlider.value += 0.05f * Time.deltaTime;
-                // Rpc·Î ¸ÞÀÎ°ªº¯°æ ¶Çº¸³»±â
+                // Rpcï¿½ï¿½ ï¿½ï¿½ï¿½Î°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Çºï¿½ï¿½ï¿½ï¿½ï¿½
                 originGage.transform.GetComponent<PhotonView>().RPC("SliderValue", RpcTarget.All, 0.05f * Time.deltaTime);
                 if (Input.GetKeyUp(KeyCode.F) && !end)
                 {
                     soundOn = false;
                     photonView.RPC("RpcAnim", RpcTarget.All, false);
+                    fsm.ChangeState(SH_PlayerFSM.State.Normal);
                 }
             }
         }
 
-        // Èý°ÔÀÌÁö°¡ ÄÑÁ®ÀÖ°í ¾Ö³Ê¹Ì°¡ F¸¦ ´­·¶À»¶§
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ ï¿½Ö³Ê¹Ì°ï¿½ Fï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (enemy)
         {
             macineOn_e = true;
@@ -127,20 +131,20 @@ public class YJ_Propmachines : MonoBehaviourPun
             if (Input.GetKey(KeyCode.F))
             {
                 enemySlider.value += 0.6f * Time.deltaTime;
-                // 3ÀÎÄªÀ¸·Î µ¹¸®±â
+                // 3ï¿½ï¿½Äªï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 enemyObject.gameObject.GetComponent<YJ_KillerMove>().propmachineFOn = true;
             }
 
             if (enemySlider.value > 0.99)
             {
-                //playerSlider.value -= 0.3f; // rpc·Î ±â°è ÀÚÃ¼¸¦ ±ð±â
+                //playerSlider.value -= 0.3f; // rpcï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 originGage.transform.GetComponent<PhotonView>().RPC("SliderValue", RpcTarget.All, -0.3f);
                 enemySlider.value = 1f;
                 if (enemySlider.value >= 1f)
                 {
-                    // »óÅÂÀüÈ¯
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¯
                     enemyObject.gameObject.GetComponent<YJ_KillerMove>().machineAttack = true;
-                    // UI²ô±â
+                    // UIï¿½ï¿½ï¿½ï¿½
                     enemyObject.gameObject.GetComponent<YJ_KillerMove>().isNearPropMachine = false;
                     enemy = false;
                     macineOn_e = false;
@@ -152,13 +156,13 @@ public class YJ_Propmachines : MonoBehaviourPun
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        // µ¥ÀÌÅÍ º¸³»±â
-        if (stream.IsWriting) // ³»°¡ µ¥ÀÌÅÍ¸¦ º¸³¾ ¼ö ÀÖ´Â »óÅÂÀÎ °æ¿ì (ismine)
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        if (stream.IsWriting) // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ismine)
         {
             // positon, rotation
             stream.SendNext(playerSlider.value);
         }
-        // µ¥ÀÌÅÍ ¹Þ±â
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½
         //else // if(stream.IsReading)
         //{
         //    playerSlider.value = (float)stream.ReceiveNext();
@@ -167,24 +171,24 @@ public class YJ_Propmachines : MonoBehaviourPun
 
     GameObject enemyObject;
     GameObject playerObject;
+    SH_PlayerFSM fsm;
 
     private void OnTriggerEnter(Collider other)
     {
-
-
-        // ÇÃ·¹ÀÌ¾î¶ó¸é
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½
         if (other.gameObject.layer == 29 && other.GetComponent<PhotonView>().IsMine)
         {
             //if (end) return;
 
             playerObject = other.gameObject;
             other.gameObject.GetComponent<SH_PlayerSkill>().isNearPropMachine = true;
+            fsm = other.GetComponent<SH_PlayerFSM>();
             player = other.gameObject.GetComponent<SH_PlayerSkill>().isNearPropMachine;
             maghineGage.GetComponent<Slider>().value = originGageSlider.GetComponent<Slider>().value;
             maghineGage.SetActive(true);
         }
 
-        // ¾Ö³Ê¹Ì¶ó¸é
+        // ï¿½Ö³Ê¹Ì¶ï¿½ï¿½ï¿½
         if (other.gameObject.layer == 30)
         {
             if (end) return;
@@ -198,7 +202,7 @@ public class YJ_Propmachines : MonoBehaviourPun
     private void OnTriggerExit(Collider other)
     {
 
-        // ÇÃ·¹ÀÌ¾î¶ó¸é
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½
         if (other.gameObject.layer == 29 && other.GetComponent<PhotonView>().IsMine)
         {
             //if (end) return;
@@ -212,7 +216,7 @@ public class YJ_Propmachines : MonoBehaviourPun
 
         }
 
-        // ¾Ö³Ê¹Ì¶ó¸é
+        // ï¿½Ö³Ê¹Ì¶ï¿½ï¿½ï¿½
         if (other.gameObject.layer == 30)
         {
             //if (end) return;

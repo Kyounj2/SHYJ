@@ -8,6 +8,7 @@ using System;
 public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
 {
     public Transform player;
+    public Transform camPivot;
     Animator anim;
     [HideInInspector] public CharacterController cc;
 
@@ -60,8 +61,49 @@ public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
         {
             float v = Input.GetAxisRaw("Vertical");
             float h = Input.GetAxisRaw("Horizontal");
-
+            
             dir = player.forward * v + player.right * h;
+            dir.Normalize();
+
+            yVelocity += gravity * Time.deltaTime;
+
+            if (cc.isGrounded)
+            {
+                yVelocity = 0;
+                jumpCount = 0;
+            }
+
+            if (Input.GetButtonDown("Jump") && jumpCount < maxJumpCount)
+            {
+                yVelocity = jumpPower;
+                jumpCount++;
+            }
+
+            dir.y = yVelocity;
+
+            photonView.RPC("RpcSetWalkFloat", RpcTarget.All, v, h);
+
+            speed = ChangeSpeed(fsm.state);
+
+            cc.Move(dir * speed * Time.deltaTime);
+        }
+        else
+        {
+            // Lerp를 이용해서 목적지, 목적방향까지 이동 및 회전
+            transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
+        }
+    }
+
+    public void TransformedMovement()
+    {
+        if (photonView.IsMine)
+        {
+            float v = Input.GetAxisRaw("Vertical");
+            float h = Input.GetAxisRaw("Horizontal");
+
+            dir = camPivot.forward * v + camPivot.right * h;
+            dir = new Vector3(dir.x, 0, dir.z);
             dir.Normalize();
 
             yVelocity += gravity * Time.deltaTime;

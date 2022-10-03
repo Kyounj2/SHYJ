@@ -388,6 +388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 7638943795464201119}
+  camPivot: {fileID: 7638943795968508332}
   cc: {fileID: 0}
   walkSpeed: 6
   runSpeed: 8

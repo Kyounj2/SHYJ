@@ -190,18 +190,18 @@ public class SH_PlayerSkill : MonoBehaviourPun
         }
         else if (Physics.Raycast(camRay, out hit, 3))
         {
-            print(hit.collider.tag);
+            //print(hit.collider.tag);
             if (hit.collider.CompareTag("Player"))
             {
                 hitFSM = hit.transform.GetComponent<SH_PlayerFSM>();
                 hitHP = hit.transform.GetComponent<SH_PlayerHP>();
                 if (hitFSM.state == SH_PlayerFSM.State.Seated)
                 {
-                    print("어디한번 F를 눌러서 동료를 구출해보셔~~^^");
+                    //print("어디한번 F를 눌러서 동료를 구출해보셔~~^^");
                     rescueUI.SetActive(true);
                     if (Input.GetKeyDown(KeyCode.F))
                     {
-                        print("눌렀네!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                        //print("눌렀네!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                         isRescue = true;
                     }
                 }
