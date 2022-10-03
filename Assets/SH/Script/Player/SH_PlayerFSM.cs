@@ -225,6 +225,11 @@ public class SH_PlayerFSM : MonoBehaviourPun
     private void Repairing()
     {
         pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, true);
+
+        if (Input.GetKeyUp(KeyCode.F))
+        {
+            ChangeState(State.Normal);
+        }
     }
 
     private void Transform()

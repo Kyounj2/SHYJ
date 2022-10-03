@@ -67,14 +67,14 @@ public class YJ_Propmachines : MonoBehaviourPun
 
     void Update()
     {
-
+        bool animationFlag = true;
 
         // �����̵� ������ �۵����ϰ��ϱ�
         if (originGageSlider.value >= 1 && !end)
         {
             maghineGage.SetActive(false);
             end = true;
-            fsm.ChangeState(SH_PlayerFSM.State.Normal);
+            animationFlag = true;
         }
 
         if (end)
@@ -82,7 +82,6 @@ public class YJ_Propmachines : MonoBehaviourPun
             // �����̵� ������ �ִϸ��̼� ���� ����
             photonView.RPC("RpcAnim", RpcTarget.All, true);
         }
-
 
         // �ӽŰ������� �����ְ� �÷��̾ F�� ��������
         if (player)
@@ -106,7 +105,12 @@ public class YJ_Propmachines : MonoBehaviourPun
                 soundOn = true;
                 photonView.RPC("RpcAnim", RpcTarget.All, true);
 
-                fsm.ChangeState(SH_PlayerFSM.State.Repairing); // ��ī
+                if (animationFlag)
+                {
+                    fsm.ChangeState(SH_PlayerFSM.State.Repairing); // ��ī
+                    animationFlag = false;
+                }
+
 
                 playerSlider.value += 0.05f * Time.deltaTime;
                 // Rpc�� ���ΰ����� �Ǻ�����
@@ -115,8 +119,8 @@ public class YJ_Propmachines : MonoBehaviourPun
                 {
                     soundOn = false;
                     photonView.RPC("RpcAnim", RpcTarget.All, false);
+                    animationFlag = true;
 
-                    fsm.ChangeState(SH_PlayerFSM.State.Normal);
                 }
             }
         }
