@@ -451,6 +451,7 @@ MonoBehaviour:
   mimicBody: {fileID: 1115306659}
   view: {fileID: 0}
   isRescue: 0
+  particleHeal: {fileID: 7517220652707092372, guid: a6557aae2a45846499b325f6dcbbc017, type: 3}
 --- !u!114 &3990998246288271246
 MonoBehaviour:
   m_ObjectHideFlags: 0

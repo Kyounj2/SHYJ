@@ -34,6 +34,8 @@ public class SH_PlayerFSM : MonoBehaviourPun
     UserInfo myInfo = GameManager.instance.userInfo;
     UsersData usersData = GameManager.instance.usersData;
 
+    YJ_KillerMove yj_km;
+
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
@@ -42,6 +44,8 @@ public class SH_PlayerFSM : MonoBehaviourPun
         pr = GetComponent<SH_PlayerRot>();
         ph = GetComponent<SH_PlayerHP>();  
         ps = GetComponent<SH_PlayerSkill>();
+
+        yj_km = GameObject.Find("Killer(Clone)").GetComponent<YJ_KillerMove>();
     }
 
     void Update()
@@ -157,6 +161,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
             case State.Seated:
                 Transform player = body.GetComponentInParent<Transform>();
                 //player.localEulerAngles = new Vector3(0, 270, 0);
+                transform.forward = -yj_km.chairPos.right;
                 pm.cc.enabled = true;
                 anim.SetTrigger("Seated");
                 break;

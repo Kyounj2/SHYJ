@@ -214,7 +214,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
         downTime += Time.deltaTime;
 
         playerTr.GetComponent<PhotonView>().RPC("RpcPlayerPos", RpcTarget.All, chairPos.transform.position);
-        playerTr.gameObject.transform.forward = chairPos.forward;
+        //playerTr.gameObject.transform.forward = -chairPos.right;
 
         if (downTime > 1.5f)
         {
@@ -615,8 +615,6 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
             receiveRot = (Quaternion)stream.ReceiveNext();
         }
     }
-
-
 
     // 네트워크모음
     [PunRPC]

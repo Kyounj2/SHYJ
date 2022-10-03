@@ -162,9 +162,13 @@ public class SH_PlayerSkill : MonoBehaviourPun
     SH_PlayerHP hitHP = new SH_PlayerHP();
     public bool isRescue = false;
 
+    public GameObject particleHeal;
+
     public void Rescue()
     {
         if (photonView.IsMine == false) return;
+
+        GameObject particle = new GameObject();
 
         Ray camRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit hit;
@@ -175,14 +179,16 @@ public class SH_PlayerSkill : MonoBehaviourPun
             rescueTime += Time.deltaTime;
             // rescueTimeÀÌ¶û slider¶û ¿¬µ¿ÇÏ±â
             print(rescueTime);
+
             if (Input.GetKeyUp(KeyCode.F))
             {
                 isRescue = false;
                 rescueTime = 0;
 
+                Destroy(particle.gameObject);
+
                 if (photonView.IsMine)
                 {
-                    //anim.SetBool("isRepair", false);
                     photonView.RPC("RpcRepairAnimation", RpcTarget.All, false);
                 }
             }
@@ -194,6 +200,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
 
                 isRescue = false;
                 rescueTime = 0;
+
+                Destroy(particle.gameObject);
 
                 if (photonView.IsMine)
                 {
@@ -217,6 +225,10 @@ public class SH_PlayerSkill : MonoBehaviourPun
                     if (Input.GetKeyDown(KeyCode.F))
                     {
                         //print("´­·¶³×!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                        //particle = Instantiate(particleHeal);
+                        particle.transform.position = 
+                            new Vector3(hitFSM.transform.position.x, 0, hitFSM.transform.position.z);
+
                         isRescue = true;
                         if (photonView.IsMine)
                         {
