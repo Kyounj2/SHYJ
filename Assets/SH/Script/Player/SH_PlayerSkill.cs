@@ -163,12 +163,11 @@ public class SH_PlayerSkill : MonoBehaviourPun
     public bool isRescue = false;
 
     public GameObject particleHeal;
+    GameObject particle;
 
     public void Rescue()
     {
         if (photonView.IsMine == false) return;
-
-        GameObject particle = new GameObject();
 
         Ray camRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit hit;
@@ -225,8 +224,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
                     if (Input.GetKeyDown(KeyCode.F))
                     {
                         //print("´­·¶³×!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                        //particle = Instantiate(particleHeal);
-                        particle.transform.position = 
+                        particle = Instantiate(particleHeal);
+                        particle.transform.position =
                             new Vector3(hitFSM.transform.position.x, 0, hitFSM.transform.position.z);
 
                         isRescue = true;
