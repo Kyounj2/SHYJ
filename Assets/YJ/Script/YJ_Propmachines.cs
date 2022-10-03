@@ -34,6 +34,12 @@ public class YJ_Propmachines : MonoBehaviourPun
 
     AudioSource machineSound;
 
+    // 브금목록
+    [SerializeField]
+    [Header("Sound")]
+    public AudioClip player_Sound;
+    public AudioClip enemy_Sound;
+
     void Start()
     {
         // 플레이거 가동용 게이지
@@ -83,8 +89,12 @@ public class YJ_Propmachines : MonoBehaviourPun
             macineOn_p = true;
 
             // 머신 게이지 소리 조정
-            if(soundOn && !machineSound.isPlaying) machineSound.Play();
-            else if(!soundOn) machineSound.Stop();
+            if (soundOn && !machineSound.isPlaying)
+            {
+                machineSound.clip = player_Sound;
+                machineSound.Play();
+            }
+            else if (!soundOn) machineSound.Stop();
         }
         if (macineOn_p)
         {

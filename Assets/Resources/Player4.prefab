@@ -597,7 +597,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4902630112771878762}
+  - {fileID: 6285762364563143284}
   - {fileID: 1115306660}
   m_Father: {fileID: 7638943795464201119}
   m_RootOrder: 0
@@ -738,17 +738,13 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4770268103119236241, guid: eca5418b751663044bcbb6a901ee15a3, type: 3}
   m_PrefabInstance: {fileID: 2104593675394447967}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &4314910140109011085
+--- !u!1001 &2941840549994638739
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 7638943796465514201}
     m_Modifications:
-    - target: {fileID: 2956660578241138077, guid: f7c016c05c749d247b1a75e922273212, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: a2e53989bdeb4204abb4b4f097fc9348, type: 2}
     - target: {fileID: 8404798108478426461, guid: f7c016c05c749d247b1a75e922273212, type: 3}
       propertyPath: m_Name
       value: James
@@ -799,8 +795,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7c016c05c749d247b1a75e922273212, type: 3}
---- !u!4 &4902630112771878762 stripped
+--- !u!4 &6285762364563143284 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9216625390457133031, guid: f7c016c05c749d247b1a75e922273212, type: 3}
-  m_PrefabInstance: {fileID: 4314910140109011085}
+  m_PrefabInstance: {fileID: 2941840549994638739}
   m_PrefabAsset: {fileID: 0}

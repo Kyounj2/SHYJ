@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 // 엔딩씬에서 하고싶은 것
 // 플레이어와 애너미의 승리여부 받아오기
@@ -24,9 +25,12 @@ public class EndingManager : MonoBehaviourPun
 
     // 닉네임
     [Header("NicName")]
-    public Text enemyName;
-    public Text name_1, name_2, name_3, name_4;
-    Text[] NameList;
+    //public Text enemyName;
+    public GameObject enemyName;
+    //public Text name_1, name_2, name_3, name_4;
+    public GameObject name_1, name_2, name_3, name_4;
+    //Text[] NameList;
+    GameObject[] NameList;
     string enemyRealName;
     string[] realName = new string[4]; // 실제 플레이어 닉네임
 
@@ -59,7 +63,8 @@ public class EndingManager : MonoBehaviourPun
         // 플레이어 생성할 자리
         playerPos = new GameObject[4] { pos_1, pos_2, pos_3, pos_4 };
         // 플레이어 이름 생성 자리
-        NameList = new Text[4] { name_1, name_2, name_3, name_4 };
+        //NameList = new Text[4] { name_1, name_2, name_3, name_4 };
+        NameList = new GameObject[4] { name_1, name_2, name_3, name_4 };
         // 플레이어 캐릭터 생성 오브젝트정보
         playerObject = new GameObject[4] { player1, player2, player3, player4 };
 
@@ -100,14 +105,16 @@ public class EndingManager : MonoBehaviourPun
         {
 
             // 애너미 가운데 자리로 생성
-            GameObject winnerGO = Instantiate(enemy);
-            winnerGO.transform.position = enemyPos.transform.position;
-            winnerGO.transform.localScale = Vector3.one * 4;
+            GameObject winnerGO = Instantiate(enemy, enemyPos.transform);
+            //winnerGO.transform.position = enemyPos.transform.position;
+            //winnerGO.transform.localScale = Vector3.one * 600;
             // 180도 뒤돌리기
-            winnerGO.transform.rotation = Quaternion.Euler(0, 180, 0);
+            //winnerGO.transform.rotation = Quaternion.Euler(0, 180, 0);
 
             // 닉네임 배치
-            enemyName.text = enemyRealName;
+            //enemyName.text = enemyRealName;
+            enemyName.SetActive(true);
+            enemyName.GetComponent<Text>().text = enemyRealName;
 
             winner = 0;
 
@@ -119,20 +126,25 @@ public class EndingManager : MonoBehaviourPun
         {
             for (int i = 0; i < PhotonNetwork.CurrentRoom.Players.Count-1; i++)
             {
-
                 // 캐릭터 배치
-                GameObject p = Instantiate(playerObject[int.Parse(realObject[i])-1]);
+                GameObject p = Instantiate(playerObject[int.Parse(realObject[i])-1], playerPos[i].transform);
                 p.SetActive(true);
-                p.transform.position = playerPos[i].transform.position;
-                p.transform.localScale = Vector3.one * 4;
-                p.transform.rotation = Quaternion.Euler(0, 180, 0);
+                //p.transform.position = playerPos[i].transform.position;
+                //p.transform.localScale = Vector3.one * 300;
+                //p.transform.rotation = Quaternion.Euler(0, 180, 0);
 
                 // 이름 배치
-                NameList[i].text = realName[i];
+                NameList[i].SetActive(true);
+                NameList[i].GetComponent<Text>().text = realName[i];
             }
 
             winner = 0;
             return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
     }
 }

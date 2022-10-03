@@ -583,6 +583,7 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     float machineAttackTime = 0;
     void MachineAttack()
     {
+        print(" 이 시간을 보자 : " + machineAttackTime);
         machineAttackTime += Time.deltaTime;
         photonView.RPC("RpcSetBool", RpcTarget.All, "MachineAttack", true);
 
