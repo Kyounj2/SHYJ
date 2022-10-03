@@ -144,7 +144,8 @@ public class SH_PlayerFSM : MonoBehaviourPun
                 break;
 
             case State.Groggy:
-                anim.SetTrigger("Groggy");
+                //anim.SetTrigger("Groggy");
+                anim.SetBool("isGroggy", true);
                 break;
 
             case State.Catched:
@@ -188,6 +189,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
             case State.Groggy:
                 curGroggTime = 0;
+                anim.SetBool("isGroggy", false);
                 break;
 
             case State.Catched:
@@ -213,6 +215,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
     private void Normal()
     {
         pm.PlayerMovement();
+
         if (ps.isRescue)
             pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, true);
         else

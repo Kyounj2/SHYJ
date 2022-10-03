@@ -11,7 +11,7 @@ using UnityEditor.EventSystems;
 
 public class SH_PlayerSkill : MonoBehaviourPun
 {
-
+    Animator anim;
     public GameObject player_ui;
     public GameObject enemy_ui;
     public bool isNearPropMachine = false;
@@ -37,6 +37,7 @@ public class SH_PlayerSkill : MonoBehaviourPun
         //    enemy_ui.SetActive(false);
         //}
 
+        anim = GetComponentInChildren<Animator>();
         view = GetComponent<PhotonView>();
 
         originalBody = GetComponent<Transform>().Find("Body").GetChild(0).gameObject;
@@ -172,21 +173,35 @@ public class SH_PlayerSkill : MonoBehaviourPun
         if (isRescue)
         {
             rescueTime += Time.deltaTime;
-            rescueUI.GetComponentInChildren<Slider>().value = rescueTime;
             // rescueTimeÀÌ¶û slider¶û ¿¬µ¿ÇÏ±â
             print(rescueTime);
             if (Input.GetKeyUp(KeyCode.F))
             {
                 isRescue = false;
                 rescueTime = 0;
+
+                if (photonView.IsMine)
+                {
+                    //anim.SetBool("isRepair", false);
+                    photonView.RPC("RpcRepairAnimation", RpcTarget.All, false);
+                }
             }
             
             if (rescueTime > RESCUESUCCESSTIME)
             {
                 hitFSM.ChangeState(SH_PlayerFSM.State.Normal);
                 hitHP.OnHealed(20);
+
                 isRescue = false;
+                rescueTime = 0;
+
+                if (photonView.IsMine)
+                {
+                    anim.SetBool("isRepair", false);
+                    photonView.RPC("RpcRepairAnimation", RpcTarget.All, false);
+                }
             }
+            rescueUI.GetComponentInChildren<Slider>().value = rescueTime;
         }
         else if (Physics.Raycast(camRay, out hit, 3))
         {
@@ -203,6 +218,11 @@ public class SH_PlayerSkill : MonoBehaviourPun
                     {
                         //print("´­·¶³×!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                         isRescue = true;
+                        if (photonView.IsMine)
+                        {
+                            //anim.SetBool("isRepair", true);
+                            photonView.RPC("RpcRepairAnimation", RpcTarget.All, true);
+                        }
                     }
                 }
             }

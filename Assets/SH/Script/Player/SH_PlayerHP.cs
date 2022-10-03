@@ -12,6 +12,7 @@ public class SH_PlayerHP : MonoBehaviourPun
     const float defaultHp = 100;
 
     SH_PlayerFSM fsm;
+    Animator anim;
 
     public GameObject normalUI;
     Slider myHPSlider;
@@ -34,6 +35,7 @@ public class SH_PlayerHP : MonoBehaviourPun
     {
         hp = defaultHp;
         fsm = GetComponent<SH_PlayerFSM>();
+        anim = GetComponentInChildren<Animator>();
 
         Transform myThumb = normalUI.transform.Find("MyTumbnail");
         myHPSlider = myThumb.Find("SliderHP").gameObject.GetComponent<Slider>();
@@ -170,6 +172,9 @@ public class SH_PlayerHP : MonoBehaviourPun
 
     public void OnDamaged(int amount)
     {
+        if (fsm.state == SH_PlayerFSM.State.Seated || fsm.state == SH_PlayerFSM.State.Die)
+            return;
+
         photonView.RPC("RpcOnDamaged", RpcTarget.All, amount);
     }
 
@@ -185,6 +190,11 @@ public class SH_PlayerHP : MonoBehaviourPun
         {
             fsm.RpcOnChangeState(SH_PlayerFSM.State.Groggy);
         }
+        else
+        {
+            anim.SetTrigger("Hitted");
+        }
+
         SetUI(hp);
     }
 

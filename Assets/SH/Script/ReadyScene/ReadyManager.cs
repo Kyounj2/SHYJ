@@ -339,6 +339,8 @@ public class ReadyManager : MonoBehaviourPun
             btnReady.image.color = btnOriginColor;
             txtReady.color = txtOriginColor;
             txtReady.text = txtOriginText;
+            ReadyLightOn(userInfo.order, isRdyClicked);
+
             isRdyClicked = true;
         }
         else if (isRdyClicked == true)
@@ -346,6 +348,8 @@ public class ReadyManager : MonoBehaviourPun
             btnReady.image.color = btnClickedColor;
             txtReady.color = txtClickedColor;
             txtReady.text = txtClickedText;
+            ReadyLightOn(userInfo.order, isRdyClicked);
+
             isRdyClicked = false;
         }
 
@@ -377,6 +381,18 @@ public class ReadyManager : MonoBehaviourPun
     void RpcTimerReset()
     {
         timer.TimerReset(1, 30);
+    }
+
+    void ReadyLightOn(int order, bool isOn)
+    {
+        photonView.RPC("RpcReadyLightOn", RpcTarget.All, order, isOn);
+    }
+
+    [PunRPC]
+    void RpcReadyLightOn(int order, bool isOn)
+    {
+        GameObject spotLight = spawnPos[order].Find("Spot Light").gameObject;
+        spotLight.SetActive(isOn);
     }
 }
  
