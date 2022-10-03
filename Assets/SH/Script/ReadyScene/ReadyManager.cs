@@ -33,6 +33,8 @@ public class ReadyManager : MonoBehaviourPun
     public GameObject playerView;
     public GameObject killerView;
 
+    public YJ_Timer timer;
+
     // Start is called befor the first frame update
     void Start()
     {
@@ -88,6 +90,8 @@ public class ReadyManager : MonoBehaviourPun
         PostUserInfo2Master(userInfo.nick_name, userInfo.role, userInfo.character, userInfo.order);
 
         //========================================================================
+
+        photonView.RPC("RpcTimerReset", RpcTarget.All);
     }
 
     void UserSpawn(int spawnOrder)
@@ -120,6 +124,7 @@ public class ReadyManager : MonoBehaviourPun
             myIcon.GetChild(0).gameObject.SetActive(true);
         }
 
+        myIcon.Find("Text (Legacy)").gameObject.SetActive(true);
         myIcon.Find("Text (Legacy)").GetComponent<Text>().text = usersData.users[spawnOrder].nick_name;
     }
 
@@ -199,7 +204,7 @@ public class ReadyManager : MonoBehaviourPun
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            if (Input.GetKeyUp(KeyCode.Alpha0))
+            if (Input.GetKeyUp(KeyCode.Alpha0) || timer.enemyWin)
                 GameStart();
         }
     }
@@ -316,17 +321,43 @@ public class ReadyManager : MonoBehaviourPun
         }
     }
 
+    Color btnOriginColor = new Color(1, 1, 1, 1);
+    Color txtOriginColor = new Color(0.2f, 0.2f, 0.2f, 1);
+    string txtOriginText = "준비 완료";
+
+    Color btnClickedColor = new Color(0.53f, 0, 0, 0.4f);
+    Color txtClickedColor = new Color(1, 1, 1, 0.8f);
+    string txtClickedText = "준비 취소";
+
+    bool isRdyClicked = true;
+
     public void OnClickReady()
     {
-        photonView.RPC("RpcOnClickReady", RpcTarget.All, userInfo.order);
+        Text txtReady = btnReady.transform.GetChild(0).GetComponent<Text>();
+        if (isRdyClicked == false)
+        {
+            btnReady.image.color = btnOriginColor;
+            txtReady.color = txtOriginColor;
+            txtReady.text = txtOriginText;
+            isRdyClicked = true;
+        }
+        else if (isRdyClicked == true)
+        {
+            btnReady.image.color = btnClickedColor;
+            txtReady.color = txtClickedColor;
+            txtReady.text = txtClickedText;
+            isRdyClicked = false;
+        }
+
+        photonView.RPC("RpcOnClickReady", RpcTarget.All, userInfo.order, !isRdyClicked);
     }
 
     int readyCount = 0;
     [PunRPC]
-    public void RpcOnClickReady(int order)
+    public void RpcOnClickReady(int order, bool isReady)
     {
         curPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
-        usersData.users[order].is_ready = true;
+        usersData.users[order].is_ready = isReady;
 
         for (int i = 0; i < curPlayer; i++)
         {
@@ -340,6 +371,12 @@ public class ReadyManager : MonoBehaviourPun
             RpcGameStart();
         else
             readyCount = 0;
+    }
+
+    [PunRPC]
+    void RpcTimerReset()
+    {
+        timer.TimerReset(1, 30);
     }
 }
  

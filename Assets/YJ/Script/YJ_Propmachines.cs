@@ -83,11 +83,18 @@ public class YJ_Propmachines : MonoBehaviourPun
             if (Input.GetKey(KeyCode.F))
             {
                 photonView.RPC("RpcAnim", RpcTarget.All, true);
+
+                fsm.ChangeState(SH_PlayerFSM.State.Repairing); // 탕카
+
                 playerSlider.value += 0.1f * Time.deltaTime;
                 // Rpc로 메인값변경 또보내기
                 originGage.transform.GetComponent<PhotonView>().RPC("SliderValue", RpcTarget.All, 0.1f * Time.deltaTime);
                 if (Input.GetKeyUp(KeyCode.F) && !end)
+                {
                     photonView.RPC("RpcAnim", RpcTarget.All, false);
+
+                    fsm.ChangeState(SH_PlayerFSM.State.Normal); // 탕카
+                }
             }
         }
 
@@ -143,11 +150,10 @@ public class YJ_Propmachines : MonoBehaviourPun
 
     GameObject enemyObject;
     GameObject playerObject;
+    SH_PlayerFSM fsm;
 
     private void OnTriggerEnter(Collider other)
     {
-
-
         // 플레이어라면
         if (other.gameObject.layer == 29 && other.GetComponent<PhotonView>().IsMine)
         {
@@ -155,6 +161,7 @@ public class YJ_Propmachines : MonoBehaviourPun
 
             playerObject = other.gameObject;
             other.gameObject.GetComponent<SH_PlayerSkill>().isNearPropMachine = true;
+            fsm = other.GetComponent<SH_PlayerFSM>();
             player = other.gameObject.GetComponent<SH_PlayerSkill>().isNearPropMachine;
             maghineGage.GetComponent<Slider>().value = originGageSlider.GetComponent<Slider>().value;
             maghineGage.SetActive(true);
