@@ -74,6 +74,7 @@ public class YJ_Propmachines : MonoBehaviourPun
         {
             maghineGage.SetActive(false);
             end = true;
+            fsm.ChangeState(SH_PlayerFSM.State.Normal);
         }
 
         if (end)
@@ -114,6 +115,7 @@ public class YJ_Propmachines : MonoBehaviourPun
                 {
                     soundOn = false;
                     photonView.RPC("RpcAnim", RpcTarget.All, false);
+
                     fsm.ChangeState(SH_PlayerFSM.State.Normal);
                 }
             }

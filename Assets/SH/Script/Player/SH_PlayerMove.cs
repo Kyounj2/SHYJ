@@ -95,46 +95,46 @@ public class SH_PlayerMove : MonoBehaviourPun, IPunObservable
         }
     }
 
-    public void TransformedMovement()
-    {
-        if (photonView.IsMine)
-        {
-            float v = Input.GetAxisRaw("Vertical");
-            float h = Input.GetAxisRaw("Horizontal");
+    //public void TransformedMovement()
+    //{
+    //    if (photonView.IsMine)
+    //    {
+    //        float v = Input.GetAxisRaw("Vertical");
+    //        float h = Input.GetAxisRaw("Horizontal");
 
-            dir = camPivot.forward * v + camPivot.right * h;
-            dir = new Vector3(dir.x, 0, dir.z);
-            dir.Normalize();
+    //        dir = camPivot.forward * v + camPivot.right * h;
+    //        dir = new Vector3(dir.x, 0, dir.z);
+    //        dir.Normalize();
 
-            yVelocity += gravity * Time.deltaTime;
+    //        yVelocity += gravity * Time.deltaTime;
 
-            if (cc.isGrounded)
-            {
-                yVelocity = 0;
-                jumpCount = 0;
-            }
+    //        if (cc.isGrounded)
+    //        {
+    //            yVelocity = 0;
+    //            jumpCount = 0;
+    //        }
 
-            if (Input.GetButtonDown("Jump") && jumpCount < maxJumpCount)
-            {
-                yVelocity = jumpPower;
-                jumpCount++;
-            }
+    //        if (Input.GetButtonDown("Jump") && jumpCount < maxJumpCount)
+    //        {
+    //            yVelocity = jumpPower;
+    //            jumpCount++;
+    //        }
 
-            dir.y = yVelocity;
+    //        dir.y = yVelocity;
 
-            photonView.RPC("RpcSetWalkFloat", RpcTarget.All, v, h);
+    //        photonView.RPC("RpcSetWalkFloat", RpcTarget.All, v, h);
 
-            speed = ChangeSpeed(fsm.state);
+    //        speed = ChangeSpeed(fsm.state);
 
-            cc.Move(dir * speed * Time.deltaTime);
-        }
-        else
-        {
-            // Lerp를 이용해서 목적지, 목적방향까지 이동 및 회전
-            transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
-        }
-    }
+    //        cc.Move(dir * speed * Time.deltaTime);
+    //    }
+    //    else
+    //    {
+    //        // Lerp를 이용해서 목적지, 목적방향까지 이동 및 회전
+    //        transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
+    //        transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
+    //    }
+    //}
 
     private float ChangeSpeed(SH_PlayerFSM.State s)
     {
