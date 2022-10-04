@@ -7,7 +7,7 @@ using Photon.Realtime;
 using static UnityEngine.UI.Image;
 using static System.Net.WebRequestMethods;
 using Unity.Burst.CompilerServices;
-using UnityEditor.EventSystems;
+//using UnityEditor.EventSystems;
 
 public class SH_PlayerSkill : MonoBehaviourPun
 {
