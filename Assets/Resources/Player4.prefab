@@ -353,6 +353,7 @@ MonoBehaviour:
   state: 0
   preState: 0
   body: {fileID: 7638943796465514201}
+  particleDead: {fileID: 7083150119559232128, guid: 824ff2e3862c2f441a7647fb13a4c989, type: 3}
 --- !u!114 &6881091995459724964
 MonoBehaviour:
   m_ObjectHideFlags: 0
