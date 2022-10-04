@@ -184,7 +184,9 @@ public class SH_PlayerSkill : MonoBehaviourPun
                 isRescue = false;
                 rescueTime = 0;
 
-                Destroy(particle.gameObject);
+                if (photonView.IsMine)
+                    photonView.RPC("RpcDestroyParticle", RpcTarget.All);
+                //Destroy(particle.gameObject);
 
                 if (photonView.IsMine)
                 {
@@ -200,7 +202,11 @@ public class SH_PlayerSkill : MonoBehaviourPun
                 isRescue = false;
                 rescueTime = 0;
 
-                Destroy(particle.gameObject);
+                if (photonView.IsMine)
+                {
+                    photonView.RPC("RpcRepairAnimation", RpcTarget.All, false);
+                    photonView.RPC("RpcDestroyParticle", RpcTarget.All);
+                }
 
                 if (photonView.IsMine)
                 {
@@ -224,9 +230,8 @@ public class SH_PlayerSkill : MonoBehaviourPun
                     if (Input.GetKeyDown(KeyCode.F))
                     {
                         //print("´­·¶³×!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                        particle = Instantiate(particleHeal);
-                        particle.transform.position =
-                            new Vector3(hitFSM.transform.position.x, 0, hitFSM.transform.position.z);
+                        if (photonView.IsMine)
+                            photonView.RPC("RpcParticleHeal", RpcTarget.All, hitFSM.transform.position);
 
                         isRescue = true;
                         if (photonView.IsMine)
@@ -242,5 +247,18 @@ public class SH_PlayerSkill : MonoBehaviourPun
         {
             rescueUI.SetActive(false);
         }
+    }
+
+    [PunRPC]
+    void RpcParticleHeal(Vector3 pos)
+    {
+        particle = Instantiate(particleHeal);
+        particle.transform.position = new Vector3(pos.x, 0, pos.z);
+    }
+
+    [PunRPC]
+    void RpcDestroyParticle()
+    {
+        Destroy(particle.gameObject);
     }
 }

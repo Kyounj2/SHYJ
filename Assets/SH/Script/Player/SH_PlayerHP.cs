@@ -206,14 +206,26 @@ public class SH_PlayerHP : MonoBehaviourPun
 
     const float DEADLINE = 30.0f;
     public float seatedTime = 0;
+
+    public GameObject particleD;
+
     public void Seated()
     {
         seatedTime += Time.deltaTime;
         //print(seatedTime);
         if (seatedTime > DEADLINE)
         {
+            photonView.RPC("RpcCreateParticleDead", RpcTarget.All, transform.position);
+
             fsm.ChangeState(SH_PlayerFSM.State.Die);
             seatedTime = 0;
         }
+    }
+
+    [PunRPC]
+    void RpcCreateParticleDead(Vector3 pos)
+    {
+        particleD = Instantiate(fsm.particleDead);
+        particleD.transform.position = new Vector3(pos.x, 0.2f, pos.z);
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine.Experimental.XR.Interaction;
+using JetBrains.Annotations;
 
 public class SH_PlayerFSM : MonoBehaviourPun
 {
@@ -205,7 +206,6 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
             case State.Seated:
                 Transform player = body.GetComponentInParent<Transform>();
-                player.localEulerAngles = new Vector3(0, 0, 0);
                 pm.cc.enabled = true;
                 ph.seatedTime = 0;
                 break;
@@ -237,6 +237,7 @@ public class SH_PlayerFSM : MonoBehaviourPun
         if (Input.GetKeyUp(KeyCode.F))
         {
             ChangeState(State.Normal);
+
         }
     }
 
@@ -274,6 +275,9 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
     Collider[] colls;
     bool liveCountFlag = true;
+
+    public GameObject particleDead;
+
     private void Die()
     {
         colls = Physics.OverlapSphere(transform.position, 2);
@@ -288,11 +292,12 @@ public class SH_PlayerFSM : MonoBehaviourPun
 
         transform.position += Vector3.down * 0.2f * Time.deltaTime;
 
-        if (transform.position.y < -5)
+        if (transform.position.y < -2)
         {
-            transform.position = new Vector3(0, -10, 0);
             transform.GetComponent<SH_PlayerRot>().camPivot.parent = null;
             transform.GetComponent<SH_PlayerRot>().camPivot.gameObject.AddComponent<YJ_DieCam>();
+            Destroy(ph.particleD.gameObject);
+            Destroy(this.gameObject);
         }
 
         if (liveCountFlag)
