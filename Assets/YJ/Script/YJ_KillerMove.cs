@@ -58,13 +58,13 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     // 브금목록
     [SerializeField]
     [Header("Sound")]
-    public AudioClip Move_Step_Sound;
     public AudioClip Attack_Sound;
     public AudioClip Attack_Hit_Sound;
     public AudioClip Skill_1_Sound;
     public AudioClip Skill_2_Sound;
     public AudioClip Break_propmaghine_Sound;
     public AudioClip Chair_Sound;
+    public AudioClip propAttack_Sound;
 
     public enum State
     {
@@ -585,12 +585,13 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
 
     void MachineAttack()
     {
-        print(" 이 시간을 보자 : " + machineAttackTime);
         machineAttackTime += Time.deltaTime;
         photonView.RPC("RpcSetBool", RpcTarget.All, "MachineAttack", true);
 
-        if(machineAttackTime > 0.5)
+        if(machineAttackTime > 0.3)
         {
+            audio.clip = propAttack_Sound;
+            audio.Play();
             photonView.RPC("RpcParticle", RpcTarget.All);
         }
 

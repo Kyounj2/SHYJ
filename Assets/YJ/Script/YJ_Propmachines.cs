@@ -38,7 +38,6 @@ public class YJ_Propmachines : MonoBehaviourPun
     [SerializeField]
     [Header("Sound")]
     public AudioClip player_Sound;
-    public AudioClip enemy_Sound;
 
     void Start()
     {

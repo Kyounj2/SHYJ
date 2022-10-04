@@ -17240,13 +17240,13 @@ MonoBehaviour:
   nicName: {fileID: 0}
   lerpSpeed: 100
   canvas: {fileID: 3528716162674037921}
-  Move_Step_Sound: {fileID: 0}
   Attack_Sound: {fileID: 8300000, guid: 16d2c6257a149104f9d33aae1448f146, type: 3}
   Attack_Hit_Sound: {fileID: 8300000, guid: 8ae81ef8d3d2ae4449fcfe669d959a15, type: 3}
   Skill_1_Sound: {fileID: 8300000, guid: 2341f161dd545b94b90d10c96ddb1360, type: 3}
   Skill_2_Sound: {fileID: 8300000, guid: 3f0df98e2ede35e4eb097b0cbdb69c14, type: 3}
   Break_propmaghine_Sound: {fileID: 8300000, guid: 0f30a78ce25feab42aee2ea65be7dc07, type: 3}
   Chair_Sound: {fileID: 8300000, guid: 343fa9903a80a48418821a5fb7f99476, type: 3}
+  propAttack_Sound: {fileID: 8300000, guid: 0f30a78ce25feab42aee2ea65be7dc07, type: 3}
   currState: 0
   machineAttack: 0
   triggerChair: 0
