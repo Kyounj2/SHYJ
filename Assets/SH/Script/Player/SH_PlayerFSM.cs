@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine.Experimental.XR.Interaction;
 using JetBrains.Annotations;
 
+// 아무거나
 public class SH_PlayerFSM : MonoBehaviourPun
 {
     public enum State
