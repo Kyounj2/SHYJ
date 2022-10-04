@@ -524,7 +524,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1231126846923901935}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.003455576, y: 0.7070983, z: -0.0018511973, w: 0.7071044}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -534,7 +534,7 @@ Transform:
   - {fileID: 907299371145188824}
   m_Father: {fileID: 8247606874441749005}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.43, y: 90, z: 0.13}
 --- !u!1 &1269934120637077574
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,7 +611,7 @@ GameObject:
   - component: {fileID: 1255025798908508465}
   - component: {fileID: 1255863322317535971}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: smoke1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -647,9 +647,9 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -5589,7 +5589,7 @@ GameObject:
   - component: {fileID: 1660008435016559080}
   - component: {fileID: 5984881645040412681}
   m_Layer: 0
-  m_Name: Particle System (2)
+  m_Name: smoke3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5625,9 +5625,9 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -12067,7 +12067,7 @@ GameObject:
   - component: {fileID: 1304133050691285463}
   - component: {fileID: 9088261475091874967}
   m_Layer: 0
-  m_Name: Particle System (1)
+  m_Name: smoke2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12103,9 +12103,9 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -17260,6 +17260,9 @@ MonoBehaviour:
   colls: []
   wave: {fileID: 5191973754200056643}
   shoulderPos: {fileID: 4695912969008215400}
+  smoke1: {fileID: 1255025798908508465}
+  smoke2: {fileID: 1304133050691285463}
+  smoke3: {fileID: 1660008435016559080}
 --- !u!95 &9076181716208236351
 Animator:
   serializedVersion: 4

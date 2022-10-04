@@ -581,11 +581,18 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     }
 
     float machineAttackTime = 0;
+    public ParticleSystem smoke1, smoke2, smoke3;
+
     void MachineAttack()
     {
         print(" 이 시간을 보자 : " + machineAttackTime);
         machineAttackTime += Time.deltaTime;
         photonView.RPC("RpcSetBool", RpcTarget.All, "MachineAttack", true);
+
+        if(machineAttackTime > 0.5)
+        {
+            photonView.RPC("RpcParticle", RpcTarget.All);
+        }
 
         // machineAttackTime이 애니메이션 플레이 시간보다 커지면 무브로 되돌리기
         if (machineAttackTime > (float)anim.GetCurrentAnimatorStateInfo(2).length)
@@ -636,5 +643,13 @@ public class YJ_KillerMove : MonoBehaviourPun, IPunObservable
     public void RpcSetBool(string s, bool b)
     {
         anim.SetBool(s, b);
+    }
+
+    [PunRPC]
+    public void RpcParticle()
+    {
+        smoke1.Play();
+        smoke2.Play();
+        smoke3.Play();
     }
 }

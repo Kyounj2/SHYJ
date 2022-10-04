@@ -64,17 +64,20 @@ public class YJ_Propmachines : MonoBehaviourPun
     //}
 
     bool soundOn = false;
+    bool animationFlag = true;
 
     void Update()
     {
-        bool animationFlag = true;
 
         // �����̵� ������ �۵����ϰ��ϱ�
         if (originGageSlider.value >= 1 && !end)
         {
-            maghineGage.SetActive(false);
-            end = true;
-            animationFlag = true;
+            if (playerObject.GetComponent<PhotonView>().IsMine)// photonView.IsMine)
+            {
+                maghineGage.SetActive(false);
+                end = true;
+                animationFlag = true;
+            }
         }
 
         if (end)

@@ -95,7 +95,7 @@ public class YJ_EscapeManager : MonoBehaviourPun
         if (time >= 1)
         {
             Time.timeScale = 1;
-            time = 0;
+            time = -100000;
             photonView.RPC("RpcEnding", RpcTarget.All);
         }
 

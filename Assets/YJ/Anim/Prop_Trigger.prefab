@@ -1516,6 +1516,8 @@ MonoBehaviour:
   originGage: {fileID: 2234415281401693401}
   maghineGage: {fileID: 0}
   hitGage: {fileID: 0}
+  player_Sound: {fileID: 8300000, guid: d502240ffaf8c9548b22ad6780ae56d8, type: 3}
+  enemy_Sound: {fileID: 8300000, guid: 0f30a78ce25feab42aee2ea65be7dc07, type: 3}
 --- !u!65 &2234415281178626212
 BoxCollider:
   m_ObjectHideFlags: 0
