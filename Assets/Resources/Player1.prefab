@@ -376,6 +376,7 @@ MonoBehaviour:
   chairIcon: {fileID: 21300000, guid: 00fd421e3137fc444b6e9dc0a9879e0b, type: 3}
   skeletonIcon: {fileID: 21300000, guid: ffb779928e1fdf44c878a1e1050cadc2, type: 3}
   seatedTime: 0
+  particleD: {fileID: 0}
 --- !u!114 &7638943795464201104
 MonoBehaviour:
   m_ObjectHideFlags: 0

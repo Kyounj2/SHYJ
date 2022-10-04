@@ -255,11 +255,11 @@ public class SH_PlayerFSM : MonoBehaviourPun
     private void Groggy()
     {
         curGroggTime += Time.deltaTime;
-        if (curGroggTime > 0.5f)
+        if (curGroggTime > 1)
         {
             pm.PlayerMovement();
-            pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, false);
         }
+        pr.PlayerRot(SH_PlayerRot.ViewState.THIRD, false);
     }
 
     private void Catched()
